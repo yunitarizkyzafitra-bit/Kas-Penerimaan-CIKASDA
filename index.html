@@ -17,7 +17,6 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
         .bg-cikasda-blue { background-color: #0b3c7c; }
         .text-cikasda-yellow { color: #f2c94c; }
-        .border-cikasda-yellow { border-color: #f2c94c; }
         .bg-cikasda-yellow { background-color: #f2c94c; }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
@@ -26,22 +25,20 @@
 </head>
 <body class="text-slate-800 antialiased flex flex-col min-h-screen">
 
-    <!-- BANNER PENGATURAN API (OTOMATIS / MANUAL BINDING) -->
-    <div id="setup-banner" class="hidden fixed top-0 left-0 right-0 bg-amber-500 text-slate-950 px-4 py-2.5 text-center text-xs font-bold z-50 shadow-md flex items-center justify-center gap-2">
-        <i class="fa-solid fa-circle-exclamation animate-pulse"></i>
-        <span>Sistem belum tersambung ke Apps Script! <a href="#" onclick="inputManualScriptUrl()" class="underline hover:text-black">Klik di Sini untuk Menghubungkan URL /exec</a></span>
+    <!-- BANNER PENGATURAN API (Akan muncul mencolok jika terputus) -->
+    <div id="setup-banner" class="bg-amber-500 text-slate-950 px-4 py-3 text-center text-xs font-bold z-50 shadow-md flex items-center justify-center gap-2">
+        <i class="fa-solid fa-circle-exclamation animate-pulse text-sm"></i>
+        <span>Sistem Belum Terhubung! <a href="#" onclick="inputManualScriptUrl()" class="underline text-blue-950 hover:text-black font-black px-2 py-0.5 bg-white/40 rounded ml-1">Klik di Sini untuk Memasukkan URL Apps Script</a></span>
     </div>
 
     <!-- HERO PROFILE HEADER (Menggunakan Foto Gedung CIKASDA) -->
     <header class="relative bg-slate-900 text-white min-h-[260px] flex items-end overflow-hidden shadow-lg">
-        <!-- Background Image dengan Overlay -->
         <div class="absolute inset-0 z-0">
-            <!-- Referensi File Foto Gedung: WhatsApp Image 2026-07-01 at 12.40.47.jpeg -->
-            <img src="WhatsApp Image 2026-07-01 at 12.40.47.jpeg" alt="Gedung Dinas CIKASDA" class="w-full h-full object-cover object-center opacity-40 scale-105 transform transition duration-700 hover:scale-100">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0b3c7c] via-[#0b3c7c]/70 to-transparent"></div>
+            <!-- Memanggil verbatim file foto gedung Anda -->
+            <img src="WhatsApp Image 2026-07-01 at 12.40.47.jpeg" alt="Gedung Dinas CIKASDA" class="w-full h-full object-cover object-center opacity-45 scale-100">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0b3c7c] via-[#0b3c7c]/75 to-transparent"></div>
         </div>
 
-        <!-- Konten Di Dalam Header -->
         <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-6 pt-20 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div class="flex items-center gap-4">
                 <div class="bg-white p-2 rounded-2xl shadow-xl w-16 h-16 shrink-0 flex items-center justify-center border-2 border-amber-400">
@@ -56,15 +53,14 @@
                 </div>
             </div>
 
-            <!-- Tombol Interaksi Utama -->
-            <div class="flex flex-wrap items-center gap-2 self-start md:self-auto">
-                <button onclick="bukaModalInput()" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs px-5 py-3 rounded-xl shadow-lg shadow-amber-400/20 active:scale-95 transition-all flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="bukaModalInput()" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs px-5 py-3 rounded-xl shadow-lg active:scale-95 transition-all flex items-center gap-2">
                     <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Inputan PAD
                 </button>
                 <button onclick="muatDataDanSinkronkan()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3 rounded-xl backdrop-blur-md transition-all flex items-center gap-2 border border-white/10">
                     <i id="icon-sync" class="fa-solid fa-arrows-rotate"></i> Sinkronkan Data
                 </button>
-                <button onclick="resetKoneksiAPI()" class="bg-red-600/20 hover:bg-red-600/40 text-red-300 text-xs px-3 py-3 rounded-xl transition-all" title="Putuskan Integrasi">
+                <button onclick="resetKoneksiAPI()" class="bg-red-600/30 hover:bg-red-600/50 text-red-200 text-xs px-3 py-3 rounded-xl transition-all" title="Reset Sambungan">
                     <i class="fa-solid fa-link-slash"></i>
                 </button>
             </div>
@@ -75,59 +71,63 @@
     <main class="flex-1 w-full max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
 
         <!-- STATUS HUBUNGAN REALTIME -->
-        <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex items-center justify-between text-xs">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between text-xs">
             <div class="flex items-center gap-3">
-                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></div>
-                <span id="status-sumber" class="font-semibold text-slate-500">Membaca status sinkronisasi cloud...</span>
+                <div id="status-indicator" class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></div>
+                <span id="status-sumber" class="font-bold text-slate-600">Status: Belum Terhubung ke Spreadsheet</span>
             </div>
-            <input type="text" id="pencarian" oninput="filterDataTabel()" placeholder="Cari Uraian atau Penyetor..." class="border border-slate-200 bg-slate-50 rounded-xl px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-800 text-xs font-medium">
+            <input type="text" id="pencarian" oninput="filterDataTabel()" placeholder="Cari Uraian atau Penyetor..." class="border border-slate-200 bg-slate-50 rounded-xl px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-800 font-medium">
         </div>
 
-        <!-- METRIK UTAMA & GRAFIK (GRID) -->
+        <!-- METRIK UTAMA & LAPORAN BULANAN -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            <!-- KARTU RINGKASAN PENDAPATAN -->
+            <!-- KARTU RINGKASAN & LAPORAN BULANAN -->
             <div class="space-y-4">
-                <div class="bg-cikasda-blue text-white rounded-2xl p-6 shadow-md border-b-4 border-amber-400 min-h-[120px] flex flex-col justify-between">
+                <div class="bg-cikasda-blue text-white rounded-2xl p-6 shadow-md border-b-4 border-amber-400">
                     <span class="text-[10px] font-bold uppercase tracking-wider text-blue-200">TOTAL REALISASI PAD</span>
                     <h2 id="grand-total" class="text-3xl font-black text-amber-400 font-mono tracking-tight mt-2">Rp 0</h2>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase">Metode Tunai</p>
-                        <h4 id="total-tunai" class="text-base font-extrabold text-slate-900 font-mono mt-1">Rp 0</h4>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Mekanisme Tunai</p>
+                        <h4 id="total-tunai" class="text-sm font-extrabold text-slate-900 font-mono mt-1">Rp 0</h4>
                     </div>
-                    <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <p class="text-[10px] font-bold text-slate-400 uppercase">Non Tunai</p>
-                        <h4 id="total-nontunai" class="text-base font-extrabold text-slate-900 font-mono mt-1">Rp 0</h4>
+                        <h4 id="total-nontunai" class="text-sm font-extrabold text-slate-900 font-mono mt-1">Rp 0</h4>
                     </div>
                 </div>
 
-                <!-- MINI REKAP PER BULAN LIST -->
-                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm max-h-[220px] overflow-y-auto custom-scrollbar space-y-2">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider sticky top-0 bg-white pb-1 border-b">Akumulasi Buku Kas</p>
-                    <div id="list-bulan" class="divide-y divide-slate-100 text-xs"></div>
+                <!-- LAPORAN PENERIMAAN BULANAN (REKAP BUKU KAS) -->
+                <div class="bg-slate-900 text-white p-4 rounded-xl border border-slate-800 shadow-lg max-h-[240px] overflow-y-auto custom-scrollbar">
+                    <p class="text-[10px] font-bold text-amber-400 uppercase tracking-wider sticky top-0 bg-slate-900 pb-2 border-b border-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-check"></i> Laporan Penerimaan Bulanan
+                    </p>
+                    <div id="list-bulan" class="divide-y divide-slate-800 text-xs mt-2 font-medium">
+                        <!-- Otomatis diisi oleh JavaScript -->
+                    </div>
                 </div>
             </div>
 
-            <!-- GRAFIK PERTUMBUHAN PAD TIAP BULAN (Menggunakan Chart.js) -->
-            <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+            <!-- GRAFIK PERTUMBUHAN PAD TIAP BULAN -->
+            <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
                 <div class="flex items-center justify-between border-b pb-3 mb-2">
                     <h3 class="text-xs font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-2">
                         <i class="fa-solid fa-chart-line text-blue-800"></i> Tren Laporan Pertumbuhan PAD Tiap Bulan
                     </h3>
                     <span class="text-[10px] bg-blue-50 text-blue-800 font-bold px-2 py-0.5 rounded">Tahun Buku 2026</span>
                 </div>
-                <div class="flex-1 relative min-h-[240px] w-full">
+                <div class="flex-1 relative min-h-[250px] w-full">
                     <canvas id="grafikPADChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- BUKU JURNAL TABEL DATA SPREADSHEET -->
-        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
-            <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+        <!-- TABEL DATA JURNAL SPREADSHEET -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="bg-slate-50 px-5 py-4 border-b border-slate-200">
                 <h3 class="text-xs font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-2">
                     <i class="fa-solid fa-list-check text-blue-800"></i> Rincian Lembar Jurnal Kas Penerimaan
                 </h3>
@@ -136,7 +136,7 @@
             <div class="overflow-x-auto custom-scrollbar">
                 <table class="w-full text-left text-xs min-w-[1000px]">
                     <thead>
-                        <tr class="bg-cikasda-blue text-white text-[10px] font-bold uppercase tracking-wider border-b border-slate-900">
+                        <tr class="bg-cikasda-blue text-white text-[10px] font-bold uppercase border-b border-slate-900">
                             <th class="p-4 text-center w-20">ID</th>
                             <th class="p-4 text-center w-24">Bulan</th>
                             <th class="p-4 text-center w-28">Tanggal</th>
@@ -145,7 +145,6 @@
                             <th class="p-4 w-40">Penjelasan</th>
                             <th class="p-4 text-right w-36">Jumlah (Rp)</th>
                             <th class="p-4 text-center w-28">Keterangan</th>
-                            <th class="p-4 text-center w-20">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="tabel-body" class="divide-y divide-slate-100 font-medium text-slate-700"></tbody>
@@ -156,23 +155,20 @@
 
     <!-- FORM INPUT MODAL POPUP -->
     <div id="modalInput" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-        <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh]">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh]">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-amber-400">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-receipt text-amber-400"></i>
-                    <h3 id="modal-title" class="font-black text-xs uppercase tracking-wider">Form Isian Pendapatan CIKASDA</h3>
+                    <h3 class="font-black text-xs uppercase tracking-wider">Form Isian Pendapatan CIKASDA</h3>
                 </div>
-                <button onclick="tutupModalInput()" class="text-white/80 hover:text-white text-base"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="tutupModalInput()" class="text-white hover:text-amber-400 text-base"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
             <form id="formTransaksi" onsubmit="simpanDataTransaksi(event)" class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs">
-                <input type="hidden" id="in-id-transaksi">
-                <input type="hidden" id="in-action" value="add">
-
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">Bulan Laporan</label>
-                        <select id="in-bulan" class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-800 font-semibold" required>
+                        <select id="in-bulan" class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-blue-800 font-bold" required>
                             <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
                             <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
                             <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
@@ -181,34 +177,34 @@
                     </div>
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">Tanggal Entry</label>
-                        <input type="text" id="in-tanggal" placeholder="DD/MM/YYYY" class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-800 font-mono font-semibold" required>
+                        <input type="text" id="in-tanggal" placeholder="DD/MM/YYYY" class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-blue-800 font-mono font-bold" required>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">Uraian / Objek</label>
-                        <input type="text" id="in-uraian" placeholder="Jenis penerimaan..." class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-800 font-bold" required>
+                        <input type="text" id="in-uraian" placeholder="Jenis penerimaan..." class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-blue-800 font-bold" required>
                     </div>
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">Penyetor / Instansi</label>
-                        <input type="text" id="in-penyetor" placeholder="Nama penyetor..." class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-800 font-bold" required>
+                        <input type="text" id="in-penyetor" placeholder="Nama penyetor..." class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-blue-800 font-bold" required>
                     </div>
                 </div>
 
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">Keterangan Penjelasan Tambahan</label>
-                    <textarea id="in-penjelasan" rows="2" placeholder="Informasi tambahan berkas..." class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-800 font-medium"></textarea>
+                    <textarea id="in-penjelasan" rows="2" placeholder="Informasi tambahan berkas..." class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-blue-800 font-medium"></textarea>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">Nominal Jumlah (Rp)</label>
-                        <input type="number" id="in-jumlah" placeholder="Contoh: 1500000" class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-800 font-mono font-bold text-blue-900" required>
+                        <input type="number" id="in-jumlah" placeholder="Contoh: 1500000" class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-blue-800 font-mono font-bold text-blue-900" required>
                     </div>
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">Mekanisme Keterangan</label>
-                        <select id="in-keterangan" class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-800 font-bold" required>
+                        <select id="in-keterangan" class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-blue-800 font-bold" required>
                             <option value="Non Tunai">Non Tunai</option>
                             <option value="Tunai">Tunai</option>
                         </select>
@@ -225,28 +221,32 @@
         </div>
     </div>
 
-    <!-- SISTEM LOGIC SCRIPT INTEGRATION (APP SCRIPT, GITHUB & CHART) -->
+    <!-- LOGIC SYSTEM SCRIPT -->
     <script>
         const daftarBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         let dataGlobalAplikasi = [];
-        let API_URL = "";
+        let API_URL = "https://script.google.com/macros/s/AKfycbzKL3Gb3p0karPXYj-niZRIgL6oxlaMhuz41CvG_QExlcUUtZNokad24np0uGwVtzQi9A/exec";
         let objekGrafikPAD = null;
 
-        function dapatkanKoneksiAPI() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const paramApi = urlParams.get('api');
-            if (paramApi) {
-                localStorage.setItem('cikasda_api_url', paramApi);
-                API_URL = paramApi;
-                window.history.replaceState({}, document.title, window.location.pathname);
+        function inisialisasiAPI() {
+            API_URL = localStorage.getItem('cikasda_api_url') || "";
+            const banner = document.getElementById("setup-banner");
+            const indicator = document.getElementById("status-indicator");
+            const statusText = document.getElementById("status-sumber");
+
+            if (API_URL) {
+                banner.classList.add("hidden");
+                indicator.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping";
+                statusText.innerText = "Terhubung dengan Cloud Google Spreadsheet";
             } else {
-                API_URL = localStorage.getItem('cikasda_api_url') || "";
+                banner.classList.remove("hidden");
+                indicator.className = "w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse";
+                statusText.innerText = "❌ Gagal Memuat Data Cloud (Tautan API Belum Ada)";
             }
-            document.getElementById("setup-banner").classList.toggle("hidden", !!API_URL);
         }
 
         function inputManualScriptUrl() {
-            const input = prompt("Masukkan Link Web App Apps Script (/exec) Anda:", API_URL);
+            const input = prompt("Masukkan URL Web App Apps Script (/exec) Anda:", API_URL);
             if (input && input.trim().startsWith("https://script.google.com")) {
                 localStorage.setItem('cikasda_api_url', input.trim());
                 window.location.reload();
@@ -254,7 +254,7 @@
         }
 
         function resetKoneksiAPI() {
-            if(confirm("Hapus tautan koneksi spreadsheet saat ini?")) {
+            if(confirm("Hapus tautan koneksi saat ini?")) {
                 localStorage.removeItem('cikasda_api_url');
                 window.location.reload();
             }
@@ -264,32 +264,11 @@
 
         function bukaModalInput() {
             if(!API_URL) { inputManualScriptUrl(); return; }
-            document.getElementById("modal-title").innerText = "Form Isian Pendapatan CIKASDA";
-            document.getElementById("in-action").value = "add";
-            document.getElementById("in-id-transaksi").value = "";
             const m = document.getElementById("modalInput");
             m.classList.remove("opacity-0", "pointer-events-none");
             m.firstElementChild.classList.remove("scale-95");
             const d = new Date();
             document.getElementById("in-tanggal").value = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
-        }
-
-        function bukaModalEdit(id) {
-            const item = dataGlobalAplikasi.find(x => x.id_transaksi.toString() === id.toString());
-            if (!item) return;
-            document.getElementById("modal-title").innerText = "Koreksi Lembar Jurnal Kas";
-            document.getElementById("in-action").value = "edit";
-            document.getElementById("in-id-transaksi").value = item.id_transaksi;
-            document.getElementById("in-bulan").value = item.bulan;
-            document.getElementById("in-tanggal").value = item.tanggal;
-            document.getElementById("in-uraian").value = item.uraian;
-            document.getElementById("in-penyetor").value = item.penyetor;
-            document.getElementById("in-penjelasan").value = item.penjelasan;
-            document.getElementById("in-jumlah").value = item.jumlah;
-            document.getElementById("in-keterangan").value = item.keterangan;
-            const m = document.getElementById("modalInput");
-            m.classList.remove("opacity-0", "pointer-events-none");
-            m.firstElementChild.classList.remove("scale-95");
         }
 
         function tutupModalInput() {
@@ -299,7 +278,6 @@
             document.getElementById("formTransaksi").reset();
         }
 
-        // FUNGSI UTAMA RENDER GRAFIK CHART.JS (MENAWAN & INTERAKTIF)
         function buatAtauUpdateGrafikPAD(dataBulanan) {
             const ctx = document.getElementById('grafikPADChart').getContext('2d');
             const dataNilai = daftarBulan.map(b => dataBulanan[b.toLowerCase()] || 0);
@@ -315,17 +293,16 @@
                 data: {
                     labels: daftarBulan,
                     datasets: [{
-                        label: 'Akumulasi PAD (Rp)',
+                        label: 'Penerimaan PAD (Rp)',
                         data: dataNilai,
                         borderColor: '#0b3c7c',
-                        backgroundColor: 'rgba(242, 201, 76, 0.2)',
-                        borderWidth: 3.5,
+                        backgroundColor: 'rgba(242, 201, 76, 0.15)',
+                        borderWidth: 3,
                         pointBackgroundColor: '#f2c94c',
                         pointBorderColor: '#0b3c7c',
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
+                        pointRadius: 4,
                         fill: true,
-                        tension: 0.3
+                        tension: 0.25
                     }]
                 },
                 options: {
@@ -333,40 +310,32 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { 
-                            beginAtZero: true,
-                            ticks: { font: { family: 'Plus Jakarta Sans', size: 10 }, callback: value => 'Rp ' + value.toLocaleString('id-ID') }
-                        },
-                        x: { ticks: { font: { family: 'Plus Jakarta Sans', size: 10 } } }
+                        y: { beginAtZero: true, ticks: { callback: value => 'Rp ' + value.toLocaleString('id-ID'), font: { size: 9 } } },
+                        x: { ticks: { font: { size: 10 } } }
                     }
                 }
             });
         }
 
         async function muatDataDanSinkronkan() {
-            dapatkanKoneksiAPI();
+            inisialisasiAPI();
             const tbody = document.getElementById("tabel-body");
-            const status = document.getElementById("status-sumber");
             const icon = document.getElementById("icon-sync");
             
             if (!API_URL) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-amber-700 bg-amber-50 font-bold">⚠️ Menunggu tautan Google Apps Script terpasang sempurna.</td></tr>`;
-                status.innerText = "Koneksi Terputus";
+                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-amber-700 bg-amber-50 font-bold">⚠️ Masukkan tautan API Web App Anda melalui tombol di banner atas.</td></tr>`;
                 return;
             }
 
             icon.classList.add("animate-spin");
-            status.innerText = "Menghubungkan ke Server Cloud Spreadsheet...";
 
             try {
                 const respon = await fetch(API_URL);
                 dataGlobalAplikasi = await respon.json();
                 tampilkanDataDashboard(dataGlobalAplikasi);
-                status.innerText = "🟢 Terhubung & Sinkron dengan Google Spreadsheet";
             } catch (err) {
                 console.error(err);
-                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-red-700 bg-red-50">Gagal Sinkronisasi. Periksa kembali Deployment Web App Anda (Setel ke 'Anyone').</td></tr>`;
-                status.innerText = "❌ Gagal Memuat Data Cloud";
+                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-700 bg-red-50">Gagal Memuat Data Cloud. Periksa pengaturan 'Anyone' pada deployment script Anda.</td></tr>`;
             } finally { icon.classList.remove("animate-spin"); }
         }
 
@@ -381,7 +350,7 @@
             daftarBulan.forEach(b => mBulan[b.toLowerCase()] = 0);
 
             if(arrayData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-slate-400">Belum ada entri catatan PAD di Spreadsheet.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-slate-400">Belum ada entri catatan PAD.</td></tr>`;
                 buatAtauUpdateGrafikPAD(mBulan);
                 return;
             }
@@ -395,21 +364,18 @@
                 if (metode.toLowerCase() === "tunai") tunai += nominal; else nonTunai += nominal;
                 if (mBulan.hasOwnProperty(bln)) mBulan[bln] += nominal;
 
-                const badge = metode.toLowerCase() === "tunai" ? "bg-amber-100 text-amber-900 border-amber-200" : "bg-blue-100 text-blue-900 border-blue-200";
+                const badge = metode.toLowerCase() === "tunai" ? "bg-amber-100 text-amber-900" : "bg-blue-100 text-blue-900";
 
                 tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50/80 transition-colors text-xs">
-                        <td class="p-4 text-center font-bold font-mono text-slate-400">#${item.id_transaksi || '-'}</td>
-                        <td class="p-4 text-center font-bold uppercase text-[10px] tracking-wide text-slate-600">${item.bulan || '-'}</td>
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-4 text-center font-bold text-slate-400 font-mono">#${item.id_transaksi || '-'}</td>
+                        <td class="p-4 text-center font-bold text-slate-600 uppercase text-[10px]">${item.bulan || '-'}</td>
                         <td class="p-4 text-center text-slate-500 font-mono">${item.tanggal || '-'}</td>
                         <td class="p-4 font-bold text-slate-900">${item.uraian || '-'}</td>
                         <td class="p-4 font-semibold text-slate-700">${item.penyetor || '-'}</td>
-                        <td class="p-4 text-slate-400 italic max-w-xs truncate" title="${item.penjelasan}">${item.penjelasan || '-'}</td>
+                        <td class="p-4 text-slate-400 italic">${item.penjelasan || '-'}</td>
                         <td class="p-4 text-right font-black text-slate-900 font-mono">${formatRupiah(nominal)}</td>
-                        <td class="p-4 text-center"><span class="px-2 py-0.5 rounded-md border text-[9px] font-black uppercase ${badge}">${metode}</span></td>
-                        <td class="p-4 text-center">
-                            <button onclick="bukaModalEdit('${item.id_transaksi}')" class="bg-slate-100 hover:bg-blue-800 hover:text-white px-2.5 py-1 rounded-md font-bold transition-colors border active:scale-95"><i class="fa-solid fa-pen-to-square"></i></button>
-                        </td>
+                        <td class="p-4 text-center"><span class="px-2 py-0.5 rounded text-[9px] font-black uppercase ${badge}">${metode}</span></td>
                     </tr>`;
             });
 
@@ -419,22 +385,19 @@
 
             daftarBulan.forEach(b => {
                 listBulanContainer.innerHTML += `
-                    <div class="flex items-center justify-between py-1.5">
-                        <span class="capitalize font-semibold text-slate-600">${b}</span>
-                        <span class="font-bold font-mono text-slate-900">${formatRupiah(mBulan[b.toLowerCase()])}</span>
+                    <div class="flex items-center justify-between py-2 border-b border-slate-800 last:border-0">
+                        <span class="capitalize text-slate-400">${b}</span>
+                        <span class="font-bold font-mono text-amber-400">${formatRupiah(mBulan[b.toLowerCase()])}</span>
                     </div>`;
             });
 
-            // Refresh Tampilan Grafik Berdasarkan Data Baru
             buatAtauUpdateGrafikPAD(mBulan);
         }
 
         function filterDataTabel() {
             const q = document.getElementById("pencarian").value.toLowerCase();
             const filtered = dataGlobalAplikasi.filter(d => 
-                (d.penyetor || "").toLowerCase().includes(q) || 
-                (d.uraian || "").toLowerCase().includes(q) || 
-                (d.bulan || "").toLowerCase().includes(q)
+                (d.penyetor || "").toLowerCase().includes(q) || (d.uraian || "").toLowerCase().includes(q)
             );
             tampilkanDataDashboard(filtered);
         }
@@ -444,8 +407,7 @@
             if(!API_URL) return;
             const btn = document.getElementById("btn-submit-form");
             const payload = {
-                action: document.getElementById("in-action").value,
-                id_transaksi: document.getElementById("in-id-transaksi").value,
+                action: "add",
                 bulan: document.getElementById("in-bulan").value,
                 tanggal: document.getElementById("in-tanggal").value,
                 uraian: document.getElementById("in-uraian").value,
@@ -457,23 +419,13 @@
 
             try {
                 btn.disabled = true;
-                btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Memproses Cloud...`;
-                await fetch(API_URL, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-                alert("Data berhasil diproses! Halaman akan menyinkronkan data ulang.");
+                btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Mengirim...`;
+                await fetch(API_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+                alert("Data Berhasil Terkirim!");
                 tutupModalInput();
                 muatDataDanSinkronkan();
-            } catch (err) {
-                console.error(err);
-                alert("Gagal melakukan enkripsi pengiriman data.");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Kirim ke Spreadsheet`;
-            }
+            } catch (err) { alert("Gagal mengirim data."); }
+            finally { btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Kirim ke Spreadsheet`; }
         }
 
         window.onload = muatDataDanSinkronkan;
