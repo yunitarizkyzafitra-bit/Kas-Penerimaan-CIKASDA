@@ -9,138 +9,132 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 antialiased flex flex-col md:flex-row min-h-screen">
 
-    <!-- SIDEBAR NAVIGASI (Tema Ungu Modern) -->
-    <aside class="w-full md:w-64 bg-white border-r border-slate-200 flex flex-col shrink-0">
-        <div class="p-5 border-b border-slate-150 flex items-center gap-3">
-            <!-- LOGO PROVINSI / CIKASDA -->
-            <div class="bg-indigo-50 p-1.5 rounded-xl border border-indigo-100 flex items-center justify-center shadow-sm w-12 h-12 shrink-0 overflow-hidden">
-                <img src="https://vignette.wikia.nocookie.net/logosrupa/images/7/77/Logo_Sulawesi_Tengah.png" alt="Logo CIKASDA" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/100x100?text=CIKASDA'">
+    <!-- SIDEBAR NAVIGASI -->
+    <aside class="w-full md:w-64 bg-sky-950 text-slate-100 border-r border-sky-900 flex flex-col shrink-0">
+        <div class="p-5 border-b border-sky-900 flex items-center gap-3 bg-sky-950">
+            <div class="bg-white p-1.5 rounded-xl flex items-center justify-center shadow-sm w-12 h-12 shrink-0 overflow-hidden">
+                <img src="https://vignette.wikia.nocookie.net/logosrupa/images/7/77/Logo_Sulawesi_Tengah.png" alt="Logo Sulawesi Tengah" class="w-full h-full object-contain">
             </div>
             <div>
-                <h1 class="text-md font-bold text-slate-800 tracking-tight">CIKASDA Net</h1>
-                <p class="text-[10px] text-purple-600 font-bold tracking-wider uppercase">Operasional Keuangan</p>
+                <h1 class="text-xs font-black text-amber-400 tracking-tight leading-tight uppercase">Dinas Cipta Karya & SDAs</h1>
+                <p class="text-[9px] text-slate-300 font-medium tracking-wider">Provinsi Sulawesi Tengah</p>
             </div>
         </div>
         
-        <!-- Profile Status -->
-        <div class="p-4 mx-3 my-4 bg-purple-50/50 rounded-xl border border-purple-150 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-purple-200">
-                BP
+        <!-- Profile & Tombol Akses Input Ber-Password -->
+        <div class="p-4 mx-3 my-4 bg-sky-900/50 rounded-xl border border-sky-800 space-y-3">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-400 text-sky-950 font-black flex items-center justify-center text-sm shadow-md">
+                    BP
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-white">Bendahara Penerimaan</h4>
+                    <p class="text-[10px] text-emerald-400 mt-0.5"><span class="w-2 h-2 rounded-full bg-emerald-400 inline-block mr-1 animate-pulse"></span> Terkoneksi</p>
+                </div>
             </div>
-            <div>
-                <h4 class="text-xs font-bold text-slate-700">Bendahara Penerimaan</h4>
-                <p class="text-[10px] text-slate-450 mt-0.5"><span class="w-2 h-2 rounded-full bg-purple-500 inline-block mr-1 animate-pulse"></span> Terkoneksi</p>
-            </div>
+            
+            <!-- Tombol Memicu Verifikasi Password -->
+            <button onclick="aksesInputData()" class="w-full flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-500 text-sky-950 font-black text-xs py-2 px-3 rounded-lg shadow-sm transition">
+                <i class="fa-solid fa-lock text-[10px]"></i> Input Transaksi Baru
+            </button>
         </div>
 
-        <!-- Menu Utama -->
+        <!-- Menu Utama + Toggle Tampilan Laporan -->
         <div class="px-3 flex-1 space-y-1">
-            <p class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Menu Utama</p>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl bg-purple-50 text-purple-700 border-l-4 border-purple-600 transition">
+            <p class="px-3 text-[10px] font-bold text-sky-300 uppercase tracking-wider mb-2">Menu Utama</p>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl bg-amber-400 text-sky-950 transition">
                 <i class="fa-solid fa-chart-pie w-5 text-center"></i> Dashboard
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition">
-                <i class="fa-solid fa-list-check w-5 text-center"></i> Jurnal Mutasi
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition">
-                <i class="fa-solid fa-building-columns w-5 text-center"></i> Rekening Kas
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition">
-                <i class="fa-solid fa-file-invoice-dollar w-5 text-center"></i> Laporan PAD
-            </a>
+            
+            <!-- Tombol Toggle Laporan Kas Bulanan -->
+            <button onclick="toggleLaporanBulanan()" class="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-slate-300 hover:bg-sky-900 hover:text-white rounded-xl transition">
+                <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-check w-5 text-center"></i> Laporan Bulanan</span>
+                <i id="ikon-toggle" class="fa-solid fa-eye text-xs text-amber-400"></i>
+            </button>
         </div>
 
-        <div class="p-4 border-t border-slate-150 text-[11px] text-slate-400 text-center font-medium">
+        <div class="p-4 border-t border-sky-900 text-[10px] text-sky-300 text-center font-medium">
             Sistem Informasi Keuangan &copy; 2026
         </div>
     </aside>
 
     <!-- AREA KONTEN UTAMA -->
     <main class="flex-1 flex flex-col overflow-x-hidden">
-        <!-- Header Atas -->
-        <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <div>
-                <p class="text-xs text-slate-400 font-medium">Selamat datang kembali,</p>
-                <h2 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">bendahara.cikasda <span class="text-base">👋</span></h2>
+        <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="hidden lg:block w-16 h-12 bg-sky-100 rounded-lg border border-sky-200 overflow-hidden">
+                    <img src="https://vignette.wikia.nocookie.net/logosrupa/images/7/77/Logo_Sulawesi_Tengah.png" class="w-full h-full object-contain p-1" alt="CIKASDA">
+                </div>
+                <div>
+                    <p class="text-[10px] text-sky-800 font-black tracking-wider uppercase">Pemerintah Provinsi Sulawesi Tengah</p>
+                    <h2 class="text-sm font-extrabold text-slate-800 tracking-tight">Dinas Cipta Karya Dan Sumber Daya Air</h2>
+                </div>
             </div>
-            <div class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 self-start sm:self-auto">
-                <i class="fa-solid fa-calendar-days text-slate-400 mr-1.5"></i> Tahun Anggaran 2026
+            <div class="text-xs font-bold text-sky-950 bg-amber-100 px-3 py-1.5 rounded-lg border border-amber-200">
+                <i class="fa-solid fa-calendar-days text-sky-900 mr-1.5"></i> TA 2026
             </div>
         </header>
 
-        <!-- Wrapper Konten Dashboard -->
         <div class="p-6 space-y-6 max-w-7xl w-full mx-auto">
-            
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h3 class="text-xl font-bold text-slate-800 tracking-tight">Dashboard Bendahara Penerimaan</h3>
-                    <p class="text-xs text-slate-500 mt-0.5">Konsolidasi Real-Time Penerimaan Lain-Lain PAD yang Sah</p>
+                    <h3 class="text-xl font-black text-sky-950 tracking-tight">Dashboard Bendahara Penerimaan</h3>
                 </div>
-                <!-- Tombol Sinkronisasi Live -->
-                <button onclick="muatDataDariSpreadsheet()" class="text-xs bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl shadow-md shadow-purple-600/10 font-bold transition flex items-center justify-center gap-2 self-start sm:self-auto">
-                    <i class="fa-solid fa-rotate animate-spin-slow"></i> Sinkronisasi Dashboard
+                <button onclick="muatDataDariSpreadsheet()" class="text-xs bg-sky-900 hover:bg-sky-950 text-white px-4 py-2 rounded-xl shadow-md font-bold transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate"></i> Sinkronisasi Dashboard
                 </button>
             </div>
 
-            <!-- PANEL BANNER UNGU UTAMA -->
-            <div class="bg-gradient-to-r from-purple-700 via-violet-600 to-indigo-600 text-white rounded-2xl p-6 md:p-8 shadow-lg shadow-purple-700/10 relative overflow-hidden">
-                <div class="relative z-10">
-                    <span class="text-[10px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-full border border-white/10">Total Kumulatif Realisasi (Live)</span>
-                    <h2 id="grand-total" class="text-3xl md:text-4xl font-extrabold tracking-tight mt-3">Rp 0</h2>
-                    <p class="text-xs text-purple-100/80 font-medium mt-2">Data ringkasan kas terintegrasi langsung dengan input HP AppSheet dan Buku Kas Utama Google Sheets.</p>
-                </div>
-                <div class="absolute right-0 bottom-0 top-0 w-1/3 bg-white/5 rounded-l-full translate-x-10 pointer-events-none hidden md:block"></div>
+            <!-- PANEL BANNER SALDO -->
+            <div class="bg-gradient-to-r from-sky-950 via-sky-900 to-blue-800 text-white rounded-2xl p-6 shadow-lg border-b-4 border-amber-400">
+                <span class="text-[10px] font-black uppercase tracking-wider bg-amber-400 text-sky-950 px-2.5 py-1 rounded-full">Total Kumulatif Realisasi (Live 2026)</span>
+                <h2 id="grand-total" class="text-3xl font-black tracking-tight mt-4 text-amber-300">Rp 0</h2>
             </div>
 
-            <!-- REKAP PER KATEGORI METODE PEMBAYARAN -->
+            <!-- SECTION TOGGLE: LAPORAN BULANAN 1 TAHUN PENUH -->
+            <div id="section-laporan-bulanan" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="border-b border-slate-150 pb-2">
+                    <h4 class="text-xs font-black text-sky-950 uppercase tracking-wider"><i class="fa-solid fa-chart-bar text-amber-500 mr-1.5"></i> Rekapitulasi Kas Per Bulan (TA 2026)</h4>
+                </div>
+                <!-- Grid Laporan 12 Bulan -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="grid-bulan">
+                    <!-- Data Bulan akan di-render otomatis oleh JavaScript di bawah -->
+                </div>
+            </div>
+
+            <!-- KARTU RINGKASAN METODE -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Kartu Tunai -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div class="bg-white p-5 rounded-2xl border-l-4 border-amber-400 border-y border-r border-slate-200 shadow-sm flex items-center justify-between">
                     <div>
-                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Transaksi Tunai</p>
-                        <h4 id="total-tunai" class="text-xl font-black text-purple-700 mt-1">Rp 0</h4>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Tunai</p>
+                        <h4 id="total-tunai" class="text-xl font-black text-sky-950 mt-1">Rp 0</h4>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
-                        <i class="fa-solid fa-money-bill-wave text-lg"></i>
-                    </div>
+                    <i class="fa-solid fa-money-bill-wave text-amber-500 text-xl"></i>
                 </div>
-
-                <!-- Kartu Non Tunai -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div class="bg-white p-5 rounded-2xl border-l-4 border-sky-900 border-y border-r border-slate-200 shadow-sm flex items-center justify-between">
                     <div>
-                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Non-Tunai (Transfer)</p>
-                        <h4 id="total-nontunai" class="text-xl font-black text-indigo-700 mt-1">Rp 0</h4>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Non-Tunai</p>
+                        <h4 id="total-nontunai" class="text-xl font-black text-sky-900 mt-1">Rp 0</h4>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                        <i class="fa-solid fa-building-columns text-lg"></i>
-                    </div>
+                    <i class="fa-solid fa-building-columns text-sky-900 text-xl"></i>
                 </div>
-
-                <!-- Status Server -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
                     <div>
-                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Status Sinkronisasi</p>
-                        <h4 id="status-sumber" class="text-xs font-bold text-slate-600 mt-2 flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-slate-400 inline-block"></span> Memeriksa jaringan API...
-                        </h4>
-                    </div>
-                    <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
-                        <i class="fa-solid fa-database text-lg"></i>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Status API</p>
+                        <h4 id="status-sumber" class="text-xs font-bold text-slate-600 mt-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-400 inline-block"></span> Memeriksa...</h4>
                     </div>
                 </div>
             </div>
 
-            <!-- JURNAL TRANSAKSI DATA MASUK -->
+            <!-- TABEL JURNAL -->
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                 <div class="border-b border-slate-150 pb-4 mb-4">
-                    <h4 class="text-sm font-bold text-slate-800">Buku Jurnal Kas Masuk (Real-time dari HP/Sheets)</h4>
-                    <p class="text-[11px] text-slate-400 mt-0.5">Seluruh input offline yang telah tersinkronisasi di lapangan akan otomatis terdaftar di bawah ini</p>
+                    <h4 class="text-sm font-extrabold text-sky-950">Buku Jurnal Kas Masuk (Real-time)</h4>
                 </div>
-
-                <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
+                <div class="overflow-x-auto max-h-[300px]">
                     <table class="w-full text-left text-xs border-collapse">
-                        <thead class="sticky top-0 bg-white shadow-sm z-10">
-                            <tr class="bg-slate-50 text-slate-500 uppercase font-bold border-b border-slate-150">
+                        <thead>
+                            <tr class="bg-sky-50 text-sky-950 uppercase font-black border-b border-slate-150">
                                 <th class="p-2.5">Bulan</th>
                                 <th class="p-2.5">Tanggal</th>
                                 <th class="p-2.5">Uraian / Penyetor</th>
@@ -150,56 +144,107 @@
                         </thead>
                         <tbody id="tabel-body" class="divide-y divide-slate-100">
                             <tr>
-                                <td colspan="5" class="p-8 text-center text-slate-400 font-medium">Sedang memuat data dari spreadsheet...</td>
+                                <td colspan="5" class="p-8 text-center text-slate-400">Memuat data...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- LOGIKA LINK API GOOGLE APPS SCRIPT -->
     <script>
-        // ⚠️ TEMPELKAN URL APPS SCRIPT WEB APP ANDA DI SINI
-        const API_URL = "https://script.google.com/macros/s/AKfycbyGcF4uH4_Z00vsdEuxYUoVPDuVY9FXFqFsNsINYV7Yvo28kojbS4cyheR3YC0WrRaf/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbzxvF1MuLC5hAzbqLY56e6mlqEP26t-OSnx8XYm0w3riJEigncB5HoN1wQNFl4I3D_Z/exec";
+        const APPSHEET_URL = "LINK_APPSHEET_ANDA_DISINI";
+        
+        // 🔐 ATUR KATA SANDI AKSES DI SINI (Contoh default: cikasda2026)
+        const KATA_SANDI_RAHASIA = "cikasda2026"; 
+
+        // List 12 Bulan Anggaran 2026
+        const daftarBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+        // Fungsi Proteksi Kata Sandi
+        function aksesInputData() {
+            const inputUser = prompt("Masukkan Kata Sandi Bendahara untuk membuka Form Input AppSheet:");
+            if (inputUser === KATA_SANDI_RAHASIA) {
+                if(APPSHEET_URL === "LINK_APPSHEET_ANDA_DISINI") {
+                    alert("Kata sandi benar! Namun tautan Form AppSheet belum Anda pasang pada baris kode ke-121.");
+                } else {
+                    window.open(APPSHEET_URL, "_blank");
+                }
+            } else if (inputUser !== null) {
+                alert("❌ Kata sandi salah! Akses ditolak.");
+            }
+        }
+
+        // Fungsi Toggle Tampilan Laporan Bulanan
+        function toggleLaporanBulanan() {
+            const section = document.getElementById("section-laporan-bulanan");
+            const ikon = document.getElementById("ikon-toggle");
+            if (section.classList.contains("hidden")) {
+                section.classList.remove("hidden");
+                ikon.className = "fa-solid fa-eye text-xs text-amber-400";
+            } else {
+                section.addClassList ? section.classList.add("hidden") : section.className += " hidden";
+                ikon.className = "fa-solid fa-eye-slash text-xs text-slate-400";
+            }
+        }
+        // Jika ingin sembunyi default saat awal buka, jalankan ini sesudah render:
+        // document.getElementById("section-laporan-bulanan").classList.add("hidden");
 
         function formatRupiah(angka) {
             return "Rp " + Number(angka).toLocaleString('id-ID');
         }
 
+        // Inisialisasi awal tampilan kotak 12 bulan kosong
+        function inisialisasiGridBulan() {
+            const grid = document.getElementById("grid-bulan");
+            grid.innerHTML = "";
+            daftarBulan.forEach(bln => {
+                grid.innerHTML += `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-center">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">${bln}</p>
+                        <p id="total-${bln.toLowerCase()}" class="text-xs font-black text-sky-950 mt-1">Rp 0</p>
+                    </div>
+                `;
+            });
+        }
+
         async function muatDataDariSpreadsheet() {
+            inisialisasiGridBulan();
             const tabelBody = document.getElementById("tabel-body");
             const statusSumber = document.getElementById("status-sumber");
             
             if (!API_URL || API_URL === "URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI") {
                 statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> Masukkan URL API`;
-                tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-amber-600 font-semibold bg-amber-50 rounded-xl">Silakan jalankan deploy ulang pada Google Apps Script Anda, salin link Web App-nya, dan tempelkan pada baris kode ke-150 di file index.html ini agar dashboard terhubung secara live.</td></tr>`;
+                tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-amber-600 font-semibold bg-amber-50 rounded-xl">Silakan lengkapi URL Web App di baris 120.</td></tr>`;
                 return;
             }
 
             try {
-                statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-purple-500 inline-block animate-pulse"></span> Mengambil data...`;
-                
+                statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-sky-600 inline-block animate-pulse"></span> Mengambil data...`;
                 const respon = await fetch(API_URL);
                 const data = await respon.json();
 
                 if (!data || data.length === 0) {
-                    tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400">Tidak ada data transaksi di dalam log Google Sheets Anda.</td></tr>`;
-                    statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Terkoneksi (Kosong)`;
+                    tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400">Tidak ada data.</td></tr>`;
+                    statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Kosong`;
                     return;
                 }
 
                 tabelBody.innerHTML = "";
-                let akumulasiTotal = 0;
-                let akumulasiTunai = 0;
-                let akumulasiNonTunai = 0;
+                let akumulasiTotal = 0, akumulasiTunai = 0, akumulasiNonTunai = 0;
+                
+                // Objek penampung nominal per bulan
+                let nominalPerBulan = {};
+                daftarBulan.forEach(b => nominalPerBulan[b.toLowerCase()] = 0);
 
                 data.forEach(item => {
                     const nilaiPenerimaan = Number(item.jumlah) || 0;
                     const jenisKeterangan = (item.keterangan || "Non Tunai").trim();
+                    const bulanItem = (item.bulan || "").trim().toLowerCase();
                     
+                    // Akumulasi Total Utama
                     akumulasiTotal += nilaiPenerimaan;
                     if (jenisKeterangan.toLowerCase() === "tunai") {
                         akumulasiTunai += nilaiPenerimaan;
@@ -207,9 +252,12 @@
                         akumulasiNonTunai += nilaiPenerimaan;
                     }
 
-                    const tagWarna = jenisKeterangan.toLowerCase() === "tunai" 
-                        ? "bg-purple-100 text-purple-700" 
-                        : "bg-indigo-100 text-indigo-700";
+                    // Akumulasi Filter per Bulan
+                    if (nominalPerBulan.hasOwnProperty(bulanItem)) {
+                        nominalPerBulan[bulanItem] += nilaiPenerimaan;
+                    }
+
+                    const tagWarna = jenisKeterangan.toLowerCase() === "tunai" ? "bg-amber-100 text-amber-800 border border-amber-200" : "bg-sky-100 text-sky-800 border border-sky-200";
 
                     tabelBody.innerHTML += `
                         <tr class="hover:bg-slate-50 transition">
@@ -217,25 +265,27 @@
                             <td class="p-2.5 font-medium text-slate-500">${item.tanggal || '-'}</td>
                             <td class="p-2.5 font-semibold text-slate-700">${item.uraian || '-'}</td>
                             <td class="p-2.5 text-right font-bold text-slate-900">${formatRupiah(nilaiPenerimaan)}</td>
-                            <td class="p-2.5 text-center">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${tagWarna}">
-                                    ${jenisKeterangan}
-                                </span>
-                            </td>
+                            <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-black ${tagWarna}">${jenisKeterangan}</span></td>
                         </tr>
                     `;
                 });
 
+                // Update komponen tampilan utama
                 document.getElementById("grand-total").innerText = formatRupiah(akumulasiTotal);
                 document.getElementById("total-tunai").innerText = formatRupiah(akumulasiTunai);
                 document.getElementById("total-nontunai").innerText = formatRupiah(akumulasiNonTunai);
                 
+                // Update nilai nominal di masing-masing kotak bulan secara otomatis
+                daftarBulan.forEach(bln => {
+                    const idElemen = "total-" + bln.toLowerCase();
+                    document.getElementById(idElemen).innerText = formatRupiah(nominalPerBulan[bln.toLowerCase()]);
+                });
+
                 statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Sinkron Aktif (Live)`;
 
             } catch (kesalahan) {
-                console.error("Gagal mengambil data:", kesalahan);
+                console.error(kesalahan);
                 statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span> Gagal Memuat`;
-                tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-rose-600 bg-rose-50 font-medium">Koneksi API Gagal. Periksa kembali apakah URL Web App Google Apps Script Anda sudah benar dan memiliki akses publik ('Anyone').</td></tr>`;
             }
         }
 
