@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Bendahara Penerimaan CIKASDA 2026</title>
+    <title>Dashboard Dinas CIKASDA 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -16,12 +16,13 @@
                 <img src="https://vignette.wikia.nocookie.net/logosrupa/images/7/77/Logo_Sulawesi_Tengah.png" alt="Logo Sulawesi Tengah" class="w-full h-full object-contain">
             </div>
             <div>
-                <h1 class="text-xs font-black text-amber-400 tracking-tight leading-tight uppercase">Dinas Cipta Karya & SDAs</h1>
+                <!-- PERUBAHAN NAMA: DINAS CIKASDA -->
+                <h1 class="text-sm font-black text-amber-400 tracking-tight leading-tight uppercase">Dinas CIKASDA</h1>
                 <p class="text-[9px] text-slate-300 font-medium tracking-wider">Provinsi Sulawesi Tengah</p>
             </div>
         </div>
         
-        <!-- Profile & Tombol Akses Input Ber-Password -->
+        <!-- Profile & Tombol Akses Input -->
         <div class="p-4 mx-3 my-4 bg-sky-900/50 rounded-xl border border-sky-800 space-y-3">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-amber-400 text-sky-950 font-black flex items-center justify-center text-sm shadow-md">
@@ -32,21 +33,17 @@
                     <p class="text-[10px] text-emerald-400 mt-0.5"><span class="w-2 h-2 rounded-full bg-emerald-400 inline-block mr-1 animate-pulse"></span> Terkoneksi</p>
                 </div>
             </div>
-            
-            <!-- Tombol Memicu Verifikasi Password -->
             <button onclick="aksesInputData()" class="w-full flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-500 text-sky-950 font-black text-xs py-2 px-3 rounded-lg shadow-sm transition">
                 <i class="fa-solid fa-lock text-[10px]"></i> Input Transaksi Baru
             </button>
         </div>
 
-        <!-- Menu Utama + Toggle Tampilan Laporan -->
+        <!-- Menu Utama -->
         <div class="px-3 flex-1 space-y-1">
             <p class="px-3 text-[10px] font-bold text-sky-300 uppercase tracking-wider mb-2">Menu Utama</p>
             <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl bg-amber-400 text-sky-950 transition">
                 <i class="fa-solid fa-chart-pie w-5 text-center"></i> Dashboard
             </a>
-            
-            <!-- Tombol Toggle Laporan Kas Bulanan -->
             <button onclick="toggleLaporanBulanan()" class="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-slate-300 hover:bg-sky-900 hover:text-white rounded-xl transition">
                 <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-check w-5 text-center"></i> Laporan Bulanan</span>
                 <i id="ikon-toggle" class="fa-solid fa-eye text-xs text-amber-400"></i>
@@ -61,22 +58,43 @@
     <!-- AREA KONTEN UTAMA -->
     <main class="flex-1 flex flex-col overflow-x-hidden">
         <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div class="flex items-center gap-4">
-                <div class="hidden lg:block w-16 h-12 bg-sky-100 rounded-lg border border-sky-200 overflow-hidden">
-                    <img src="https://vignette.wikia.nocookie.net/logosrupa/images/7/77/Logo_Sulawesi_Tengah.png" class="w-full h-full object-contain p-1" alt="CIKASDA">
-                </div>
-                <div>
-                    <p class="text-[10px] text-sky-800 font-black tracking-wider uppercase">Pemerintah Provinsi Sulawesi Tengah</p>
-                    <h2 class="text-sm font-extrabold text-slate-800 tracking-tight">Dinas Cipta Karya Dan Sumber Daya Air</h2>
-                </div>
+            <div>
+                <p class="text-[10px] text-sky-800 font-black tracking-wider uppercase">Pemerintah Provinsi Sulawesi Tengah</p>
+                <!-- PERUBAHAN NAMA HEDER: DINAS CIKASDA -->
+                <h2 class="text-base font-extrabold text-slate-800 tracking-tight">Dinas CIKASDA</h2>
             </div>
-            <div class="text-xs font-bold text-sky-950 bg-amber-100 px-3 py-1.5 rounded-lg border border-amber-200">
+            <div class="text-xs font-bold text-sky-950 bg-amber-100 px-3 py-1.5 rounded-lg border border-amber-200 self-start sm:self-auto">
                 <i class="fa-solid fa-calendar-days text-sky-900 mr-1.5"></i> TA 2026
             </div>
         </header>
 
         <div class="p-6 space-y-6 max-w-7xl w-full mx-auto">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            
+            <!-- 🖼️ BOX BARU: FOTO / BANNER GEDUNG KANTOR (Kuning-Biru) -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden grid grid-cols-1 md:grid-cols-3">
+                <!-- Sisi Gambar Gedung -->
+                <div class="md:col-span-1 h-48 md:h-full bg-sky-900 relative min-h-[160px]">
+                    <!-- GANTI tautan src di bawah ini dengan "73773_2.jpg" jika file sudah Anda upload ke folder GitHub Anda -->
+                    <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=600&q=80" 
+                         alt="Gedung Dinas CIKASDA" 
+                         class="w-full h-full object-cover opacity-90">
+                    <div class="absolute inset-0 bg-gradient-to-t from-sky-950/80 to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 bg-amber-400 text-sky-950 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider">Dokumentasi Kantor</span>
+                </div>
+                <!-- Sisi Teks Identitas Kedinasan -->
+                <div class="p-6 md:col-span-2 flex flex-col justify-center bg-gradient-to-br from-white to-slate-50">
+                    <h3 class="text-lg font-black text-sky-950 leading-tight">Dinas Cipta Karya Dan Sumber Daya Air Provinsi Sulawesi Tengah</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+                        Selamat datang di portal visualisasi data real-time Penyerapan dan Penerimaan Kas Daerah. Pastikan sinkronisasi eksternal berjalan dengan menekan tombol perbarui di bawah ini.
+                    </p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="text-[10px] font-bold bg-sky-50 text-sky-900 px-2.5 py-1 rounded-md border border-sky-100"><i class="fa-solid fa-map-location-dot mr-1 text-amber-500"></i> Palu, Sulawesi Tengah</span>
+                        <span class="text-[10px] font-bold bg-sky-50 text-sky-900 px-2.5 py-1 rounded-md border border-sky-100"><i class="fa-solid fa-shield-halved mr-1 text-emerald-500"></i> Terproteksi SSL</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
                 <div>
                     <h3 class="text-xl font-black text-sky-950 tracking-tight">Dashboard Bendahara Penerimaan</h3>
                 </div>
@@ -96,9 +114,8 @@
                 <div class="border-b border-slate-150 pb-2">
                     <h4 class="text-xs font-black text-sky-950 uppercase tracking-wider"><i class="fa-solid fa-chart-bar text-amber-500 mr-1.5"></i> Rekapitulasi Kas Per Bulan (TA 2026)</h4>
                 </div>
-                <!-- Grid Laporan 12 Bulan -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="grid-bulan">
-                    <!-- Data Bulan akan di-render otomatis oleh JavaScript di bawah -->
+                    <!-- Rendered by JS -->
                 </div>
             </div>
 
@@ -154,30 +171,25 @@
     </main>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbzxvF1MuLC5hAzbqLY56e6mlqEP26t-OSnx8XYm0w3riJEigncB5HoN1wQNFl4I3D_Z/exec";
-        const APPSHEET_URL = "https://script.google.com/macros/s/AKfycbzxvF1MuLC5hAzbqLY56e6mlqEP26t-OSnx8XYm0w3riJEigncB5HoN1wQNFl4I3D_Z/exec";
-        
-        // 🔐 ATUR KATA SANDI AKSES DI SINI (Contoh default: cikasda2026)
+        const API_URL = "https://script.google.com/macros/s/AKfycbxV089qXzNgfzfsUmwH0NQFtajoRuMZp8kZzbw3Y-S_Z29Kzxh3odBKxJEPtdsHsRRO/exec";
+        const APPSHEET_URL = "1e30yx1BUDlShaDfMwbssVHO39g36aebwFBs3puJCSjk";
         const KATA_SANDI_RAHASIA = "cikasda2026"; 
 
-        // List 12 Bulan Anggaran 2026
         const daftarBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 
-        // Fungsi Proteksi Kata Sandi
         function aksesInputData() {
             const inputUser = prompt("Masukkan Kata Sandi Bendahara untuk membuka Form Input AppSheet:");
             if (inputUser === KATA_SANDI_RAHASIA) {
                 if(APPSHEET_URL === "LINK_APPSHEET_ANDA_DISINI") {
-                    alert("Kata sandi benar! Namun tautan Form AppSheet belum Anda pasang pada baris kode ke-121.");
+                    alert("Kata sandi benar! Tautan AppSheet belum dimasukkan pada kode.");
                 } else {
                     window.open(APPSHEET_URL, "_blank");
                 }
             } else if (inputUser !== null) {
-                alert("❌ Kata sandi salah! Akses ditolak.");
+                alert("❌ Kata sandi salah!");
             }
         }
 
-        // Fungsi Toggle Tampilan Laporan Bulanan
         function toggleLaporanBulanan() {
             const section = document.getElementById("section-laporan-bulanan");
             const ikon = document.getElementById("ikon-toggle");
@@ -185,18 +197,15 @@
                 section.classList.remove("hidden");
                 ikon.className = "fa-solid fa-eye text-xs text-amber-400";
             } else {
-                section.addClassList ? section.classList.add("hidden") : section.className += " hidden";
+                section.className += " hidden";
                 ikon.className = "fa-solid fa-eye-slash text-xs text-slate-400";
             }
         }
-        // Jika ingin sembunyi default saat awal buka, jalankan ini sesudah render:
-        // document.getElementById("section-laporan-bulanan").classList.add("hidden");
 
         function formatRupiah(angka) {
             return "Rp " + Number(angka).toLocaleString('id-ID');
         }
 
-        // Inisialisasi awal tampilan kotak 12 bulan kosong
         function inisialisasiGridBulan() {
             const grid = document.getElementById("grid-bulan");
             grid.innerHTML = "";
@@ -215,9 +224,9 @@
             const tabelBody = document.getElementById("tabel-body");
             const statusSumber = document.getElementById("status-sumber");
             
-            if (!API_URL || API_URL === "https://script.google.com/macros/s/AKfycbzxvF1MuLC5hAzbqLY56e6mlqEP26t-OSnx8XYm0w3riJEigncB5HoN1wQNFl4I3D_Z/exec") {
+            if (!API_URL || API_URL === "URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI") {
                 statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> Masukkan URL API`;
-                tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-amber-600 font-semibold bg-amber-50 rounded-xl">Silakan lengkapi URL Web App di baris 120.</td></tr>`;
+                tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-amber-600 bg-amber-50 rounded-xl">Lengkapi URL API di baris kode ke-150.</td></tr>`;
                 return;
             }
 
@@ -234,8 +243,6 @@
 
                 tabelBody.innerHTML = "";
                 let akumulasiTotal = 0, akumulasiTunai = 0, akumulasiNonTunai = 0;
-                
-                // Objek penampung nominal per bulan
                 let nominalPerBulan = {};
                 daftarBulan.forEach(b => nominalPerBulan[b.toLowerCase()] = 0);
 
@@ -244,7 +251,6 @@
                     const jenisKeterangan = (item.keterangan || "Non Tunai").trim();
                     const bulanItem = (item.bulan || "").trim().toLowerCase();
                     
-                    // Akumulasi Total Utama
                     akumulasiTotal += nilaiPenerimaan;
                     if (jenisKeterangan.toLowerCase() === "tunai") {
                         akumulasiTunai += nilaiPenerimaan;
@@ -252,7 +258,6 @@
                         akumulasiNonTunai += nilaiPenerimaan;
                     }
 
-                    // Akumulasi Filter per Bulan
                     if (nominalPerBulan.hasOwnProperty(bulanItem)) {
                         nominalPerBulan[bulanItem] += nilaiPenerimaan;
                     }
@@ -270,12 +275,10 @@
                     `;
                 });
 
-                // Update komponen tampilan utama
                 document.getElementById("grand-total").innerText = formatRupiah(akumulasiTotal);
                 document.getElementById("total-tunai").innerText = formatRupiah(akumulasiTunai);
                 document.getElementById("total-nontunai").innerText = formatRupiah(akumulasiNonTunai);
                 
-                // Update nilai nominal di masing-masing kotak bulan secara otomatis
                 daftarBulan.forEach(bln => {
                     const idElemen = "total-" + bln.toLowerCase();
                     document.getElementById(idElemen).innerText = formatRupiah(nominalPerBulan[bln.toLowerCase()]);
