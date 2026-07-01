@@ -11,7 +11,7 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=600;800&family=Plus+Jakarta+Sans:wght=400;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -49,11 +49,12 @@
         <span>SISTEM BELUM TERHUBUNG KE SPREADSHEET BARU! <button type="button" onclick="hubungkanURLAppsScript()" class="underline bg-cikasda-blue text-white font-black px-3 py-1 rounded ml-2 hover:bg-cikasda-lightblue shadow transition-all cursor-pointer">Tautkan Web App Di Sini</button></span>
     </div>
 
-    <!-- ELEGAN HERO HEADER DENGAN GAMBAR GEDUNG 73773_JPG -->
+    <!-- ELEGAN HERO HEADER DENGAN GAMBAR GEDUNG 73773_2.JPG -->
     <header class="relative min-h-[260px] flex items-end overflow-hidden border-b-4 border-cikasda-yellow bg-cikasda-blue shadow-lg">
         <div class="absolute inset-0 z-0">
-            <img src="73773.jpg" alt="Gedung Dinas CIKASDA" class="w-full h-full object-cover object-center opacity-25 filter brightness-125 contrast-110">
-            <div class="absolute inset-0 bg-gradient-to-t from-cikasda-blue via-cikasda-blue/80 to-transparent"></div>
+            <!-- PENGGUNAAN KODE GAMBAR BARU 73773_2.JPG DENGAN OPACITY LEBIH JELAS -->
+            <img src="73773_2.jpg" alt="Gedung Dinas CIKASDA" class="w-full h-full object-cover object-center opacity-45 filter brightness-110 contrast-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-cikasda-blue via-cikasda-blue/70 to-transparent"></div>
         </div>
 
         <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-8 pt-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -288,7 +289,7 @@
     <script>
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         let gudangDataLokal = [];
-        let APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw45-yhKEnoHo1HBq62w39_Qp3Jg1WiiWITayGgkhT9nCM2r2VcrRaU82Fsl2ilJWki/exec";
+        let APPS_SCRIPT_URL = "";
         let instanceGrafikPAD = null;
 
         function cekKoneksiSistem() {
@@ -299,7 +300,7 @@
             if (APPS_SCRIPT_URL) {
                 banner.classList.add("hidden");
                 badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
-                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Terhubung`;
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Terhubung`;
             } else {
                 banner.classList.remove("hidden");
                 badge.className = "flex items-center gap-1.5 bg-red-500/20 text-red-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-red-500/30";
@@ -308,7 +309,7 @@
         }
 
         function hubungkanURLAppsScript() {
-            const masukanUrl = prompt("https://script.google.com/macros/s/AKfycbw45-yhKEnoHo1HBq62w39_Qp3Jg1WiiWITayGgkhT9nCM2r2VcrRaU82Fsl2ilJWki/exec) Anda:", APPS_SCRIPT_URL);
+            const masukanUrl = prompt("Tempelkan URL Web App Apps Script Baru (/exec) Anda:", APPS_SCRIPT_URL);
             if (masukanUrl && masukanUrl.trim().startsWith("https://script.google.com")) {
                 localStorage.setItem('url_apps_script_cikasda', masukanUrl.trim());
                 window.location.reload();
@@ -379,6 +380,7 @@
             });
         }
 
+        // PERBAIKAN UTAMA AKSES WEB UNTUK SINKRONISASI CLOUD SPREADSHEET
         async function muatDataSinkronisasiCloud() {
             cekKoneksiSistem();
             const tBody = document.getElementById("tabel-jurnal-body");
@@ -390,12 +392,27 @@
             ikon.classList.add("fa-spin");
 
             try {
-                const hasilFetch = await fetch(APPS_SCRIPT_URL);
+                // Modifikasi penanganan redirect Google Apps Script secara eksplisit menggunakan mode cors + standard error handling
+                const hasilFetch = await fetch(APPS_SCRIPT_URL, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                });
+                
+                if (!hasilFetch.ok) throw new Error("Network response was not ok");
+                
                 gudangDataLokal = await hasilFetch.json();
                 prosesDanTampilkanSemuaData(gudangDataLokal);
+                
+                // Set badge status menjadi aktif permanen setelah berhasil
+                const badge = document.getElementById("status-badge");
+                badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Terhubung`;
+                
             } catch (kesalahan) {
-                console.error(kesalahan);
-                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-bold">Gagal mengambil sinkronisasi data cloud. Periksa pengaturan 'Anyone' pada Apps Script.</td></tr>`;
+                console.error("Sinkronisasi Gagal:", kesalahan);
+                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-bold">⚠️ Gagal mensinkronisasikan data cloud.<br><span class="text-[10px] font-normal text-gray-500">Pastikan skrip di Google Apps Script sudah di-Deploy ulang sebagai "Web App" dengan akses "Anyone" (Siapa Saja).</span></td></tr>`;
             } finally { ikon.classList.remove("fa-spin"); }
         }
 
