@@ -54,7 +54,7 @@
                     <div class="flex items-center gap-2">
                         <span class="bg-cikasda-yellow text-cikasda-blue text-[10px] font-black uppercase px-2.5 py-0.5 rounded shadow-sm tracking-wider">Sistem Integrasi Terkunci</span>
                         <div id="status-badge" class="flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Siap Sycron
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Siap Sync
                         </div>
                     </div>
                     <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight mt-1.5">Dinas Cipta Karya dan Sumber Daya Air</h1>
@@ -210,7 +210,7 @@
                     </div>
                     <div>
                         <label class="block font-bold mb-1 text-cikasda-lightblue">Tanggal Transaksi</label>
-                        <input type="text" id="f-tanggal" placeholder="DD/MM/YYYY" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-mono font-bold text-cikasda-blue focus:border-cikasda-blue" required>
+                        <input type="date" id="f-tanggal" onchange="sinkronkanPilihanBulan(this.value)" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2 text-sm font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
                     </div>
                 </div>
 
@@ -278,7 +278,7 @@
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2z0ZsynyA8i6B_HGNAhPG2wWDiIlKeaBJU9PQ9H8b3uyhKjhaABcmHkS_PuYaAos-/exec";
         
         // ==========================================
-        //  2. KATA SANDI / PIN INPUT DIUBAH MENJADI: cikasda
+        //  2. KATA SANDI / PIN INPUT: cikasda
         // ==========================================
         const PIN_OTORISASI_INPUT = "cikasda";
 
@@ -301,12 +301,27 @@
             }
         }
 
+        // OTOMATISASI BULAN SESUAI TANGGAL KALENDER YANG DIPILIH USER
+        function sinkronkanPilihanBulan(tanggalString) {
+            if (!tanggalString) return;
+            const bagianTanggal = tanggalString.split("-"); // Format: YYYY-MM-DD
+            const indeksBulan = parseInt(bagianTanggal[1], 10) - 1;
+            if (indeksBulan >= 0 && indeksBulan < 12) {
+                document.getElementById("f-bulan").value = listNamaBulan[indeksBulan];
+            }
+        }
+
         function bukaModalForm() {
             const m = document.getElementById("modalFormTransaksi");
             m.classList.remove("opacity-0", "pointer-events-none");
             m.firstElementChild.classList.remove("scale-95");
+            
+            // Mengatur default kalender otomatis ke tanggal hari ini (Format HTML5: YYYY-MM-DD)
             const d = new Date();
-            document.getElementById("f-tanggal").value = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+            const formatHariIni = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            
+            document.getElementById("f-tanggal").value = formatHariIni;
+            document.getElementById("f-bulan").value = listNamaBulan[d.getMonth()];
         }
 
         function tutupModalForm() {
@@ -348,190 +363,3 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { grid: { color: 'rgba(8, 51, 112, 0.04)' }, ticks: { callback: v => 'Rp ' + v.toLocaleString('id-ID'), color: '#083370', font: { size: 9, weight: 'bold' } } },
-                        x: { grid: { display: false }, ticks: { color: '#083370', font: { size: 10, weight: 'bold' } } }
-                    }
-                }
-            });
-        }
-
-        async function muatDataSinkronisasiCloud() {
-            const tBody = document.getElementById("tabel-jurnal-body");
-            const ikon = document.getElementById("icon-sync");
-            const badge = document.getElementById("status-badge");
-            
-            if (APPS_SCRIPT_URL.includes("MASUKKAN_URL")) {
-                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-extrabold">⚠️ KODE BELUM SIAP! Silakan isi variabel APPS_SCRIPT_URL dengan tautan Web App Anda.</td></tr>`;
-                return;
-            }
-            
-            ikon.classList.add("fa-spin");
-
-            try {
-                const hasilFetch = await fetch(APPS_SCRIPT_URL, {
-                    method: "GET",
-                    headers: { "Accept": "application/json" }
-                });
-                
-                if (!hasilFetch.ok) throw new Error("Network response was not ok");
-                
-                gudangDataLokal = await hasilFetch.json();
-                prosesDanTampilkanSemuaData(gudangDataLokal);
-                
-                badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
-                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online`;
-                
-            } catch (kesalahan) {
-                console.error("Sinkronisasi Gagal:", kesalahan);
-                badge.className = "flex items-center gap-1.5 bg-amber-500/20 text-amber-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-amber-500/30";
-                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Offline`;
-                
-                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-amber-600 font-bold">⚠️ Mode Offline / Masalah Koneksi.<br><span class="text-[10px] font-normal text-gray-500">Data tidak dapat dimuat karena perangkat sedang tidak terhubung ke internet.</span></td></tr>`;
-            } finally { ikon.classList.remove("fa-spin"); }
-        }
-
-        function prosesDanTampilkanSemuaData(dataArray) {
-            const tBody = document.getElementById("tabel-jurnal-body");
-            const containerBulan = document.getElementById("container-bulanan");
-            tBody.innerHTML = "";
-            containerBulan.innerHTML = "";
-
-            let totalKas = 0, nominalTunai = 0, nominalNonTunai = 0;
-            let akumulasiBulan = {};
-            listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
-
-            let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lain": 0 };
-
-            if(!dataArray || dataArray.length === 0) {
-                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa di spreadsheet.</td></tr>`;
-                gambarUlangGrafikPAD(akumulasiBulan);
-                perbaruiTampilanAngka(0, 0, 0, breakdownSewa);
-                renderDaftarBulananKiri(akumulasiBulan);
-                return;
-            }
-
-            dataArray.forEach(item => {
-                const nominal = Number(item.jumlah) || 0;
-                const mekanisme = (item.keterangan || "Non Tunai").trim();
-                const bln = (item.bulan || "").trim().toLowerCase();
-                const textUraian = (item.uraian || "").trim().toLowerCase();
-
-                totalKas += nominal;
-                if (mekanisme.toLowerCase() === "tunai") nominalTunai += nominal; else nominalNonTunai += nominal;
-                if (akumulasiBulan.hasOwnProperty(bln)) akumulasiBulan[bln] += nominal;
-
-                if (textUraian.includes("rumah")) breakdownSewa.rumah += nominal;
-                else if (textUraian.includes("kantin")) breakdownSewa.kantin += nominal;
-                else if (textUraian.includes("tenis")) breakdownSewa.tenis += nominal;
-                else if (textUraian.includes("badminton")) breakdownSewa.badminton += nominal;
-                else if (textUraian.includes("pelataran")) breakdownSewa.pelataran += nominal;
-                else if (textUraian.includes("masjid")) breakdownSewa.masjid += nominal;
-                else breakdownSewa.lain += nominal;
-
-                const warnaBadge = mekanisme.toLowerCase() === "tunai" ? "bg-amber-100 text-cikasda-blue border border-cikasda-yellow" : "bg-blue-100 text-cikasda-blue border border-blue-200";
-
-                tBody.innerHTML += `
-                    <tr class="hover:bg-cikasda-bg/60 transition-colors border-b border-cikasda-bg font-bold">
-                        <td class="p-4 text-center font-mono text-cikasda-lightblue">#${item.id_transaksi || '-'}</td>
-                        <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
-                        <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
-                        <td class="p-4 text-cikasda-blue font-extrabold">${item.uraian || '-'}</td>
-                        <td class="p-4 text-cikasda-lightblue">${item.penyetor || '-'}</td>
-                        <td class="p-4 text-cikasda-blue/70 italic font-medium">${item.penjelasan || '-'}</td>
-                        <td class="p-4 text-right font-black font-mono">${konversiKeRupiah(nominal)}</td>
-                        <td class="p-4 text-center"><span class="px-2.5 py-0.5 rounded text-[9px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
-                    </tr>`;
-            });
-
-            perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa);
-            renderDaftarBulananKiri(akumulasiBulan);
-            gambarUlangGrafikPAD(akumulasiBulan);
-        }
-
-        function perbaruiTampilanAngka(total, t, nt, bDown) {
-            document.getElementById("grand-total").innerText = konversiKeRupiah(total);
-            document.getElementById("total-tunai").innerText = konversiKeRupiah(t);
-            document.getElementById("total-nontunai").innerText = konversiKeRupiah(nt);
-
-            document.getElementById("pos-rumah").innerText = konversiKeRupiah(bDown.rumah);
-            document.getElementById("pos-kantin").innerText = konversiKeRupiah(bDown.kantin);
-            document.getElementById("pos-tenis").innerText = konversiKeRupiah(bDown.tenis);
-            document.getElementById("pos-badminton").innerText = konversiKeRupiah(bDown.badminton);
-            document.getElementById("pos-masjid").innerText = konversiKeRupiah(bDown.masjid);
-            document.getElementById("pos-pelataran").innerText = konversiKeRupiah(bDown.pelataran);
-            document.getElementById("pos-lain").innerText = konversiKeRupiah(bDown.lain);
-        }
-
-        function renderDaftarBulananKiri(petaBulanan) {
-            const containerBulan = document.getElementById("container-bulanan");
-            listNamaBulan.forEach(b => {
-                containerBulan.innerHTML += `
-                    <div class="flex items-center justify-between py-2.5 border-b border-cikasda-bg last:border-0 hover:bg-cikasda-lightyellow px-1 transition-all">
-                        <span class="capitalize text-cikasda-lightblue font-bold">${b}</span>
-                        <span class="font-black font-mono text-cikasda-blue">${konversiKeRupiah(petaBulanan[b.toLowerCase()])}</span>
-                    </div>`;
-            });
-        }
-
-        function jalankanPencarianTabel() {
-            const kataKunci = document.getElementById("input-cari").value.toLowerCase();
-            const dataTerfilter = gudangDataLokal.filter(d => 
-                (d.penyetor || "").toLowerCase().includes(kataKunci) || 
-                (d.uraian || "").toLowerCase().includes(kataKunci) || 
-                (d.penjelasan || "").toLowerCase().includes(kataKunci) ||
-                (d.bulan || "").toLowerCase().includes(kataKunci)
-            );
-            prosesDanTampilkanSemuaData(dataTerfilter);
-        }
-
-        async function prosesKirimDataKeCloud(e) {
-            e.preventDefault();
-            
-            // VALIDASI KATA SANDI
-            const inputPin = document.getElementById("f-pin-keamanan").value;
-            if (inputPin !== PIN_OTORISASI_INPUT) {
-                alert("❌ KATA SANDI (PIN) SALAH! Anda tidak memiliki akses otorisasi.");
-                document.getElementById("f-pin-keamanan").value = "";
-                return;
-            }
-
-            const tombol = document.getElementById("tombolSubmitForm");
-            
-            const dataKirim = {
-                bulan: document.getElementById("f-bulan").value,
-                tanggal: document.getElementById("f-tanggal").value,
-                uraian: document.getElementById("f-uraian").value,
-                penyetor: document.getElementById("f-penyetor").value,
-                penjelasan: document.getElementById("f-penjelasan").value,
-                jumlah: Number(document.getElementById("f-jumlah").value) || 0,
-                keterangan: document.getElementById("f-keterangan").value
-            };
-
-            try {
-                tombol.disabled = true;
-                tombol.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-cikasda-yellow"></i> Mengirim...`;
-                
-                await fetch(APPS_SCRIPT_URL, { 
-                    method: "POST", 
-                    mode: "no-cors", 
-                    headers: { "Content-Type": "application/json" }, 
-                    body: JSON.stringify(dataKirim) 
-                });
-                
-                alert("Data sewa berhasil disisipkan ke Cloud Spreadsheet!");
-                tutupModalForm();
-                muatDataSinkronisasiCloud();
-            } catch (gagal) { 
-                alert("Gagal mengirim data! Hubungkan perangkat ke internet terlebih dahulu."); 
-            } finally { 
-                tombol.disabled = false; 
-                tombol.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`; 
-            }
-        }
-
-        window.onload = muatDataSinkronisasiCloud;
-    </script>
-</body>
-</html>
