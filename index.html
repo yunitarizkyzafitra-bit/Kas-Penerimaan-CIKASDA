@@ -6,12 +6,12 @@
     <title>Executive Dashboard PAD - Dinas CIKASDA</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons Pro -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Google Font Plus Jakarta Sans & Orbitron -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -19,13 +19,13 @@
                 extend: {
                     colors: {
                         cikasda: {
-                            bg: '#f0f5fa',
-                            blue: '#0b3c7c',
-                            lightblue: '#1e5ca8',
-                            deepblue: '#05234d',
-                            yellow: '#f2c94c',
-                            amber: '#dfb226',
-                            lightyellow: '#fffdeb'
+                            bg: '#f3f8fc',
+                            blue: '#083370',
+                            lightblue: '#1a5ba3',
+                            yellow: '#f1c40f',
+                            amber: '#d4ac0d',
+                            lightyellow: '#fefbe7',
+                            cardbg: '#ffffff'
                         }
                     }
                 }
@@ -33,205 +33,204 @@
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f0f5fa; color: #0b3c7c; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f3f8fc; color: #083370; }
         .font-digital { font-family: 'Orbitron', sans-serif; }
-        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border: 2px solid rgba(11, 60, 124, 0.15); }
-        .glass-card { background: #ffffff; border: 2px solid rgba(11, 60, 124, 0.15); box-shadow: 0 4px 20px rgba(11, 60, 124, 0.04); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); border: 2px solid rgba(8, 51, 112, 0.12); box-shadow: 0 4px 30px rgba(8, 51, 112, 0.03); }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f0f5fa; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #0b3c7c; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f3f8fc; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1a5ba3; border-radius: 4px; }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
 
-    <!-- TOP GLOW BANNER SETUP API -->
-    <div id="setup-banner" class="bg-cikasda-yellow text-cikasda-blue px-4 py-2.5 text-center text-xs font-black z-50 shadow-sm flex items-center justify-center gap-2 border-b-2 border-cikasda-amber">
-        <i class="fa-solid fa-triangle-exclamation animate-bounce text-sm"></i>
-        <span>SISTEM BELUM TERHUBUNG PERMANEN! <a href="#" onclick="inputManualScriptUrl()" class="underline bg-cikasda-blue text-white hover:bg-cikasda-lightblue font-extrabold px-3 py-1 rounded ml-2 shadow-sm transition-all">Tautkan Web App Apps Script</a></span>
+    <!-- TOP SETUP NOTIFICATION BANNER -->
+    <div id="setup-banner" class="bg-cikasda-yellow text-cikasda-blue px-4 py-3 text-center text-xs font-extrabold z-50 shadow-sm flex items-center justify-center gap-2 border-b-2 border-cikasda-amber">
+        <i class="fa-solid fa-circle-exclamation animate-pulse text-sm"></i>
+        <span>SISTEM BELUM TERHUBUNG KE SPREADSHEET BARU! <a href="#" onclick="hubungkanURLAppsScript()" class="underline bg-cikasda-blue text-white font-black px-3 py-1 rounded ml-2 hover:bg-cikasda-lightblue shadow transition-all">Tautkan Web App Di Sini</a></span>
     </div>
 
-    <!-- HERO BACKGROUND UTAMA CERAH -->
-    <header class="relative min-h-[280px] flex items-end overflow-hidden border-b-4 border-cikasda-yellow shadow-md bg-white">
+    <!-- ELEGAN HERO HEADER DENGAN GAMBAR GEDUNG 73773.JPG -->
+    <header class="relative min-h-[260px] flex items-end overflow-hidden border-b-4 border-cikasda-yellow bg-cikasda-blue shadow-lg">
         <div class="absolute inset-0 z-0">
-            <!-- Menampilkan gambar gedung cikasda 73773.jpg dengan opacity cerah -->
-            <img src="73773.jpg" alt="Gedung Dinas CIKASDA" class="w-full h-full object-cover object-center scale-105 opacity-30 filter contrast-125">
-            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-transparent to-transparent"></div>
+            <!-- Menyematkan foto gedung cikasda sesuai berkas terlampir -->
+            <img src="73773.jpg" alt="Gedung Dinas CIKASDA" class="w-full h-full object-cover object-center opacity-25 filter brightness-125 contrast-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-cikasda-blue via-cikasda-blue/80 to-transparent"></div>
         </div>
 
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-8 pt-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-8 pt-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div class="flex items-center gap-5">
-                <div class="bg-white p-2.5 rounded-2xl shadow-md w-20 h-20 shrink-0 flex items-center justify-center border-2 border-cikasda-blue">
+                <!-- Logo Provinsi Sulawesi Tengah -->
+                <div class="bg-white p-2 rounded-2xl shadow-md w-20 h-20 shrink-0 flex items-center justify-center border border-cikasda-yellow">
                     <img src="https://vignette.wikia.nocookie.net/logosrupa/images/7/77/Logo_Sulawesi_Tengah.png" alt="Logo Sulteng" class="w-full h-full object-contain">
                 </div>
-                <div>
+                <div class="text-white">
                     <div class="flex items-center gap-2">
-                        <span class="bg-cikasda-blue text-white text-[10px] font-black uppercase px-3 py-0.5 rounded shadow-sm tracking-widest">PANEL EKSEKUTIF</span>
-                        <div id="status-badge" class="flex items-center gap-1.5 bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded text-[10px] font-bold border border-orange-200">
-                            <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span> Terputus
+                        <span class="bg-cikasda-yellow text-cikasda-blue text-[10px] font-black uppercase px-2.5 py-0.5 rounded shadow-sm tracking-wider">Sistem Integrasi Real-Time</span>
+                        <div id="status-badge" class="flex items-center gap-1.5 bg-red-500/20 text-red-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-red-500/30">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></span> Terputus
                         </div>
                     </div>
-                    <h1 class="text-2xl md:text-3xl font-black tracking-tight mt-1.5 text-cikasda-blue">Dinas Cipta Karya dan Sumber Daya Air</h1>
-                    <p class="text-xs text-cikasda-lightblue font-bold flex items-center gap-2 mt-1">
-                        <i class="fa-solid fa-map-location-dot text-cikasda-yellow"></i> Provinsi Sulawesi Tengah
+                    <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight mt-1.5">Dinas Cipta Karya dan Sumber Daya Air</h1>
+                    <p class="text-xs text-cikasda-lightyellow/80 font-semibold flex items-center gap-1.5 mt-1">
+                        <i class="fa-solid fa-building-user text-cikasda-yellow"></i> Anggaran Pendapatan Daerah (PAD) • Provinsi Sulawesi Tengah
                     </p>
                 </div>
             </div>
 
-            <!-- ACTION EXECUTIVE CONTROLS -->
+            <!-- KENDALI SISTEM -->
             <div class="flex flex-wrap items-center gap-3">
-                <button onclick="bukaModalInput()" class="bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black text-xs px-5 py-3.5 rounded-xl shadow-lg border-b-4 border-cikasda-deepblue active:scale-95 transition-all flex items-center gap-2 tracking-wide uppercase">
-                    <i class="fa-solid fa-square-plus text-sm text-cikasda-yellow"></i> Tambah Entri PAD
+                <button onclick="bukaModalForm()" class="bg-cikasda-yellow hover:bg-cikasda-lightyellow text-cikasda-blue font-black text-xs px-5 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 tracking-wide uppercase border-b-4 border-cikasda-amber active:scale-95">
+                    <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Entri Sewa
                 </button>
-                <button onclick="muatDataDanSinkronkan()" class="bg-cikasda-lightyellow hover:bg-white text-cikasda-blue font-black text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border-2 border-cikasda-yellow shadow-sm">
-                    <i id="icon-sync" class="fa-solid fa-rotate"></i> Sinkronkan Data
+                <button onclick="muatDataSinkronisasi Cloud()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
+                    <i id="icon-sync" class="fa-solid fa-arrow-rotate-dash"></i> Sinkronkan Data
                 </button>
-                <button onclick="resetKoneksiAPI()" class="bg-red-50 hover:bg-red-100 text-red-600 text-xs px-3.5 py-3.5 rounded-xl transition-all border border-red-200" title="Reset Tautan">
+                <button onclick="resetTautanSistem()" class="bg-red-500/20 hover:bg-red-500/30 text-red-200 text-xs px-3.5 py-3.5 rounded-xl transition-all border border-red-500/20" title="Putus Tautan Spreadsheet">
                     <i class="fa-solid fa-link-slash"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- DASHBOARD WORKSPACE -->
+    <!-- CORE WORKSPACE -->
     <main class="flex-1 w-full max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
 
-        <!-- REALTIME METRICS TOP ROW -->
+        <!-- KARTU INDIKATOR UTAMA -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- GRAND TOTAL REALISASI -->
-            <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-cikasda-yellow bg-white">
-                <div class="absolute -right-6 -bottom-6 text-cikasda-bg text-8xl font-black"><i class="fa-solid fa-vault"></i></div>
-                <span class="text-[10px] font-black uppercase tracking-widest text-cikasda-lightblue block">TOTAL REALISASI PAD</span>
+            <!-- REKAP TOTAL TOTAL -->
+            <div class="glass-panel rounded-2xl p-6 relative overflow-hidden border-l-4 border-cikasda-yellow bg-cikasda-cardbg">
+                <div class="absolute -right-4 -bottom-4 text-cikasda-bg text-7xl font-black opacity-40"><i class="fa-solid fa-wallet text-cikasda-lightblue"></i></div>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-cikasda-lightblue block">TOTAL KAS PENERIMAAN PAD</span>
                 <h2 id="grand-total" class="text-3xl font-black text-cikasda-blue font-digital tracking-wider mt-3">Rp 0</h2>
                 <div class="flex items-center gap-4 mt-4 text-[11px] font-bold border-t border-cikasda-bg pt-3 text-cikasda-lightblue">
-                    <div>Tunai: <span id="total-tunai" class="text-cikasda-blue font-mono font-bold">Rp 0</span></div>
+                    <div>Tunai: <span id="total-tunai" class="text-cikasda-blue">Rp 0</span></div>
                     <div class="w-px h-3 bg-cikasda-yellow"></div>
-                    <div>Non-Tunai: <span id="total-nontunai" class="text-cikasda-blue font-mono font-bold">Rp 0</span></div>
+                    <div>Non-Tunai: <span id="total-nontunai" class="text-cikasda-blue">Rp 0</span></div>
                 </div>
             </div>
 
-            <!-- SEARCH OVERVIEW -->
-            <div class="md:col-span-2 glass-panel rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 bg-white">
-                <div class="w-full md:w-1/2">
-                    <span class="text-[10px] font-black uppercase tracking-widest text-cikasda-blue block mb-1">Pencarian Data Jurnal</span>
-                    <input type="text" id="pencarian" oninput="filterDataTabel()" placeholder="Cari penyetor, jenis sewa, instansi..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/40 rounded-xl px-4 py-3 text-xs text-cikasda-blue placeholder-cikasda-lightblue/60 font-bold focus:outline-none focus:border-cikasda-blue transition-all">
+            <!-- PENCARIAN & FILTER -->
+            <div class="md:col-span-2 glass-panel rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-cikasda-cardbg">
+                <div class="w-full sm:w-2/3">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-cikasda-blue block mb-1.5"><i class="fa-solid fa-magnifying-glass"></i> Filter & Cari Jurnal</span>
+                    <input type="text" id="input-cari" oninput="jalankanPencarianTabel()" placeholder="Ketik nama penyetor, instansi, atau keterangan..." class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-4 py-3 text-xs font-semibold text-cikasda-blue placeholder-cikasda-lightblue/50 focus:outline-none focus:border-cikasda-lightblue transition-all">
                 </div>
-                <div class="w-full md:w-1/2 flex flex-col justify-end md:text-right">
-                    <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">File Konfigurasi Utama</span>
-                    <span class="text-xs font-black text-cikasda-blue mt-1"><i class="fa-regular fa-file-excel text-emerald-600 mr-1.5"></i>Format Data Penerimaan CIKASDA</span>
+                <div class="w-full sm:w-1/3 text-left sm:text-right flex flex-col justify-center">
+                    <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Database Terintegrasi</span>
+                    <span class="text-xs font-black text-cikasda-blue mt-1"><i class="fa-regular fa-file-lines text-cikasda-yellow mr-1"></i> Google Sheets Connected</span>
                 </div>
             </div>
         </div>
 
-        <!-- BREAKDOWN KOLOM URAIAN -->
+        <!-- BREAKDOWN POS SEWA PENDAPATAN (DINAMIS & SINKRON) -->
         <section class="space-y-3">
             <h3 class="text-xs font-black uppercase tracking-widest text-cikasda-blue flex items-center gap-2 pl-1">
-                <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Breakdown Pos Pendapatan Uraian Sewa
+                <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Akumulasi Saldo Per Kategori Uraian Sewa
             </h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
-                <div class="glass-card p-3 rounded-xl border-t-4 border-cikasda-blue">
-                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase tracking-tight">Rumah Dinas</span>
-                    <span id="bd-rumah-dinas" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+                <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cikasda-blue bg-cikasda-cardbg">
+                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Rumah Dinas</span>
+                    <span id="pos-rumah" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
                 </div>
-                <div class="glass-card p-3 rounded-xl border-t-4 border-cikasda-amber">
-                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase tracking-tight">Sewa Kantin</span>
-                    <span id="bd-kantin" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cikasda-yellow bg-cikasda-cardbg">
+                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Sewa Kantin</span>
+                    <span id="pos-kantin" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
                 </div>
-                <div class="glass-card p-3 rounded-xl border-t-4 border-emerald-600">
-                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase tracking-tight">Lap. Tenis</span>
-                    <span id="bd-tenis" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                <div class="glass-panel p-3.5 rounded-xl border-t-4 border-emerald-600 bg-cikasda-cardbg">
+                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Lap. Tenis</span>
+                    <span id="pos-tenis" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
                 </div>
-                <div class="glass-card p-3 rounded-xl border-t-4 border-purple-600">
-                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase tracking-tight">Badminton</span>
-                    <span id="bd-badminton" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                <div class="glass-panel p-3.5 rounded-xl border-t-4 border-indigo-600 bg-cikasda-cardbg">
+                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Badminton</span>
+                    <span id="pos-badminton" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
                 </div>
-                <div class="glass-card p-3 rounded-xl border-t-4 border-teal-600">
-                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase tracking-tight">Masjid Raya</span>
-                    <span id="bd-masjid" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                <div class="glass-panel p-3.5 rounded-xl border-t-4 border-teal-600 bg-cikasda-cardbg">
+                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Masjid Raya</span>
+                    <span id="pos-masjid" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
                 </div>
-                <div class="glass-card p-3 rounded-xl border-t-4 border-cyan-600">
-                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase tracking-tight">Pelataran Msd</span>
-                    <span id="bd-pelataran" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cyan-500 bg-cikasda-cardbg">
+                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Pelataran Msd</span>
+                    <span id="pos-pelataran" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
                 </div>
-                <div class="glass-card p-3 rounded-xl border-t-4 border-cikasda-lightblue">
-                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase tracking-tight">Lain-Lain</span>
-                    <span id="bd-lainnya" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                <div class="glass-panel p-3.5 rounded-xl border-t-4 border-amber-600 bg-cikasda-cardbg">
+                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Lain-Lain</span>
+                    <span id="pos-lain" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
                 </div>
             </div>
         </section>
 
-        <!-- MIDDLE BLOCKS: LAPORAN BULANAN & GRAPH -->
+        <!-- GRAFIK & BULANAN -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- LAPORAN PENERIMAAN BULANAN -->
-            <div class="glass-card rounded-2xl p-4 flex flex-col max-h-[340px]">
-                <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-2.5 flex items-center gap-2">
-                    <i class="fa-solid fa-calendar-days text-xs text-cikasda-amber"></i> Laporan Penerimaan Bulanan
+            <!-- LAPORAN KAS BULANAN -->
+            <div class="glass-panel rounded-2xl p-4 flex flex-col h-[340px] bg-cikasda-cardbg">
+                <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check text-cikasda-yellow"></i> Ikhtisar Laporan bulanan
                 </p>
-                <div id="list-bulan" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-cikasda-bg text-xs font-bold mt-1">
-                    <!-- Diproses Otomatis -->
+                <div id="container-bulanan" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-cikasda-bg text-xs font-semibold">
+                    <!-- Terisi Otomatis -->
                 </div>
             </div>
 
-            <!-- VISUALISASI UTAMA GRAFIK -->
-            <div class="lg:col-span-2 glass-panel rounded-2xl p-5 flex flex-col justify-between min-h-[340px]">
+            <!-- GRAFIK LINE TREN TPERTUMBUHAN -->
+            <div class="lg:col-span-2 glass-panel rounded-2xl p-5 flex flex-col justify-between h-[340px] bg-cikasda-cardbg">
                 <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
                     <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-chart-line text-cikasda-amber"></i> Tren Pertumbuhan Penerimaan Real-Time
+                        <i class="fa-solid fa-chart-line text-cikasda-lightblue"></i> Grafik Fluktuasi Pendapatan PAD Bulanan
                     </h3>
-                    <span class="text-[9px] bg-cikasda-lightyellow border border-cikasda-yellow text-cikasda-blue font-black px-2.5 py-0.5 rounded">Tahun Anggaran 2026</span>
+                    <span class="text-[9px] bg-cikasda-lightyellow border border-cikasda-yellow text-cikasda-blue font-black px-2.5 py-0.5 rounded">T.A 2026</span>
                 </div>
-                <div class="flex-1 relative w-full mt-4">
-                    <canvas id="grafikPADChart"></canvas>
+                <div class="flex-1 relative w-full mt-3">
+                    <canvas id="canvasGrafikPAD"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- DATATABLE JURNAL CATATAN CLOUD -->
-        <div class="glass-panel rounded-2xl overflow-hidden bg-white border-2 border-cikasda-blue/20">
+        <!-- TABEL RINCIAN DATA JURNAL UTAMA -->
+        <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
             <div class="bg-cikasda-lightyellow px-5 py-4 border-b-2 border-cikasda-yellow flex items-center justify-between">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
-                    <i class="fa-solid fa-database text-cikasda-amber"></i> Rincian Lembar Jurnal Kas Penerimaan (Spreadsheet)
+                    <i class="fa-solid fa-table-list text-cikasda-lightblue"></i> Lembar Log Transaksi Jurnal Kas (Live Spreadsheet)
                 </h3>
             </div>
             
             <div class="overflow-x-auto custom-scrollbar">
                 <table class="w-full text-left text-xs min-w-[1050px]">
                     <thead>
-                        <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b-2 border-cikasda-blue/10">
+                        <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
                             <th class="p-4 text-center w-16">ID</th>
                             <th class="p-4 text-center w-24">Bulan</th>
                             <th class="p-4 text-center w-28">Tanggal</th>
-                            <th class="p-4 w-44">Uraian Dokumen</th>
+                            <th class="p-4 w-44">Uraian Sewa</th>
                             <th class="p-4 w-44">Penyetor Instansi</th>
                             <th class="p-4 w-44">Penjelasan Rekap</th>
-                            <th class="p-4 text-right w-36">Jumlah Penerimaan</th>
+                            <th class="p-4 text-right w-36">Jumlah (Rp)</th>
                             <th class="p-4 text-center w-28">Mekanisme</th>
                         </tr>
                     </thead>
-                    <tbody id="tabel-body" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue bg-white">
-                        <!-- Diproses Otomatis -->
+                    <tbody id="tabel-jurnal-body" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue">
+                        <!-- Terisi Otomatis via API -->
                     </tbody>
                 </table>
             </div>
         </div>
     </main>
 
-    <!-- FORM INPUT DATA TRANSACTION POPUP -->
-    <div id="modalInput" class="fixed inset-0 bg-cikasda-blue/30 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-        <div class="glass-card w-full max-w-lg rounded-2xl shadow-xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh]">
+    <!-- MODAL POPUP FORM TRANSAKSI INPUT -->
+    <div id="modalFormTransaksi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-card w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
                 <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-file-invoice-dollar text-cikasda-yellow"></i>
-                    <h3 class="font-black text-xs uppercase tracking-widest">Form Isian Pendapatan PAD</h3>
+                    <i class="fa-solid fa-money-check-dollar text-cikasda-yellow"></i>
+                    <h3 class="font-black text-xs uppercase tracking-widest">Input Kas Penerimaan Baru</h3>
                 </div>
-                <button onclick="tutupModalInput()" class="text-white/80 hover:text-white text-base"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="tutupModalForm()" class="text-white/80 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <form id="formTransaksi" onsubmit="simpanDataTransaksi(event)" class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue">
+            <form id="elemenFormInput" onsubmit="prosesKirimDataKeCloud(event)" class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue">
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-extrabold mb-1 text-cikasda-lightblue">Bulan Laporan</label>
-                        <select id="in-bulan" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/50 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue" required>
+                        <label class="block font-bold mb-1 text-cikasda-lightblue">Bulan Pembukuan</label>
+                        <select id="f-bulan" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue" required>
                             <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
                             <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
                             <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
@@ -239,14 +238,14 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-extrabold mb-1 text-cikasda-lightblue">Tanggal Entry</label>
-                        <input type="text" id="in-tanggal" placeholder="DD/MM/YYYY" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/50 rounded-xl p-2.5 font-mono font-bold text-cikasda-blue focus:border-cikasda-blue" required>
+                        <label class="block font-bold mb-1 text-cikasda-lightblue">Tanggal Transaksi</label>
+                        <input type="text" id="f-tanggal" placeholder="DD/MM/YYYY" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-mono font-bold text-cikasda-blue focus:border-cikasda-blue" required>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block font-extrabold mb-1 text-cikasda-lightblue">Uraian / Kategori Objek Sewa</label>
-                    <select id="in-uraian" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/50 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue" required>
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Uraian / Jenis Objek Sewa</label>
+                    <select id="f-uraian" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue" required>
                         <option value="Sewa Rumah Dinas">Sewa Rumah Dinas</option>
                         <option value="Sewa Kantin">Sewa Kantin</option>
                         <option value="Sewa Lapangan Tenis">Sewa Lapangan Tenis</option>
@@ -258,23 +257,23 @@
                 </div>
 
                 <div>
-                    <label class="block font-extrabold mb-1 text-cikasda-lightblue">Penyetor / Instansi Pemohon</label>
-                    <input type="text" id="in-penyetor" placeholder="Nama lengkap penyetor/instansi..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/50 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue" required>
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Nama Penyetor / Instansi</label>
+                    <input type="text" id="f-penyetor" placeholder="Masukkan nama pihak penyetor..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue" required>
                 </div>
 
                 <div>
-                    <label class="block font-extrabold mb-1 text-cikasda-lightblue">Keterangan Tambahan / Nomor Surat</label>
-                    <textarea id="in-penjelasan" rows="2" placeholder="Tulis rincian nomor surat..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/50 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue"></textarea>
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Penjelasan Rekap / Nomor Surat</label>
+                    <textarea id="f-penjelasan" rows="2" placeholder="Tulis rincian berita acara / nomor surat keputusan..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue"></textarea>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-extrabold mb-1 text-cikasda-lightblue">Nominal Transaksi (Rp)</label>
-                        <input type="number" id="in-jumlah" placeholder="Contoh: 2500000" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/50 rounded-xl p-2.5 font-mono font-bold text-cikasda-blue focus:border-cikasda-blue" required>
+                        <label class="block font-bold mb-1 text-cikasda-lightblue">Nominal (Rp)</label>
+                        <input type="number" id="f-jumlah" placeholder="Contoh: 1500000" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-mono font-bold text-cikasda-blue focus:border-cikasda-blue" required>
                     </div>
                     <div>
-                        <label class="block font-extrabold mb-1 text-cikasda-lightblue">Mekanisme Pembayaran</label>
-                        <select id="in-keterangan" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/50 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue" required>
+                        <label class="block font-bold mb-1 text-cikasda-lightblue">Mekanisme Pembayaran</label>
+                        <select id="f-keterangan" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue" required>
                             <option value="Non Tunai">Non Tunai</option>
                             <option value="Tunai">Tunai</option>
                         </select>
@@ -282,96 +281,96 @@
                 </div>
 
                 <div class="pt-4 border-t border-cikasda-bg flex items-center justify-end gap-2">
-                    <button type="button" onclick="tutupModalInput()" class="px-4 py-2.5 rounded-xl border-2 border-cikasda-yellow bg-cikasda-lightyellow font-bold text-cikasda-blue">Batal</button>
-                    <button type="submit" id="btn-submit-form" class="px-5 py-2.5 rounded-xl bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black flex items-center gap-1.5 shadow-md">
-                        <i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Kirim Ke Data Cloud
+                    <button type="button" onclick="tutupModalForm()" class="px-4 py-2.5 rounded-xl border border-cikasda-yellow bg-cikasda-lightyellow font-bold text-cikasda-blue">Batal</button>
+                    <button type="submit" id="tombolSubmitForm" class="px-5 py-2.5 rounded-xl bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black flex items-center gap-2 shadow-md">
+                        <i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- MAIN ENGINE CONTROLLER -->
+    <!-- ENGINE CONTROLLER JAVASCRIPT INTEGRATION -->
     <script>
-        const daftarBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-        let dataGlobalAplikasi = [];
-        let API_URL = "";
-        let objekGrafikPAD = null;
+        const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        let gudangDataLokal = [];
+        let APPS_SCRIPT_URL = "";
+        let instanceGrafikPAD = null;
 
-        function inisialisasiAPI() {
-            API_URL = localStorage.getItem('cikasda_api_url') || "";
+        function cekKoneksiSistem() {
+            APPS_SCRIPT_URL = localStorage.getItem('url_apps_script_cikasda') || "";
             const banner = document.getElementById("setup-banner");
             const badge = document.getElementById("status-badge");
 
-            if (API_URL) {
+            if (APPS_SCRIPT_URL) {
                 banner.classList.add("hidden");
-                badge.className = "flex items-center gap-1.5 bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-300";
-                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Terhubung`;
+                badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Terhubung`;
             } else {
                 banner.classList.remove("hidden");
-                badge.className = "flex items-center gap-1.5 bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded text-[10px] font-bold border border-orange-300";
-                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span> Terputus`;
+                badge.className = "flex items-center gap-1.5 bg-red-500/20 text-red-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-red-500/30";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></span> Terputus`;
             }
         }
 
-        function inputManualScriptUrl() {
-            const input = prompt("Masukkan Tautan URL Web App Apps Script (/exec) Anda:", API_URL);
-            if (input && input.trim().startsWith("https://script.google.com")) {
-                localStorage.setItem('cikasda_api_url', input.trim());
+        function hubungkanURLAppsScript() {
+            const masukanUrl = prompt("Tempelkan URL Web App Apps Script Baru (/exec) Anda:", APPS_SCRIPT_URL);
+            if (masukanUrl && masukanUrl.trim().startsWith("https://script.google.com")) {
+                localStorage.setItem('url_apps_script_cikasda', masukanUrl.trim());
                 window.location.reload();
-            } else if (input) { alert("Tautan Tidak Valid!"); }
+            } else if (masukanUrl) { alert("Format URL tidak valid! Pastikan berakhiran /exec"); }
         }
 
-        function resetKoneksiAPI() {
-            if(confirm("Hapus tautan koneksi dashboard?")) {
-                localStorage.removeItem('cikasda_api_url');
+        function resetTautanSistem() {
+            if(confirm("Apakah Anda ingin memutuskan tautan spreadsheet saat ini?")) {
+                localStorage.removeItem('url_apps_script_cikasda');
                 window.location.reload();
             }
         }
 
-        function formatRupiah(num) { return "Rp " + Number(num).toLocaleString('id-ID'); }
+        function konversiKeRupiah(angka) { return "Rp " + Number(angka).toLocaleString('id-ID'); }
 
-        function bukaModalInput() {
-            if(!API_URL) { inputManualScriptUrl(); return; }
-            const m = document.getElementById("modalInput");
+        function bukaModalForm() {
+            if(!APPS_SCRIPT_URL) { hubungkanURLAppsScript(); return; }
+            const m = document.getElementById("modalFormTransaksi");
             m.classList.remove("opacity-0", "pointer-events-none");
             m.firstElementChild.classList.remove("scale-95");
             const d = new Date();
-            document.getElementById("in-tanggal").value = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+            document.getElementById("f-tanggal").value = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
         }
 
-        function tutupModalInput() {
-            const m = document.getElementById("modalInput");
+        function tutupModalForm() {
+            const m = document.getElementById("modalFormTransaksi");
             m.classList.add("opacity-0", "pointer-events-none");
             m.firstElementChild.classList.add("scale-95");
-            document.getElementById("formTransaksi").reset();
+            document.getElementById("elemenFormInput").reset();
         }
 
-        function buatAtauUpdateGrafikPAD(dataBulanan) {
-            const ctx = document.getElementById('grafikPADChart').getContext('2d');
-            const dataNilai = daftarBulan.map(b => dataBulanan[b.toLowerCase()] || 0);
+        function gambarUlangGrafikPAD(petaBulanan) {
+            const ctx = document.getElementById('canvasGrafikPAD').getContext('2d');
+            const nilaiSumbuY = listNamaBulan.map(b => petaBulanan[b.toLowerCase()] || 0);
 
-            if (objekGrafikPAD) {
-                objekGrafikPAD.data.datasets[0].data = dataNilai;
-                objekGrafikPAD.update();
+            if (instanceGrafikPAD) {
+                instanceGrafikPAD.data.datasets[0].data = nilaiSumbuY;
+                instanceGrafikPAD.update();
                 return;
             }
 
-            objekGrafikPAD = new Chart(ctx, {
+            instanceGrafikPAD = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: daftarBulan,
+                    labels: listNamaBulan,
                     datasets: [{
-                        label: 'Realisasi Kas PAD (Rp)',
-                        data: dataNilai,
-                        borderColor: '#0b3c7c',
-                        backgroundColor: 'rgba(242, 201, 76, 0.15)',
+                        label: 'Realisasi Kas (Rp)',
+                        data: nilaiSumbuY,
+                        borderColor: '#083370',
+                        backgroundColor: 'rgba(241, 196, 15, 0.12)',
                         borderWidth: 3,
-                        pointBackgroundColor: '#f2c94c',
-                        pointBorderColor: '#0b3c7c',
-                        pointRadius: 5,
+                        pointBackgroundColor: '#f1c40f',
+                        pointBorderColor: '#083370',
+                        pointRadius: 4,
                         fill: true,
-                        tension: 0.3
+                        tension: 0.25
                     }]
                 },
                 options: {
@@ -379,144 +378,169 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { grid: { color: 'rgba(11, 60, 124, 0.05)' }, ticks: { callback: v => 'Rp ' + v.toLocaleString('id-ID'), color: '#0b3c7c', font: { size: 9, weight: 'bold' } } },
-                        x: { grid: { display: false }, ticks: { color: '#0b3c7c', font: { size: 10, weight: 'bold' } } }
+                        y: { grid: { color: 'rgba(8, 51, 112, 0.04)' }, ticks: { callback: v => 'Rp ' + v.toLocaleString('id-ID'), color: '#083370', font: { size: 9, weight: 'bold' } } },
+                        x: { grid: { display: false }, ticks: { color: '#083370', font: { size: 10, weight: 'bold' } } }
                     }
                 }
             });
         }
 
-        async function muatDataDanSinkronkan() {
-            inisialisasiAPI();
-            const tbody = document.getElementById("tabel-body");
-            const icon = document.getElementById("icon-sync");
-            if (!API_URL) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-orange-600 font-extrabold">⚠️ Masukkan Tautan API Melalui Banner Atas Terlebih Dahulu.</td></tr>`;
+        async function muatDataSinkronisasi Cloud() {
+            cekKoneksiSistem();
+            const tBody = document.getElementById("tabel-jurnal-body");
+            const ikon = document.getElementById("icon-sync");
+            if (!APPS_SCRIPT_URL) {
+                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-extrabold">⚠️ Silakan hubungkan URL Web App Apps Script terlebih dahulu via banner kuning di atas.</td></tr>`;
                 return;
             }
-            icon.classList.add("fa-spin");
+            ikon.classList.add("fa-spin");
 
             try {
-                const respon = await fetch(API_URL);
-                dataGlobalAplikasi = await respon.json();
-                tampilkanDataDashboard(dataGlobalAplikasi);
-            } catch (err) {
-                console.error(err);
-                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-bold">Gagal Sinkronisasi. Pastikan Web App Apps Script disetel aksesnya ke 'Anyone'.</td></tr>`;
-            } finally { icon.classList.remove("fa-spin"); }
+                // Fetch data dari Apps Script Google Sheet baru
+                const hasilFetch = await fetch(APPS_SCRIPT_URL);
+                gudangDataLokal = await hasilFetch.json();
+                prosesDanTampilkanSemuaData(gudangDataLokal);
+            } catch (kesalahan) {
+                console.error(kesalahan);
+                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-bold">Gagal mengambil sinkronisasi data cloud. Periksa pengaturan 'Anyone' pada Apps Script.</td></tr>`;
+            } finally { ikon.classList.remove("fa-spin"); }
         }
 
-        function tampilkanDataDashboard(arrayData) {
-            const tbody = document.getElementById("tabel-body");
-            const listBulanContainer = document.getElementById("list-bulan");
-            tbody.innerHTML = "";
-            listBulanContainer.innerHTML = "";
+        function prosesDanTampilkanSemuaData(dataArray) {
+            const tBody = document.getElementById("tabel-jurnal-body");
+            const containerBulan = document.getElementById("container-bulanan");
+            tBody.innerHTML = "";
+            containerBulan.innerHTML = "";
 
-            let grandTotal = 0, tunai = 0, nonTunai = 0;
-            let mBulan = {};
-            daftarBulan.forEach(b => mBulan[b.toLowerCase()] = 0);
+            let totalKas = 0, nominalTunai = 0, nominalNonTunai = 0;
+            let akumulasiBulan = {};
+            listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
 
-            let breakdownSewa = { "rumah_dinas": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lainnya": 0 };
+            let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lain": 0 };
 
-            if(arrayData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-cikasda-lightblue">Jurnal penerimaan cloud kosong.</td></tr>`;
-                buatAtauUpdateGrafikPAD(mBulan);
+            if(!dataArray || dataArray.length === 0) {
+                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa di spreadsheet.</td></tr>`;
+                gambarUlangGrafikPAD(akumulasiBulan);
+                perbaruiTampilanAngka(0, 0, 0, breakdownSewa);
+                renderDaftarBulananKiri(akumulasiBulan);
                 return;
             }
 
-            arrayData.forEach(item => {
+            dataArray.forEach(item => {
+                // Konversi string nilai dari spreadsheet ke Angka Murni agar tidak terputus integrasinya
                 const nominal = Number(item.jumlah) || 0;
-                const metode = (item.keterangan || "Non Tunai").trim();
+                const mekanisme = (item.keterangan || "Non Tunai").trim();
                 const bln = (item.bulan || "").trim().toLowerCase();
-                const uraianTeks = (item.uraian || "").trim().toLowerCase();
+                const textUraian = (item.uraian || "").trim().toLowerCase();
 
-                grandTotal += nominal;
-                if (metode.toLowerCase() === "tunai") tunai += nominal; else nonTunai += nominal;
-                if (mBulan.hasOwnProperty(bln)) mBulan[bln] += nominal;
+                totalKas += nominal;
+                if (mekanisme.toLowerCase() === "tunai") nominalTunai += nominal; else nominalNonTunai += nominal;
+                if (akumulasiBulan.hasOwnProperty(bln)) akumulasiBulan[bln] += nominal;
 
-                if (uraianTeks.includes("rumah dinas")) breakdownSewa.rumah_dinas += nominal;
-                else if (uraianTeks.includes("kantin")) breakdownSewa.kantin += nominal;
-                else if (uraianTeks.includes("tenis")) breakdownSewa.tenis += nominal;
-                else if (uraianTeks.includes("badminton")) breakdownSewa.badminton += nominal;
-                else if (uraianTeks.includes("pelataran masjid")) breakdownSewa.pelataran += nominal;
-                else if (uraianTeks.includes("masjid raya")) breakdownSewa.masjid += nominal;
-                else breakdownSewa.lainnya += nominal;
+                // Hitung pembagian saldo sewa secara akurat
+                if (textUraian.includes("rumah")) breakdownSewa.rumah += nominal;
+                else if (textUraian.includes("kantin")) breakdownSewa.kantin += nominal;
+                else if (textUraian.includes("tenis")) breakdownSewa.tenis += nominal;
+                else if (textUraian.includes("badminton")) breakdownSewa.badminton += nominal;
+                else if (textUraian.includes("pelataran")) breakdownSewa.pelataran += nominal;
+                else if (textUraian.includes("masjid")) breakdownSewa.masjid += nominal;
+                else breakdownSewa.lain += nominal;
 
-                const badge = metode.toLowerCase() === "tunai" ? "bg-amber-100 text-cikasda-blue border border-cikasda-yellow" : "bg-blue-100 text-cikasda-blue border border-blue-300";
+                const warnaBadge = mekanisme.toLowerCase() === "tunai" ? "bg-amber-100 text-cikasda-blue border border-cikasda-yellow" : "bg-blue-100 text-cikasda-blue border border-blue-200";
 
-                tbody.innerHTML += `
-                    <tr class="hover:bg-cikasda-bg/50 transition-colors border-b border-cikasda-bg text-cikasda-blue">
-                        <td class="p-4 text-center font-bold text-cikasda-lightblue font-mono">#${item.id_transaksi || '-'}</td>
-                        <td class="p-4 text-center font-black text-cikasda-blue uppercase text-[10px]">${item.bulan || '-'}</td>
+                tBody.innerHTML += `
+                    <tr class="hover:bg-cikasda-bg/60 transition-colors border-b border-cikasda-bg font-bold">
+                        <td class="p-4 text-center font-mono text-cikasda-lightblue">#${item.id_transaksi || '-'}</td>
+                        <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
                         <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
-                        <td class="p-4 font-extrabold text-cikasda-blue">${item.uraian || '-'}</td>
-                        <td class="p-4 font-bold text-cikasda-lightblue">${item.penyetor || '-'}</td>
-                        <td class="p-4 text-cikasda-blue/80 italic">${item.penjelasan || '-'}</td>
-                        <td class="p-4 text-right font-black text-cikasda-blue font-mono">${formatRupiah(nominal)}</td>
-                        <td class="p-4 text-center"><span class="px-2.5 py-0.5 rounded text-[9px] font-black uppercase ${badge}">${metode}</span></td>
+                        <td class="p-4 text-cikasda-blue font-extrabold">${item.uraian || '-'}</td>
+                        <td class="p-4 text-cikasda-lightblue">${item.penyetor || '-'}</td>
+                        <td class="p-4 text-cikasda-blue/70 italic font-medium">${item.penjelasan || '-'}</td>
+                        <td class="p-4 text-right font-black font-mono">${konversiKeRupiah(nominal)}</td>
+                        <td class="p-4 text-center"><span class="px-2.5 py-0.5 rounded text-[9px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
                     </tr>`;
             });
 
-            document.getElementById("grand-total").innerText = formatRupiah(grandTotal);
-            document.getElementById("total-tunai").innerText = formatRupiah(tunai);
-            document.getElementById("total-nontunai").innerText = formatRupiah(nonTunai);
+            perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa);
+            renderDaftarBulananKiri(akumulasiBulan);
+            gambarUlangGrafikPAD(akumulasiBulan);
+        }
 
-            document.getElementById("bd-rumah-dinas").innerText = formatRupiah(breakdownSewa.rumah_dinas);
-            document.getElementById("bd-kantin").innerText = formatRupiah(breakdownSewa.kantin);
-            document.getElementById("bd-tenis").innerText = formatRupiah(breakdownSewa.tenis);
-            document.getElementById("bd-badminton").innerText = formatRupiah(breakdownSewa.badminton);
-            document.getElementById("bd-masjid").innerText = formatRupiah(breakdownSewa.masjid);
-            document.getElementById("bd-pelataran").innerText = formatRupiah(breakdownSewa.pelataran);
-            document.getElementById("bd-lainnya").innerText = formatRupiah(breakdownSewa.lainnya);
+        function perbaruiTampilanAngka(total, t, nt, bDown) {
+            document.getElementById("grand-total").innerText = konversiKeRupiah(total);
+            document.getElementById("total-tunai").innerText = konversiKeRupiah(t);
+            document.getElementById("total-nontunai").innerText = konversiKeRupiah(nt);
 
-            daftarBulan.forEach(b => {
-                listBulanContainer.innerHTML += `
+            document.getElementById("pos-rumah").innerText = konversiKeRupiah(bDown.rumah);
+            document.getElementById("pos-kantin").innerText = konversiKeRupiah(bDown.kantin);
+            document.getElementById("pos-tenis").innerText = konversiKeRupiah(bDown.tenis);
+            document.getElementById("pos-badminton").innerText = konversiKeRupiah(bDown.badminton);
+            document.getElementById("pos-masjid").innerText = konversiKeRupiah(bDown.masjid);
+            document.getElementById("pos-pelataran").innerText = konversiKeRupiah(bDown.pelataran);
+            document.getElementById("pos-lain").innerText = konversiKeRupiah(bDown.lain);
+        }
+
+        function renderDaftarBulananKiri(petaBulanan) {
+            const containerBulan = document.getElementById("container-bulanan");
+            listNamaBulan.forEach(b => {
+                containerBulan.innerHTML += `
                     <div class="flex items-center justify-between py-2.5 border-b border-cikasda-bg last:border-0 hover:bg-cikasda-lightyellow px-1 transition-all">
                         <span class="capitalize text-cikasda-lightblue font-bold">${b}</span>
-                        <span class="font-extrabold font-mono text-cikasda-blue">${formatRupiah(mBulan[b.toLowerCase()])}</span>
+                        <span class="font-black font-mono text-cikasda-blue">${konversiKeRupiah(petaBulanan[b.toLowerCase()])}</span>
                     </div>`;
             });
-
-            buatAtauUpdateGrafikPAD(mBulan);
         }
 
-        function filterDataTabel() {
-            const q = document.getElementById("pencarian").value.toLowerCase();
-            const filtered = dataGlobalAplikasi.filter(d => 
-                (d.penyetor || "").toLowerCase().includes(q) || 
-                (d.uraian || "").toLowerCase().includes(q) || 
-                (d.penjelasan || "").toLowerCase().includes(q)
+        function jalankanPencarianTabel() {
+            const kataKunci = document.getElementById("input-cari").value.toLowerCase();
+            const dataTerfilter = gudangDataLokal.filter(d => 
+                (d.penyetor || "").toLowerCase().includes(kataKunci) || 
+                (d.uraian || "").toLowerCase().includes(kataKunci) || 
+                (d.penjelasan || "").toLowerCase().includes(kataKunci) ||
+                (d.bulan || "").toLowerCase().includes(kataKunci)
             );
-            tampilkanDataDashboard(filtered);
+            prosesDanTampilkanSemuaData(dataTerfilter);
         }
 
-        async function simpanDataTransaksi(e) {
+        async function prosesKirimDataKeCloud(e) {
             e.preventDefault();
-            if(!API_URL) return;
-            const btn = document.getElementById("btn-submit-form");
-            const payload = {
-                action: "add",
-                bulan: document.getElementById("in-bulan").value,
-                tanggal: document.getElementById("in-tanggal").value,
-                uraian: document.getElementById("in-uraian").value,
-                penyetor: document.getElementById("in-penyetor").value,
-                penjelasan: document.getElementById("in-penjelasan").value,
-                jumlah: Number(document.getElementById("in-jumlah").value),
-                keterangan: document.getElementById("in-keterangan").value
+            if(!APPS_SCRIPT_URL) return;
+            const tombol = document.getElementById("tombolSubmitForm");
+            
+            const dataKirim = {
+                bulan: document.getElementById("f-bulan").value,
+                tanggal: document.getElementById("f-tanggal").value,
+                uraian: document.getElementById("f-uraian").value,
+                penyetor: document.getElementById("f-penyetor").value,
+                penjelasan: document.getElementById("f-penjelasan").value,
+                jumlah: Number(document.getElementById("f-jumlah").value) || 0,
+                keterangan: document.getElementById("f-keterangan").value
             };
 
             try {
-                btn.disabled = true;
-                btn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin text-cikasda-yellow"></i> Mengirim data...`;
-                await fetch(API_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-                alert("Data Berhasil Disimpan ke Spreadsheet!");
-                tutupModalInput();
-                muatDataDanSinkronkan();
-            } catch (err) { alert("Gagal mengirim data."); }
-            finally { btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Kirim Ke Data Cloud`; }
+                tombol.disabled = true;
+                tombol.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-cikasda-yellow"></i> Mengirim...`;
+                
+                // POST data ke google sheets baru
+                await fetch(APPS_SCRIPT_URL, { 
+                    method: "POST", 
+                    mode: "no-cors", 
+                    headers: { "Content-Type": "application/json" }, 
+                    body: JSON.stringify(dataKirim) 
+                });
+                
+                alert("Data sewa berhasil disisipkan ke Cloud Spreadsheet!");
+                tutupModalForm();
+                muatDataSinkronisasi Cloud();
+            } catch (gagal) { 
+                alert("Gagal mengirim data, silakan periksa koneksi internet."); 
+            } finally { 
+                tombol.disabled = false; 
+                tombol.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`; 
+            }
         }
 
-        window.onload = muatDataDanSinkronkan;
+        window.onload = muatDataSinkronisasi Cloud;
     </script>
 </body>
 </html>
