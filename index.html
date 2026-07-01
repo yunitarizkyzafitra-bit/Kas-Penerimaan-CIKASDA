@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Bendahara Penerimaan CIKASDA 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased flex flex-col md:flex-row min-h-screen">
+
+    <!-- SIDEBAR NAVIGASI (Tema Ungu Modern) -->
+    <aside class="w-full md:w-64 bg-white border-r border-slate-200 flex flex-col shrink-0">
+        <div class="p-5 border-b border-slate-150 flex items-center gap-3">
+            <!-- LOGO PROVINSI / CIKASDA -->
+            <div class="bg-indigo-50 p-1.5 rounded-xl border border-indigo-100 flex items-center justify-center shadow-sm w-12 h-12 shrink-0 overflow-hidden">
+                <img src="https://vignette.wikia.nocookie.net/logosrupa/images/7/77/Logo_Sulawesi_Tengah.png" alt="Logo CIKASDA" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/100x100?text=CIKASDA'">
+            </div>
+            <div>
+                <h1 class="text-md font-bold text-slate-800 tracking-tight">CIKASDA Net</h1>
+                <p class="text-[10px] text-purple-600 font-bold tracking-wider uppercase">Operasional Keuangan</p>
+            </div>
+        </div>
+        
+        <!-- Profile Status -->
+        <div class="p-4 mx-3 my-4 bg-purple-50/50 rounded-xl border border-purple-150 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-purple-200">
+                BP
+            </div>
+            <div>
+                <h4 class="text-xs font-bold text-slate-700">Bendahara Penerimaan</h4>
+                <p class="text-[10px] text-slate-450 mt-0.5"><span class="w-2 h-2 rounded-full bg-purple-500 inline-block mr-1 animate-pulse"></span> Terkoneksi</p>
+            </div>
+        </div>
+
+        <!-- Menu Utama -->
+        <div class="px-3 flex-1 space-y-1">
+            <p class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Menu Utama</p>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl bg-purple-50 text-purple-700 border-l-4 border-purple-600 transition">
+                <i class="fa-solid fa-chart-pie w-5 text-center"></i> Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition">
+                <i class="fa-solid fa-list-check w-5 text-center"></i> Jurnal Mutasi
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition">
+                <i class="fa-solid fa-building-columns w-5 text-center"></i> Rekening Kas
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition">
+                <i class="fa-solid fa-file-invoice-dollar w-5 text-center"></i> Laporan PAD
+            </a>
+        </div>
+
+        <div class="p-4 border-t border-slate-150 text-[11px] text-slate-400 text-center font-medium">
+            Sistem Informasi Keuangan &copy; 2026
+        </div>
+    </aside>
+
+    <!-- AREA KONTEN UTAMA -->
+    <main class="flex-1 flex flex-col overflow-x-hidden">
+        <!-- Header Atas -->
+        <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+                <p class="text-xs text-slate-400 font-medium">Selamat datang kembali,</p>
+                <h2 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">bendahara.cikasda <span class="text-base">👋</span></h2>
+            </div>
+            <div class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 self-start sm:self-auto">
+                <i class="fa-solid fa-calendar-days text-slate-400 mr-1.5"></i> Tahun Anggaran 2026
+            </div>
+        </header>
+
+        <!-- Wrapper Konten Dashboard -->
+        <div class="p-6 space-y-6 max-w-7xl w-full mx-auto">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 tracking-tight">Dashboard Bendahara Penerimaan</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Konsolidasi Real-Time Penerimaan Lain-Lain PAD yang Sah</p>
+                </div>
+                <!-- Tombol Sinkronisasi Live -->
+                <button onclick="muatDataDariSpreadsheet()" class="text-xs bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl shadow-md shadow-purple-600/10 font-bold transition flex items-center justify-center gap-2 self-start sm:self-auto">
+                    <i class="fa-solid fa-rotate animate-spin-slow"></i> Sinkronisasi Dashboard
+                </button>
+            </div>
+
+            <!-- PANEL BANNER UNGU UTAMA -->
+            <div class="bg-gradient-to-r from-purple-700 via-violet-600 to-indigo-600 text-white rounded-2xl p-6 md:p-8 shadow-lg shadow-purple-700/10 relative overflow-hidden">
+                <div class="relative z-10">
+                    <span class="text-[10px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-full border border-white/10">Total Kumulatif Realisasi (Live)</span>
+                    <h2 id="grand-total" class="text-3xl md:text-4xl font-extrabold tracking-tight mt-3">Rp 0</h2>
+                    <p class="text-xs text-purple-100/80 font-medium mt-2">Data ringkasan kas terintegrasi langsung dengan input HP AppSheet dan Buku Kas Utama Google Sheets.</p>
+                </div>
+                <div class="absolute right-0 bottom-0 top-0 w-1/3 bg-white/5 rounded-l-full translate-x-10 pointer-events-none hidden md:block"></div>
+            </div>
+
+            <!-- REKAP PER KATEGORI METODE PEMBAYARAN -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Kartu Tunai -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Transaksi Tunai</p>
+                        <h4 id="total-tunai" class="text-xl font-black text-purple-700 mt-1">Rp 0</h4>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
+                        <i class="fa-solid fa-money-bill-wave text-lg"></i>
+                    </div>
+                </div>
+
+                <!-- Kartu Non Tunai -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Non-Tunai (Transfer)</p>
+                        <h4 id="total-nontunai" class="text-xl font-black text-indigo-700 mt-1">Rp 0</h4>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                        <i class="fa-solid fa-building-columns text-lg"></i>
+                    </div>
+                </div>
+
+                <!-- Status Server -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Status Sinkronisasi</p>
+                        <h4 id="status-sumber" class="text-xs font-bold text-slate-600 mt-2 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-slate-400 inline-block"></span> Memeriksa jaringan API...
+                        </h4>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
+                        <i class="fa-solid fa-database text-lg"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JURNAL TRANSAKSI DATA MASUK -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="border-b border-slate-150 pb-4 mb-4">
+                    <h4 class="text-sm font-bold text-slate-800">Buku Jurnal Kas Masuk (Real-time dari HP/Sheets)</h4>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Seluruh input offline yang telah tersinkronisasi di lapangan akan otomatis terdaftar di bawah ini</p>
+                </div>
+
+                <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead class="sticky top-0 bg-white shadow-sm z-10">
+                            <tr class="bg-slate-50 text-slate-500 uppercase font-bold border-b border-slate-150">
+                                <th class="p-2.5">Bulan</th>
+                                <th class="p-2.5">Tanggal</th>
+                                <th class="p-2.5">Uraian / Penyetor</th>
+                                <th class="p-2.5 text-right">Jumlah (Rp)</th>
+                                <th class="p-2.5 text-center">Metode</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-body" class="divide-y divide-slate-100">
+                            <tr>
+                                <td colspan="5" class="p-8 text-center text-slate-400 font-medium">Sedang memuat data dari spreadsheet...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- LOGIKA LINK API GOOGLE APPS SCRIPT -->
+    <script>
+        // ⚠️ TEMPELKAN URL APPS SCRIPT WEB APP ANDA DI SINI
+        const API_URL = "https://script.google.com/macros/s/AKfycbyGcF4uH4_Z00vsdEuxYUoVPDuVY9FXFqFsNsINYV7Yvo28kojbS4cyheR3YC0WrRaf/exec";
+
+        function formatRupiah(angka) {
+            return "Rp " + Number(angka).toLocaleString('id-ID');
+        }
+
+        async function muatDataDariSpreadsheet() {
+            const tabelBody = document.getElementById("tabel-body");
+            const statusSumber = document.getElementById("status-sumber");
+            
+            if (!API_URL || API_URL === "URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI") {
+                statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> Masukkan URL API`;
+                tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-amber-600 font-semibold bg-amber-50 rounded-xl">Silakan jalankan deploy ulang pada Google Apps Script Anda, salin link Web App-nya, dan tempelkan pada baris kode ke-150 di file index.html ini agar dashboard terhubung secara live.</td></tr>`;
+                return;
+            }
+
+            try {
+                statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-purple-500 inline-block animate-pulse"></span> Mengambil data...`;
+                
+                const respon = await fetch(API_URL);
+                const data = await respon.json();
+
+                if (!data || data.length === 0) {
+                    tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400">Tidak ada data transaksi di dalam log Google Sheets Anda.</td></tr>`;
+                    statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Terkoneksi (Kosong)`;
+                    return;
+                }
+
+                tabelBody.innerHTML = "";
+                let akumulasiTotal = 0;
+                let akumulasiTunai = 0;
+                let akumulasiNonTunai = 0;
+
+                data.forEach(item => {
+                    const nilaiPenerimaan = Number(item.jumlah) || 0;
+                    const jenisKeterangan = (item.keterangan || "Non Tunai").trim();
+                    
+                    akumulasiTotal += nilaiPenerimaan;
+                    if (jenisKeterangan.toLowerCase() === "tunai") {
+                        akumulasiTunai += nilaiPenerimaan;
+                    } else {
+                        akumulasiNonTunai += nilaiPenerimaan;
+                    }
+
+                    const tagWarna = jenisKeterangan.toLowerCase() === "tunai" 
+                        ? "bg-purple-100 text-purple-700" 
+                        : "bg-indigo-100 text-indigo-700";
+
+                    tabelBody.innerHTML += `
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-2.5 font-bold text-slate-400 tracking-wider uppercase text-[10px]">${item.bulan || '-'}</td>
+                            <td class="p-2.5 font-medium text-slate-500">${item.tanggal || '-'}</td>
+                            <td class="p-2.5 font-semibold text-slate-700">${item.uraian || '-'}</td>
+                            <td class="p-2.5 text-right font-bold text-slate-900">${formatRupiah(nilaiPenerimaan)}</td>
+                            <td class="p-2.5 text-center">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${tagWarna}">
+                                    ${jenisKeterangan}
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                document.getElementById("grand-total").innerText = formatRupiah(akumulasiTotal);
+                document.getElementById("total-tunai").innerText = formatRupiah(akumulasiTunai);
+                document.getElementById("total-nontunai").innerText = formatRupiah(akumulasiNonTunai);
+                
+                statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Sinkron Aktif (Live)`;
+
+            } catch (kesalahan) {
+                console.error("Gagal mengambil data:", kesalahan);
+                statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span> Gagal Memuat`;
+                tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-rose-600 bg-rose-50 font-medium">Koneksi API Gagal. Periksa kembali apakah URL Web App Google Apps Script Anda sudah benar dan memiliki akses publik ('Anyone').</td></tr>`;
+            }
+        }
+
+        window.onload = muatDataDariSpreadsheet;
+    </script>
+</body>
+</html>
