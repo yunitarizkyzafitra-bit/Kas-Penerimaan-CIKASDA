@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Executive Dashboard PAD - Dinas CIKASDA</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=600;800&family=Plus+Jakarta+Sans:wght=400;600;700;800&display=swap" rel="stylesheet">
     
     <script>
@@ -43,24 +39,21 @@
 </head>
 <body class="antialiased flex flex-col min-h-screen">
 
-    <!-- TOP SETUP NOTIFICATION BANNER -->
     <div id="setup-banner" class="bg-cikasda-yellow text-cikasda-blue px-4 py-3 text-center text-xs font-extrabold z-50 shadow-sm flex items-center justify-center gap-2 border-b-2 border-cikasda-amber">
         <i class="fa-solid fa-circle-exclamation animate-pulse text-sm"></i>
         <span>SISTEM BELUM TERHUBUNG KE SPREADSHEET BARU! <button type="button" onclick="hubungkanURLAppsScript()" class="underline bg-cikasda-blue text-white font-black px-3 py-1 rounded ml-2 hover:bg-cikasda-lightblue shadow transition-all cursor-pointer">Tautkan Web App Di Sini</button></span>
     </div>
 
-    <!-- ELEGAN HERO HEADER DENGAN GAMBAR GEDUNG 73773_2.jpg -->
     <header class="relative min-h-[260px] flex items-end overflow-hidden border-b-4 border-cikasda-yellow bg-cikasda-blue shadow-lg">
         <div class="absolute inset-0 z-0">
-            <!-- PENGGUNAAN KODE GAMBAR BARU 73773_2.jpg DENGAN OPACITY LEBIH JELAS -->
             <img src="73773_2.jpg" alt="Gedung Dinas CIKASDA" class="w-full h-full object-cover object-center opacity-45 filter brightness-110 contrast-105">
             <div class="absolute inset-0 bg-gradient-to-t from-cikasda-blue via-cikasda-blue/70 to-transparent"></div>
         </div>
 
         <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-8 pt-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div class="flex items-center gap-5">
-                <div class="bg-white p-2 rounded-2xl shadow-md w-20 h-20 shrink-0 flex items-center justify-center border border-cikasda-yellow">
-                    <img src="https://vignette.wikia.nocookie.net/logosrupa/images/7/77/Logo_Sulawesi_Tengah.png" alt="Logo Sulteng" class="w-full h-full object-contain">
+                <div class="bg-white p-1 rounded-2xl shadow-md w-20 h-20 shrink-0 flex items-center justify-center border-2 border-cikasda-yellow overflow-hidden">
+                    <img src="73773_2.jpg" alt="Gedung CIKASDA" class="w-full h-full object-cover rounded-xl">
                 </div>
                 <div class="text-white">
                     <div class="flex items-center gap-2">
@@ -76,7 +69,6 @@
                 </div>
             </div>
 
-            <!-- KENDALI SISTEM -->
             <div class="flex flex-wrap items-center gap-3">
                 <button onclick="bukaModalForm()" class="bg-cikasda-yellow hover:bg-cikasda-lightyellow text-cikasda-blue font-black text-xs px-5 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 tracking-wide uppercase border-b-4 border-cikasda-amber active:scale-95">
                     <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Entri Sewa
@@ -91,10 +83,8 @@
         </div>
     </header>
 
-    <!-- CORE WORKSPACE -->
     <main class="flex-1 w-full max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
 
-        <!-- KARTU INDIKATOR UTAMA -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="glass-panel rounded-2xl p-6 relative overflow-hidden border-l-4 border-cikasda-yellow bg-cikasda-cardbg">
                 <div class="absolute -right-4 -bottom-4 text-cikasda-bg text-7xl font-black opacity-40"><i class="fa-solid fa-wallet text-cikasda-lightblue"></i></div>
@@ -119,7 +109,6 @@
             </div>
         </div>
 
-        <!-- BREAKDOWN POS SEWA PENDAPATAN -->
         <section class="space-y-3">
             <h3 class="text-xs font-black uppercase tracking-widest text-cikasda-blue flex items-center gap-2 pl-1">
                 <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Akumulasi Saldo Per Kategori Uraian Sewa
@@ -156,15 +145,13 @@
             </div>
         </section>
 
-        <!-- GRAFIK & BULANAN -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="glass-panel rounded-2xl p-4 flex flex-col h-[340px] bg-cikasda-cardbg">
                 <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3 flex items-center gap-2">
                     <i class="fa-solid fa-calendar-check text-cikasda-yellow"></i> Ikhtisar Laporan bulanan
                 </p>
                 <div id="container-bulanan" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-cikasda-bg text-xs font-semibold">
-                    <!-- Terisi Otomatis -->
-                </div>
+                    </div>
             </div>
 
             <div class="lg:col-span-2 glass-panel rounded-2xl p-5 flex flex-col justify-between h-[340px] bg-cikasda-cardbg">
@@ -180,7 +167,6 @@
             </div>
         </div>
 
-        <!-- TABEL RINCIAN DATA JURNAL UTAMA -->
         <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
             <div class="bg-cikasda-lightyellow px-5 py-4 border-b-2 border-cikasda-yellow flex items-center justify-between">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
@@ -203,14 +189,12 @@
                         </tr>
                     </thead>
                     <tbody id="tabel-jurnal-body" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue">
-                        <!-- Terisi Otomatis via API -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </div>
     </main>
 
-    <!-- MODAL POPUP FORM TRANSAKSI INPUT -->
     <div id="modalFormTransaksi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="glass-card w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -285,7 +269,6 @@
         </div>
     </div>
 
-    <!-- ENGINE CONTROLLER JAVASCRIPT INTEGRATION -->
     <script>
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         let gudangDataLokal = [];
@@ -380,7 +363,6 @@
             });
         }
 
-        // PERBAIKAN UTAMA AKSES WEB UNTUK SINKRONISASI CLOUD SPREADSHEET
         async function muatDataSinkronisasiCloud() {
             cekKoneksiSistem();
             const tBody = document.getElementById("tabel-jurnal-body");
@@ -392,12 +374,9 @@
             ikon.classList.add("fa-spin");
 
             try {
-                // Modifikasi penanganan redirect Google Apps Script secara eksplisit menggunakan mode cors + standard error handling
                 const hasilFetch = await fetch(APPS_SCRIPT_URL, {
                     method: "GET",
-                    headers: {
-                        "Accept": "application/json"
-                    }
+                    headers: { "Accept": "application/json" }
                 });
                 
                 if (!hasilFetch.ok) throw new Error("Network response was not ok");
@@ -405,14 +384,13 @@
                 gudangDataLokal = await hasilFetch.json();
                 prosesDanTampilkanSemuaData(gudangDataLokal);
                 
-                // Set badge status menjadi aktif permanen setelah berhasil
                 const badge = document.getElementById("status-badge");
                 badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
                 badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Terhubung`;
                 
             } catch (kesalahan) {
                 console.error("Sinkronisasi Gagal:", kesalahan);
-                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-bold">⚠️ Gagal mensinkronisasikan data cloud.<br><span class="text-[10px] font-normal text-gray-500">Pastikan skrip di Google Apps Script sudah di-Deploy ulang sebagai "Web App" dengan akses "Anyone" (Siapa Saja).</span></td></tr>`;
+                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-bold">⚠️ Gagal mensinkronisasikan data cloud.<br><span class="text-[10px] font-normal text-gray-500">Pastikan baris pertama (header) Google Sheets Anda menggunakan huruf kecil: id_transaksi, bulan, tanggal, uraian, penyetor, penjelasan, jumlah, keterangan.</span></td></tr>`;
             } finally { ikon.classList.remove("fa-spin"); }
         }
 
