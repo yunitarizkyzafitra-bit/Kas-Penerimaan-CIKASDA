@@ -46,20 +46,18 @@
     <!-- TOP SETUP NOTIFICATION BANNER -->
     <div id="setup-banner" class="bg-cikasda-yellow text-cikasda-blue px-4 py-3 text-center text-xs font-extrabold z-50 shadow-sm flex items-center justify-center gap-2 border-b-2 border-cikasda-amber">
         <i class="fa-solid fa-circle-exclamation animate-pulse text-sm"></i>
-        <span>SISTEM BELUM TERHUBUNG KE SPREADSHEET BARU! <a href="#" onclick="hubungkanURLAppsScript()" class="underline bg-cikasda-blue text-white font-black px-3 py-1 rounded ml-2 hover:bg-cikasda-lightblue shadow transition-all">Tautkan Web App Di Sini</a></span>
+        <span>SISTEM BELUM TERHUBUNG KE SPREADSHEET BARU! <button type="button" onclick="hubungkanURLAppsScript()" class="underline bg-cikasda-blue text-white font-black px-3 py-1 rounded ml-2 hover:bg-cikasda-lightblue shadow transition-all cursor-pointer">Tautkan Web App Di Sini</button></span>
     </div>
 
-    <!-- ELEGAN HERO HEADER DENGAN GAMBAR GEDUNG 73773.JPG -->
+    <!-- ELEGAN HERO HEADER DENGAN GAMBAR GEDUNG 73773_JPG -->
     <header class="relative min-h-[260px] flex items-end overflow-hidden border-b-4 border-cikasda-yellow bg-cikasda-blue shadow-lg">
         <div class="absolute inset-0 z-0">
-            <!-- Menyematkan foto gedung cikasda sesuai berkas terlampir -->
             <img src="73773.jpg" alt="Gedung Dinas CIKASDA" class="w-full h-full object-cover object-center opacity-25 filter brightness-125 contrast-110">
             <div class="absolute inset-0 bg-gradient-to-t from-cikasda-blue via-cikasda-blue/80 to-transparent"></div>
         </div>
 
         <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-8 pt-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div class="flex items-center gap-5">
-                <!-- Logo Provinsi Sulawesi Tengah -->
                 <div class="bg-white p-2 rounded-2xl shadow-md w-20 h-20 shrink-0 flex items-center justify-center border border-cikasda-yellow">
                     <img src="https://vignette.wikia.nocookie.net/logosrupa/images/7/77/Logo_Sulawesi_Tengah.png" alt="Logo Sulteng" class="w-full h-full object-contain">
                 </div>
@@ -82,7 +80,7 @@
                 <button onclick="bukaModalForm()" class="bg-cikasda-yellow hover:bg-cikasda-lightyellow text-cikasda-blue font-black text-xs px-5 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 tracking-wide uppercase border-b-4 border-cikasda-amber active:scale-95">
                     <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Entri Sewa
                 </button>
-                <button onclick="muatDataSinkronisasi Cloud()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
+                <button onclick="muatDataSinkronisasiCloud()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
                     <i id="icon-sync" class="fa-solid fa-arrow-rotate-dash"></i> Sinkronkan Data
                 </button>
                 <button onclick="resetTautanSistem()" class="bg-red-500/20 hover:bg-red-500/30 text-red-200 text-xs px-3.5 py-3.5 rounded-xl transition-all border border-red-500/20" title="Putus Tautan Spreadsheet">
@@ -97,7 +95,6 @@
 
         <!-- KARTU INDIKATOR UTAMA -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- REKAP TOTAL TOTAL -->
             <div class="glass-panel rounded-2xl p-6 relative overflow-hidden border-l-4 border-cikasda-yellow bg-cikasda-cardbg">
                 <div class="absolute -right-4 -bottom-4 text-cikasda-bg text-7xl font-black opacity-40"><i class="fa-solid fa-wallet text-cikasda-lightblue"></i></div>
                 <span class="text-[10px] font-extrabold uppercase tracking-widest text-cikasda-lightblue block">TOTAL KAS PENERIMAAN PAD</span>
@@ -109,7 +106,6 @@
                 </div>
             </div>
 
-            <!-- PENCARIAN & FILTER -->
             <div class="md:col-span-2 glass-panel rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-cikasda-cardbg">
                 <div class="w-full sm:w-2/3">
                     <span class="text-[10px] font-black uppercase tracking-widest text-cikasda-blue block mb-1.5"><i class="fa-solid fa-magnifying-glass"></i> Filter & Cari Jurnal</span>
@@ -122,7 +118,7 @@
             </div>
         </div>
 
-        <!-- BREAKDOWN POS SEWA PENDAPATAN (DINAMIS & SINKRON) -->
+        <!-- BREAKDOWN POS SEWA PENDAPATAN -->
         <section class="space-y-3">
             <h3 class="text-xs font-black uppercase tracking-widest text-cikasda-blue flex items-center gap-2 pl-1">
                 <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Akumulasi Saldo Per Kategori Uraian Sewa
@@ -161,7 +157,6 @@
 
         <!-- GRAFIK & BULANAN -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- LAPORAN KAS BULANAN -->
             <div class="glass-panel rounded-2xl p-4 flex flex-col h-[340px] bg-cikasda-cardbg">
                 <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3 flex items-center gap-2">
                     <i class="fa-solid fa-calendar-check text-cikasda-yellow"></i> Ikhtisar Laporan bulanan
@@ -171,7 +166,6 @@
                 </div>
             </div>
 
-            <!-- GRAFIK LINE TREN TPERTUMBUHAN -->
             <div class="lg:col-span-2 glass-panel rounded-2xl p-5 flex flex-col justify-between h-[340px] bg-cikasda-cardbg">
                 <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
                     <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
@@ -294,7 +288,7 @@
     <script>
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         let gudangDataLokal = [];
-        let APPS_SCRIPT_URL = "";
+        let APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw45-yhKEnoHo1HBq62w39_Qp3Jg1WiiWITayGgkhT9nCM2r2VcrRaU82Fsl2ilJWki/exec";
         let instanceGrafikPAD = null;
 
         function cekKoneksiSistem() {
@@ -314,7 +308,7 @@
         }
 
         function hubungkanURLAppsScript() {
-            const masukanUrl = prompt("Tempelkan URL Web App Apps Script Baru (/exec) Anda:", APPS_SCRIPT_URL);
+            const masukanUrl = prompt("https://script.google.com/macros/s/AKfycbw45-yhKEnoHo1HBq62w39_Qp3Jg1WiiWITayGgkhT9nCM2r2VcrRaU82Fsl2ilJWki/exec) Anda:", APPS_SCRIPT_URL);
             if (masukanUrl && masukanUrl.trim().startsWith("https://script.google.com")) {
                 localStorage.setItem('url_apps_script_cikasda', masukanUrl.trim());
                 window.location.reload();
@@ -385,7 +379,7 @@
             });
         }
 
-        async function muatDataSinkronisasi Cloud() {
+        async function muatDataSinkronisasiCloud() {
             cekKoneksiSistem();
             const tBody = document.getElementById("tabel-jurnal-body");
             const ikon = document.getElementById("icon-sync");
@@ -396,7 +390,6 @@
             ikon.classList.add("fa-spin");
 
             try {
-                // Fetch data dari Apps Script Google Sheet baru
                 const hasilFetch = await fetch(APPS_SCRIPT_URL);
                 gudangDataLokal = await hasilFetch.json();
                 prosesDanTampilkanSemuaData(gudangDataLokal);
@@ -427,7 +420,6 @@
             }
 
             dataArray.forEach(item => {
-                // Konversi string nilai dari spreadsheet ke Angka Murni agar tidak terputus integrasinya
                 const nominal = Number(item.jumlah) || 0;
                 const mekanisme = (item.keterangan || "Non Tunai").trim();
                 const bln = (item.bulan || "").trim().toLowerCase();
@@ -437,7 +429,6 @@
                 if (mekanisme.toLowerCase() === "tunai") nominalTunai += nominal; else nominalNonTunai += nominal;
                 if (akumulasiBulan.hasOwnProperty(bln)) akumulasiBulan[bln] += nominal;
 
-                // Hitung pembagian saldo sewa secara akurat
                 if (textUraian.includes("rumah")) breakdownSewa.rumah += nominal;
                 else if (textUraian.includes("kantin")) breakdownSewa.kantin += nominal;
                 else if (textUraian.includes("tenis")) breakdownSewa.tenis += nominal;
@@ -521,7 +512,6 @@
                 tombol.disabled = true;
                 tombol.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-cikasda-yellow"></i> Mengirim...`;
                 
-                // POST data ke google sheets baru
                 await fetch(APPS_SCRIPT_URL, { 
                     method: "POST", 
                     mode: "no-cors", 
@@ -531,7 +521,7 @@
                 
                 alert("Data sewa berhasil disisipkan ke Cloud Spreadsheet!");
                 tutupModalForm();
-                muatDataSinkronisasi Cloud();
+                muatDataSinkronisasiCloud();
             } catch (gagal) { 
                 alert("Gagal mengirim data, silakan periksa koneksi internet."); 
             } finally { 
@@ -540,7 +530,7 @@
             }
         }
 
-        window.onload = muatDataSinkronisasi Cloud;
+        window.onload = muatDataSinkronisasiCloud;
     </script>
 </body>
 </html>
