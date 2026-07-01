@@ -155,7 +155,7 @@
 
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbzxvF1MuLC5hAzbqLY56e6mlqEP26t-OSnx8XYm0w3riJEigncB5HoN1wQNFl4I3D_Z/exec";
-        const APPSHEET_URL = "LINK_APPSHEET_ANDA_DISINI";
+        const APPSHEET_URL = "https://script.google.com/macros/s/AKfycbzxvF1MuLC5hAzbqLY56e6mlqEP26t-OSnx8XYm0w3riJEigncB5HoN1wQNFl4I3D_Z/exec";
         
         // 🔐 ATUR KATA SANDI AKSES DI SINI (Contoh default: cikasda2026)
         const KATA_SANDI_RAHASIA = "cikasda2026"; 
@@ -215,7 +215,7 @@
             const tabelBody = document.getElementById("tabel-body");
             const statusSumber = document.getElementById("status-sumber");
             
-            if (!API_URL || API_URL === "URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI") {
+            if (!API_URL || API_URL === "https://script.google.com/macros/s/AKfycbzxvF1MuLC5hAzbqLY56e6mlqEP26t-OSnx8XYm0w3riJEigncB5HoN1wQNFl4I3D_Z/exec") {
                 statusSumber.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> Masukkan URL API`;
                 tabelBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-amber-600 font-semibold bg-amber-50 rounded-xl">Silakan lengkapi URL Web App di baris 120.</td></tr>`;
                 return;
