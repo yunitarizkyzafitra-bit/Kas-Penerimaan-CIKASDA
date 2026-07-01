@@ -306,4 +306,287 @@
             const b = tanggalString.split("-");
             if (b.length >= 2) {
                 const indeksBulan = parseInt(b[1], 10) - 1;
-                if (indeksBulan >= 0 && indeks
+                if (indeksBulan >= 0 && indeksBulan < 12) {
+                    const selectBln = document.getElementById("f-bulan");
+                    if (selectBln) selectBln.value = listNamaBulan[indeksBulan];
+                }
+            }
+        }
+
+        // FUNGSI PEMBUKA UTAMA: DIRANCANG ANTI-CRASH MURNI BERBASIS ELEMENT ID
+        function bukaModalForm() {
+            const m = document.getElementById("modalFormTransaksi");
+            if (!m) return;
+            
+            m.classList.remove("opacity-0", "pointer-events-none");
+            if (m.firstElementChild) m.firstElementChild.classList.remove("scale-95");
+            
+            try {
+                const d = new Date();
+                const tahun = d.getFullYear();
+                const bulan = String(d.getMonth() + 1).padStart(2, '0');
+                const hari = String(d.getDate()).padStart(2, '0');
+                
+                const inputTgl = document.getElementById("f-tanggal");
+                const selectBln = document.getElementById("f-bulan");
+                
+                if (inputTgl) inputTgl.value = `${tahun}-${bulan}-${hari}`;
+                if (selectBln) selectBln.value = listNamaBulan[d.getMonth()];
+            } catch (err) {
+                console.warn("Lewati penataan otomatis tanggal:", err);
+            }
+        }
+
+        function tutupModalForm() {
+            const m = document.getElementById("modalFormTransaksi");
+            if (!m) return;
+            m.classList.add("opacity-0", "pointer-events-none");
+            if (m.firstElementChild) m.firstElementChild.classList.add("scale-95");
+            
+            const formObj = document.getElementById("elemenFormInput");
+            if (formObj) formObj.reset();
+            
+            const inputSandi = document.getElementById("f-pin-keamanan");
+            const ikonMata = document.getElementById("ikon-mata-sandi");
+            if (inputSandi) inputSandi.type = "password";
+            if (ikonMata) ikonMata.className = "fa-solid fa-eye";
+        }
+
+        function gambarUlangGrafikPAD(petaBulanan) {
+            const canvasEl = document.getElementById('canvasGrafikPAD');
+            if (!canvasEl) return;
+            const ctx = canvasEl.getContext('2d');
+            const nilaiSumbuY = listNamaBulan.map(b => petaBulanan[b.toLowerCase()] || 0);
+
+            if (instanceGrafikPAD) {
+                instanceGrafikPAD.data.datasets[0].data = nilaiSumbuY;
+                instanceGrafikPAD.update();
+                return;
+            }
+
+            instanceGrafikPAD = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: listNamaBulan,
+                    datasets: [{
+                        label: 'Realisasi Kas (Rp)',
+                        data: nilaiSumbuY,
+                        borderColor: '#083370',
+                        backgroundColor: 'rgba(241, 196, 15, 0.12)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#f1c40f',
+                        pointBorderColor: '#083370',
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.25
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: 'rgba(8, 51, 112, 0.04)' }, ticks: { callback: v => 'Rp ' + v.toLocaleString('id-ID'), color: '#083370', font: { size: 9, weight: 'bold' } } },
+                        x: { grid: { display: false }, ticks: { color: '#083370', font: { size: 10, weight: 'bold' } } }
+                    }
+                }
+            });
+        }
+
+        async function muatDataSinkronisasiCloud() {
+            const tBody = document.getElementById("tabel-jurnal-body");
+            const ikon = document.getElementById("icon-sync");
+            const badge = document.getElementById("status-badge");
+            
+            if (!tBody) return;
+            if (APPS_SCRIPT_URL.includes("MASUKKAN_URL")) {
+                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-extrabold">⚠️ KODE BELUM SIAP! Silakan isi variabel APPS_SCRIPT_URL dengan tautan Web App Anda.</td></tr>`;
+                return;
+            }
+            
+            if (ikon) ikon.classList.add("fa-spin");
+
+            try {
+                const hasilFetch = await fetch(APPS_SCRIPT_URL, {
+                    method: "GET",
+                    headers: { "Accept": "application/json" }
+                });
+                
+                if (!hasilFetch.ok) throw new Error("Jaringan bermasalah");
+                
+                gudangDataLokal = await hasilFetch.json();
+                prosesDanTampilkanSemuaData(gudangDataLokal);
+                
+                if (badge) {
+                    badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
+                    badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online`;
+                }
+                
+            } catch (kesalahan) {
+                console.error("Sinkronisasi Gagal:", kesalahan);
+                if (badge) {
+                    badge.className = "flex items-center gap-1.5 bg-amber-500/20 text-amber-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-amber-500/30";
+                    badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Offline`;
+                }
+                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-amber-600 font-bold">⚠️ Mode Offline / Masalah Koneksi.<br><span class="text-[10px] font-normal text-gray-500">Gagal mengunduh data dari Google Sheets.</span></td></tr>`;
+            } finally { if (ikon) ikon.classList.remove("fa-spin"); }
+        }
+
+        function prosesDanTampilkanSemuaData(dataArray) {
+            const tBody = document.getElementById("tabel-jurnal-body");
+            const containerBulan = document.getElementById("container-bulanan");
+            if (!tBody) return;
+            
+            tBody.innerHTML = "";
+            if (containerBulan) containerBulan.innerHTML = "";
+
+            let totalKas = 0, nominalTunai = 0, nominalNonTunai = 0;
+            let akumulasiBulan = {};
+            listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
+
+            let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lain": 0 };
+
+            if(!dataArray || dataArray.length === 0) {
+                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa di spreadsheet.</td></tr>`;
+                gambarUlangGrafikPAD(akumulasiBulan);
+                perbaruiTampilanAngka(0, 0, 0, breakdownSewa);
+                renderDaftarBulananKiri(akumulasiBulan);
+                return;
+            }
+
+            dataArray.forEach(item => {
+                const nominal = Number(item.jumlah) || 0;
+                const mekanisme = (item.keterangan || "Non Tunai").trim();
+                const bln = (item.bulan || "").trim().toLowerCase();
+                const textUraian = (item.uraian || "").trim().toLowerCase();
+
+                totalKas += nominal;
+                if (mekanisme.toLowerCase() === "tunai") nominalTunai += nominal; else nominalNonTunai += nominal;
+                if (akumulasiBulan.hasOwnProperty(bln)) akumulasiBulan[bln] += nominal;
+
+                if (textUraian.includes("rumah")) breakdownSewa.rumah += nominal;
+                else if (textUraian.includes("kantin")) breakdownSewa.kantin += nominal;
+                else if (textUraian.includes("tenis")) breakdownSewa.tenis += nominal;
+                else if (textUraian.includes("badminton")) breakdownSewa.badminton += nominal;
+                else if (textUraian.includes("pelataran")) breakdownSewa.pelataran += nominal;
+                else if (textUraian.includes("masjid")) breakdownSewa.masjid += nominal;
+                else breakdownSewa.lain += nominal;
+
+                const warnaBadge = mekanisme.toLowerCase() === "tunai" ? "bg-amber-100 text-cikasda-blue border border-cikasda-yellow" : "bg-blue-100 text-cikasda-blue border border-blue-200";
+
+                tBody.innerHTML += `
+                    <tr class="hover:bg-cikasda-bg/60 transition-colors border-b border-cikasda-bg font-bold">
+                        <td class="p-4 text-center font-mono text-cikasda-lightblue">#${item.id_transaksi || '-'}</td>
+                        <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
+                        <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
+                        <td class="p-4 text-cikasda-blue font-extrabold">${item.uraian || '-'}</td>
+                        <td class="p-4 text-cikasda-lightblue">${item.penyetor || '-'}</td>
+                        <td class="p-4 text-cikasda-blue/70 italic font-medium">${item.penjelasan || '-'}</td>
+                        <td class="p-4 text-right font-black font-mono">${konversiKeRupiah(nominal)}</td>
+                        <td class="p-4 text-center"><span class="px-2.5 py-0.5 rounded text-[9px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
+                    </tr>`;
+            });
+
+            perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa);
+            renderDaftarBulananKiri(akumulasiBulan);
+            gambarUlangGrafikPAD(akumulasiBulan);
+        }
+
+        function perbaruiTampilanAngka(total, t, nt, bDown) {
+            const setTxt = (id, val) => { const el = document.getElementById(id); if(el) el.innerText = val; };
+            setTxt("grand-total", konversiKeRupiah(total));
+            setTxt("total-tunai", konversiKeRupiah(t));
+            setTxt("total-nontunai", konversiKeRupiah(nt));
+            setTxt("pos-rumah", konversiKeRupiah(bDown.rumah));
+            setTxt("pos-kantin", konversiKeRupiah(bDown.kantin));
+            setTxt("pos-tenis", konversiKeRupiah(bDown.tenis));
+            setTxt("pos-badminton", konversiKeRupiah(bDown.badminton));
+            setTxt("pos-masjid", konversiKeRupiah(bDown.masjid));
+            setTxt("pos-pelataran", konversiKeRupiah(bDown.pelataran));
+            setTxt("pos-lain", konversiKeRupiah(bDown.lain));
+        }
+
+        function renderDaftarBulananKiri(petaBulanan) {
+            const containerBulan = document.getElementById("container-bulanan");
+            if (!containerBulan) return;
+            listNamaBulan.forEach(b => {
+                containerBulan.innerHTML += `
+                    <div class="flex items-center justify-between py-2.5 border-b border-cikasda-bg last:border-0 hover:bg-cikasda-lightyellow px-1 transition-all">
+                        <span class="capitalize text-cikasda-lightblue font-bold">${b}</span>
+                        <span class="font-black font-mono text-cikasda-blue">${konversiKeRupiah(petaBulanan[b.toLowerCase()])}</span>
+                    </div>`;
+            });
+        }
+
+        function jalankanPencarianTabel() {
+            const inputCari = document.getElementById("input-cari");
+            if (!inputCari) return;
+            const kataKunci = inputCari.value.toLowerCase();
+            const dataTerfilter = gudangDataLokal.filter(d => 
+                (d.penyetor || "").toLowerCase().includes(kataKunci) || 
+                (d.uraian || "").toLowerCase().includes(kataKunci) || 
+                (d.penjelasan || "").toLowerCase().includes(kataKunci) ||
+                (d.bulan || "").toLowerCase().includes(kataKunci)
+            );
+            prosesDanTampilkanSemuaData(dataTerfilter);
+        }
+
+        async function prosesKirimDataKeCloud(e) {
+            e.preventDefault();
+            
+            const inputPin = document.getElementById("f-pin-keamanan").value;
+            if (inputPin !== PIN_OTORISASI_INPUT) {
+                alert("❌ KATA SANDI (PIN) SALAH! Akses ditolak.");
+                document.getElementById("f-pin-keamanan").value = "";
+                return;
+            }
+
+            const tombol = document.getElementById("tombolSubmitForm");
+            const tanggalInput = document.getElementById("f-tanggal").value;
+            let tanggalFormatted = tanggalInput;
+            
+            if (tanggalInput.includes("-")) {
+                const b = tanggalInput.split("-");
+                tanggalFormatted = `${b[2]}/${b[1]}/${b[0]}`;
+            }
+            
+            const dataKirim = {
+                bulan: document.getElementById("f-bulan").value,
+                tanggal: tanggalFormatted,
+                uraian: document.getElementById("f-uraian").value,
+                penyetor: document.getElementById("f-penyetor").value,
+                penjelasan: document.getElementById("f-penjelasan").value,
+                jumlah: Number(document.getElementById("f-jumlah").value) || 0,
+                keterangan: document.getElementById("f-keterangan").value
+            };
+
+            try {
+                if (tombol) {
+                    tombol.disabled = true;
+                    tombol.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-cikasda-yellow"></i> Mengirim...`;
+                }
+                
+                await fetch(APPS_SCRIPT_URL, { 
+                    method: "POST", 
+                    mode: "no-cors", 
+                    headers: { "Content-Type": "application/json" }, 
+                    body: JSON.stringify(dataKirim) 
+                });
+                
+                alert("Data sewa berhasil disimpan ke Spreadsheet!");
+                tutupModalForm();
+                muatDataSinkronisasiCloud();
+            } catch (gagal) { 
+                alert("Gagal mengirim data, silakan periksa koneksi internet."); 
+            } finally { 
+                if (tombol) {
+                    tombol.disabled = false; 
+                    tombol.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`; 
+                }
+            }
+        }
+
+        window.onload = muatDataSinkronisasiCloud;
+    </script>
+</body>
+</html>
