@@ -93,6 +93,12 @@
                 <div class="absolute -right-4 -bottom-4 text-cikasda-bg text-7xl font-black opacity-40"><i class="fa-solid fa-wallet text-cikasda-lightblue"></i></div>
                 <span class="text-[10px] font-extrabold uppercase tracking-widest text-cikasda-lightblue block">TOTAL KAS PENERIMAAN PAD</span>
                 <h2 id="grand-total" class="text-3xl font-black text-cikasda-blue font-digital tracking-wider mt-3">Rp 0</h2>
+                
+                <div style="font-size: 11px; margin-top: 8px;" class="font-bold text-cikasda-lightblue/80">
+                    <div id="target-pad-tahun">Target PAD: Rp 21.360.000</div>
+                    <div id="persen-capaian-pad" class="text-cikasda-lightblue mt-0.5">Kenaikan Target: 0.00%</div>
+                </div>
+
                 <div class="flex items-center gap-4 mt-4 text-[11px] font-bold border-t border-cikasda-bg pt-3 text-cikasda-lightblue">
                     <div>Tunai: <span id="total-tunai" class="text-cikasda-blue">Rp 0</span></div>
                     <div class="w-px h-3 bg-cikasda-yellow"></div>
@@ -134,7 +140,7 @@
                     <span id="pos-badminton" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-teal-600 bg-cikasda-cardbg">
-                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Masjid Raya</span>
+                    <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Aula Masjid Raya</span>
                     <span id="pos-masjid" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cyan-500 bg-cikasda-cardbg">
@@ -232,7 +238,7 @@
                         <option value="Sewa Kantin">Sewa Kantin</option>
                         <option value="Sewa Lapangan Tenis">Sewa Lapangan Tenis</option>
                         <option value="Sewa Lapangan Badminton">Sewa Lapangan Badminton</option>
-                        <option value="Sewa Masjid Raya">Sewa Masjid Raya</option>
+                        <option value="Sewa Masjid Raya">Sewa Aula Masjid Raya</option>
                         <option value="Sewa Pelataran Masjid Raya">Sewa Pelataran Masjid Raya</option>
                         <option value="Lainnya">Lainnya</option>
                     </select>
@@ -402,7 +408,6 @@
             if (ikon) ikon.classList.add("fa-spin");
 
             try {
-                // Menambahkan parameter timestamp acak (?_t=...) agar browser dipaksa mengambil data paling segar dari Google Sheets
                 const hasilFetch = await fetch(`${APPS_SCRIPT_URL}?_t=${Date.now()}`, {
                     method: "GET",
                     headers: { "Accept": "application/json" }
@@ -485,85 +490,100 @@
             gambarUlangGrafikPAD(akumulasiBulan);
         }
 
-        function perbaruiTampilanAngka(total, t, nt, bDown) {
-            const setTxt = (id, val) => { const el = document.getElementById(id); if(el) el.innerText = val; };
-            setTxt("grand-total", konversiKeRupiah(total));
-            setTxt("total-tunai", konversiKeRupiah(t));
-            setTxt("total-nontunai", konversiKeRupiah(nt));
-            setTxt("pos-rumah", konversiKeRupiah(bDown.rumah));
-            setTxt("pos-kantin", konversiKeRupiah(bDown.kantin));
-            setTxt("pos-tenis", konversiKeRupiah(bDown.tenis));
-            setTxt("pos-badminton", konversiKeRupiah(bDown.badminton));
-            setTxt("pos-masjid", konversiKeRupiah(bDown.masjid));
-            setTxt("pos-pelataran", konversiKeRupiah(bDown.pelataran));
-            setTxt("pos-lain", konversiKeRupiah(bDown.lain));
+        function perbaruiTampilanAngka(grandTotal, tunai, nonTunai, sewa) {
+            const g = document.getElementById("grand-total");
+            const t = document.getElementById("total-tunai");
+            const nt = document.getElementById("total-nontunai");
+            
+            if (g) g.innerText = konversiKeRupiah(grandTotal);
+            if (t) t.innerText = konversiKeRupiah(tunai);
+            if (nt) nt.innerText = konversiKeRupiah(nonTunai);
+
+            // ===================================================================
+            // MODUL KALKULASI PERSENTASE KENAIKAN REAL-TIME DARI TARGET PAD 21.360.000
+            // ===================================================================
+            const targetPAD = 21360000;
+            let persenCapaian = (targetPAD > 0) ? (grandTotal / targetPAD) * 100 : 0;
+            
+            const txtTarget = document.getElementById("target-pad-tahun");
+            const txtPersen = document.getElementById("persen-capaian-pad");
+            
+            if (txtTarget) txtTarget.innerText = "Target PAD: Rp " + targetPAD.toLocaleString('id-ID');
+            if (txtPersen) txtPersen.innerText = "Kenaikan Target: " + persenCapaian.toFixed(2) + "%";
+            // ===================================================================
+
+            const idMap = { "pos-rumah": sewa.rumah, "pos-kantin": sewa.kantin, "pos-tenis": sewa.tenis, "pos-badminton": sewa.badminton, "pos-masjid": sewa.masjid, "pos-pelataran": sewa.pelataran, "pos-lain": sewa.lain };
+            Object.keys(idMap).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = konversiKeRupiah(idMap[id]);
+            });
         }
 
         function renderDaftarBulananKiri(petaBulanan) {
             const containerBulan = document.getElementById("container-bulanan");
             if (!containerBulan) return;
+            containerBulan.innerHTML = "";
             listNamaBulan.forEach(b => {
+                const nilai = petaBulanan[b.toLowerCase()] || 0;
                 containerBulan.innerHTML += `
-                    <div class="flex items-center justify-between py-2.5 border-b border-cikasda-bg last:border-0 hover:bg-cikasda-lightyellow px-1 transition-all">
-                        <span class="capitalize text-cikasda-lightblue font-bold">${b}</span>
-                        <span class="font-black font-mono text-cikasda-blue">${konversiKeRupiah(petaBulanan[b.toLowerCase()])}</span>
+                    <div class="flex items-center justify-between py-2.5 px-2 hover:bg-cikasda-bg/40 transition-colors">
+                        <span class="text-cikasda-blue font-bold uppercase text-[10px] tracking-wider">${b}</span>
+                        <span class="font-mono text-cikasda-lightblue">${konversiKeRupiah(nilai)}</span>
                     </div>`;
             });
         }
 
         function jalankanPencarianTabel() {
-            const inputCari = document.getElementById("input-cari");
-            if (!inputCari) return;
-            const kataKunci = inputCari.value.toLowerCase();
-            const dataTerfilter = gudangDataLokal.filter(d => 
-                (d.penyetor || "").toLowerCase().includes(kataKunci) || 
-                (d.uraian || "").toLowerCase().includes(kataKunci) || 
-                (d.penjelasan || "").toLowerCase().includes(kataKunci) ||
-                (d.bulan || "").toLowerCase().includes(kataKunci)
-            );
-            prosesDanTampilkanSemuaData(dataTerfilter);
+            const inputVal = (document.getElementById("input-cari").value || "").trim().toLowerCase();
+            if (!gudangDataLokal || gudangDataLokal.length === 0) return;
+            if (!inputVal) { prosesDanTampilkanSemuaData(gudangDataLokal); return; }
+
+            const hasilFilter = gudangDataLokal.filter(item => {
+                return (item.bulan || "").toLowerCase().includes(inputVal) ||
+                       (item.uraian || "").toLowerCase().includes(inputVal) ||
+                       (item.penyetor || "").toLowerCase().includes(inputVal) ||
+                       (item.penjelasan || "").toLowerCase().includes(inputVal) ||
+                       (item.keterangan || "").toLowerCase().includes(inputVal) ||
+                       (item.tanggal || "").toLowerCase().includes(inputVal);
+            });
+            prosesDanTampilkanSemuaData(hasilFilter);
         }
 
-        async function prosesKirimDataKeCloud(e) {
-            e.preventDefault();
-            const inputPin = document.getElementById("f-pin-keamanan").value;
-            if (inputPin !== PIN_OTORISASI_INPUT) {
-                alert("❌ KATA SANDI (PIN) SALAH!");
-                return;
-            }
+        async function prosesKirimDataKeCloud(event) {
+            event.preventDefault();
+            const bSubmit = document.getElementById("tombolSubmitForm");
+            const pinVal = document.getElementById("f-pin-keamanan").value;
 
-            const tombol = document.getElementById("tombolSubmitForm");
-            const tanggalInput = document.getElementById("f-tanggal").value;
-            let tanggalFormatted = tanggalInput;
-            if (tanggalInput.includes("-")) {
-                const b = tanggalInput.split("-");
-                tanggalFormatted = `${b[2]}/${b[1]}/${b[0]}`;
-            }
-            
-            const dataKirim = {
+            if (pinVal !== PIN_OTORISASI_INPUT) { alert("⚠️ KATA SANDI OTORISASI SALAH! Data ditolak oleh sistem."); return; }
+            if (APPS_SCRIPT_URL.includes("MASUKKAN_URL")) { alert("URL Web App belum terkonfigurasi dengan benar."); return; }
+
+            if (bSubmit) { bSubmit.disabled = true; bSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Memproses Data...`; }
+
+            const dataPayload = {
                 bulan: document.getElementById("f-bulan").value,
-                tanggal: tanggalFormatted,
+                tanggal: document.getElementById("f-tanggal").value,
                 uraian: document.getElementById("f-uraian").value,
                 penyetor: document.getElementById("f-penyetor").value,
                 penjelasan: document.getElementById("f-penjelasan").value,
-                jumlah: Number(document.getElementById("f-jumlah").value) || 0,
+                jumlah: parseFloat(document.getElementById("f-jumlah").value) || 0,
                 keterangan: document.getElementById("f-keterangan").value
             };
 
             try {
-                if (tombol) {
-                    tombol.disabled = true;
-                    tombol.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-cikasda-yellow"></i> Mengirim...`;
-                }
-                await fetch(APPS_SCRIPT_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(dataKirim) });
-                alert("Data sewa berhasil disimpan!");
+                const respon = await fetch(APPS_SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataPayload)
+                });
+                alert("✨ Sukses! Data penerimaan kas sewa berhasil disimpan ke Google Sheets Cloud.");
                 tutupModalForm();
-                muatDataSinkronisasiCloud();
-            } catch (gagal) { alert("Gagal terhubung."); }
-            finally { if (tombol) { tombol.disabled = false; tombol.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`; } }
+                setTimeout(() => { muatDataSinkronisasiCloud(); }, 800);
+            } catch (err) { console.error(err); alert("Terjadi kesalahan koneksi internet."); }
+            finally { if (bSubmit) { bSubmit.disabled = false; bSubmit.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`; } }
         }
 
-        window.onload = muatDataSinkronisasiCloud;
+        window.addEventListener("DOMContentLoaded", () => { muatDataSinkronisasiCloud(); });
     </script>
 </body>
 </html>
