@@ -12,8 +12,8 @@
     <link rel="apple-touch-icon" href="73773_2.jpg">
     <link rel="apple-touch-icon" sizes="152x152" href="73773_2.jpg">
     <link rel="apple-touch-icon" sizes="180x180" href="73773_2.jpg">
-    <link rel="icon" type="image/jpeg" sizes="192x192" href="73773_2.jpg">
-    <link rel="icon" type="image/jpeg" sizes="512x512" href="73773_2.jpg">
+    <link class="icon" type="image/jpeg" sizes="192x192" href="73773_2.jpg">
+    <link class="icon" type="image/jpeg" sizes="512x512" href="73773_2.jpg">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -96,7 +96,7 @@
                 
                 <div style="font-size: 11px; margin-top: 8px;" class="font-bold text-cikasda-lightblue/80">
                     <div id="target-pad-tahun">Target PAD: Rp 21.360.000</div>
-                    <div id="persen-capaian-pad" class="text-cikasda-lightblue mt-0.5">Kenaikan Target: 0.00%</div>
+                    <div id="persen-capaian-pad" class="text-cikasda-lightblue mt-0.5">Capaian Target: 0.00%</div>
                 </div>
 
                 <div class="flex items-center gap-4 mt-4 text-[11px] font-bold border-t border-cikasda-bg pt-3 text-cikasda-lightblue">
@@ -126,30 +126,37 @@
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cikasda-blue bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Rumah Dinas</span>
                     <span id="pos-rumah" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 21.360.000/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cikasda-yellow bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Sewa Kantin</span>
                     <span id="pos-kantin" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 5.000.000/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-emerald-600 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Lap. Tenis</span>
                     <span id="pos-tenis" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 9.000.000/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-indigo-600 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Badminton</span>
                     <span id="pos-badminton" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 7.500.000/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-teal-600 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Aula Masjid Raya</span>
                     <span id="pos-masjid" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 0 / Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cyan-500 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Pelataran Msd</span>
                     <span id="pos-pelataran" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 0/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-amber-600 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Lain-Lain</span>
                     <span id="pos-lain" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
+                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 2.448.000/Tahun</span>
                 </div>
             </div>
         </section>
@@ -160,7 +167,7 @@
                     <i class="fa-solid fa-calendar-check text-cikasda-yellow"></i> Ikhtisar Laporan bulanan
                 </p>
                 <div id="container-bulanan" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-cikasda-bg text-xs font-semibold">
-                    </div>
+                </div>
             </div>
 
             <div class="lg:col-span-2 glass-panel rounded-2xl p-5 flex flex-col justify-between h-[340px] bg-cikasda-cardbg">
@@ -198,7 +205,7 @@
                         </tr>
                     </thead>
                     <tbody id="tabel-jurnal-body" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -289,9 +296,6 @@
     </div>
 
     <script>
-        // =======================================================
-        //  PASTIKAN UNTUK MENEMPEL URL WEB APP /EXEC TERBARU DI SINI
-        // =======================================================
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUSSHHSNhB9No-_uCXSeY33hwk69Yc2hYGTFhm9Yplz6p0U1fo7-ilXjGIfy3eX0g/exec";
         
         const PIN_OTORISASI_INPUT = "cikasdaok2";
@@ -477,113 +481,124 @@
                         <td class="p-4 text-center font-mono text-cikasda-lightblue">#${item.id_transaksi || '-'}</td>
                         <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
                         <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
-                        <td class="p-4 text-cikasda-blue font-extrabold">${item.uraian || '-'}</td>
-                        <td class="p-4 text-cikasda-lightblue">${item.penyetor || '-'}</td>
-                        <td class="p-4 text-cikasda-blue/70 italic font-medium">${item.penjelasan || '-'}</td>
-                        <td class="p-4 text-right font-black font-mono">${konversiKeRupiah(nominal)}</td>
-                        <td class="p-4 text-center"><span class="px-2.5 py-0.5 rounded text-[9px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
+                        <td class="p-4 text-left font-extrabold text-xs text-cikasda-blue">${item.uraian || '-'}</td>
+                        <td class="p-4 text-left font-semibold">${item.penyetor || '-'}</td>
+                        <td class="p-4 text-left text-[11px] text-cikasda-lightblue font-medium max-w-xs truncate">${item.penjelasan || '-'}</td>
+                        <td class="p-4 text-right font-mono font-black text-cikasda-blue">${konversiKeRupiah(nominal)}</td>
+                        <td class="p-4 text-center"><span class="px-2.5 py-1 rounded text-[10px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
                     </tr>`;
             });
 
+            gambarUlangGrafikPAD(akumulasiBulan);
             perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa);
             renderDaftarBulananKiri(akumulasiBulan);
-            gambarUlangGrafikPAD(akumulasiBulan);
         }
 
-        function perbaruiTampilanAngka(grandTotal, tunai, nonTunai, sewa) {
-            const g = document.getElementById("grand-total");
-            const t = document.getElementById("total-tunai");
-            const nt = document.getElementById("total-nontunai");
-            
-            if (g) g.innerText = konversiKeRupiah(grandTotal);
-            if (t) t.innerText = konversiKeRupiah(tunai);
-            if (nt) nt.innerText = konversiKeRupiah(nonTunai);
+        function perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa) {
+            const targetPADUtama = 21360000;
+            let capaianTotalPersen = targetPADUtama > 0 ? ((totalKas / targetPADUtama) * 100).toFixed(2) : 0;
 
-            // ===================================================================
-            // MODUL KALKULASI PERSENTASE KENAIKAN REAL-TIME DARI TARGET PAD 21.360.000
-            // ===================================================================
-            const targetPAD = 21360000;
-            let persenCapaian = (targetPAD > 0) ? (grandTotal / targetPAD) * 100 : 0;
-            
-            const txtTarget = document.getElementById("target-pad-tahun");
-            const txtPersen = document.getElementById("persen-capaian-pad");
-            
-            if (txtTarget) txtTarget.innerText = "Target PAD: Rp " + targetPAD.toLocaleString('id-ID');
-            if (txtPersen) txtPersen.innerText = "Kenaikan Target: " + persenCapaian.toFixed(2) + "%";
-            // ===================================================================
+            document.getElementById("grand-total").innerText = konversiKeRupiah(totalKas);
+            document.getElementById("target-pad-tahun").innerText = "Target PAD: " + konversiKeRupiah(targetPADUtama);
+            document.getElementById("persen-capaian-pad").innerText = "Capaian Target: " + capaianTotalPersen + "%";
+            document.getElementById("total-tunai").innerText = konversiKeRupiah(nominalTunai);
+            document.getElementById("total-nontunai").innerText = konversiKeRupiah(nominalNonTunai);
 
-            const idMap = { "pos-rumah": sewa.rumah, "pos-kantin": sewa.kantin, "pos-tenis": sewa.tenis, "pos-badminton": sewa.badminton, "pos-masjid": sewa.masjid, "pos-pelataran": sewa.pelataran, "pos-lain": sewa.lain };
-            Object.keys(idMap).forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.innerText = konversiKeRupiah(idMap[id]);
-            });
+            const targetSewa = {
+                rumah: 21360000,
+                kantin: 5000000,
+                tenis: 9000000,
+                badminton: 7500000,
+                masjid: 0,
+                pelataran: 0,
+                lain: 2448000
+            };
+
+            function hitungPersentase(nominalAktual, nilaiTarget) {
+                if (nilaiTarget === 0) return "0.00%";
+                return ((nominalAktual / nilaiTarget) * 100).toFixed(2) + "%";
+            }
+
+            // Semua kolom sekarang mengambil nilai dinamis dari variabel breakdownSewa
+            document.getElementById("pos-rumah").innerText = konversiKeRupiah(breakdownSewa.rumah) + " (" + hitungPersentase(breakdownSewa.rumah, targetSewa.rumah) + ")";
+            document.getElementById("pos-kantin").innerText = konversiKeRupiah(breakdownSewa.kantin) + " (" + hitungPersentase(breakdownSewa.kantin, targetSewa.kantin) + ")";
+            document.getElementById("pos-tenis").innerText = konversiKeRupiah(breakdownSewa.tenis) + " (" + hitungPersentase(breakdownSewa.tenis, targetSewa.tenis) + ")";
+            document.getElementById("pos-badminton").innerText = konversiKeRupiah(breakdownSewa.badminton) + " (" + hitungPersentase(breakdownSewa.badminton, targetSewa.badminton) + ")";
+            document.getElementById("pos-masjid").innerText = konversiKeRupiah(breakdownSewa.masjid) + " (" + hitungPersentase(breakdownSewa.masjid, targetSewa.masjid) + ")";
+            document.getElementById("pos-pelataran").innerText = konversiKeRupiah(breakdownSewa.pelataran) + " (" + hitungPersentase(breakdownSewa.pelataran, targetSewa.pelataran) + ")";
+            
+            // Kolom Lain-lain sekarang bersifat dinamis mengikuti data sistem
+            document.getElementById("pos-lain").innerText = konversiKeRupiah(breakdownSewa.lain) + " (" + hitungPersentase(breakdownSewa.lain, targetSewa.lain) + ")";
         }
-
         function renderDaftarBulananKiri(petaBulanan) {
             const containerBulan = document.getElementById("container-bulanan");
             if (!containerBulan) return;
             containerBulan.innerHTML = "";
+            
             listNamaBulan.forEach(b => {
                 const nilai = petaBulanan[b.toLowerCase()] || 0;
                 containerBulan.innerHTML += `
-                    <div class="flex items-center justify-between py-2.5 px-2 hover:bg-cikasda-bg/40 transition-colors">
-                        <span class="text-cikasda-blue font-bold uppercase text-[10px] tracking-wider">${b}</span>
-                        <span class="font-mono text-cikasda-lightblue">${konversiKeRupiah(nilai)}</span>
+                    <div class="py-2.5 flex items-center justify-between border-b border-cikasda-bg/50">
+                        <span class="text-cikasda-blue font-bold uppercase tracking-wide text-[11px]">${b}</span>
+                        <span class="font-mono font-black text-cikasda-lightblue">${konversiKeRupiah(nilai)}</span>
                     </div>`;
             });
         }
 
         function jalankanPencarianTabel() {
-            const inputVal = (document.getElementById("input-cari").value || "").trim().toLowerCase();
-            if (!gudangDataLokal || gudangDataLokal.length === 0) return;
-            if (!inputVal) { prosesDanTampilkanSemuaData(gudangDataLokal); return; }
-
-            const hasilFilter = gudangDataLokal.filter(item => {
-                return (item.bulan || "").toLowerCase().includes(inputVal) ||
-                       (item.uraian || "").toLowerCase().includes(inputVal) ||
-                       (item.penyetor || "").toLowerCase().includes(inputVal) ||
-                       (item.penjelasan || "").toLowerCase().includes(inputVal) ||
-                       (item.keterangan || "").toLowerCase().includes(inputVal) ||
-                       (item.tanggal || "").toLowerCase().includes(inputVal);
+            const kataKunci = document.getElementById("input-cari").value.toLowerCase();
+            const barisTabel = document.querySelectorAll("#tabel-jurnal-body tr");
+            barisTabel.forEach(tr => {
+                if(tr.cells.length < 2) return;
+                const teksBaris = tr.innerText.toLowerCase();
+                if(teksBaris.includes(kataKunci)) tr.style.display = ""; else tr.style.display = "none";
             });
-            prosesDanTampilkanSemuaData(hasilFilter);
         }
 
-        async function prosesKirimDataKeCloud(event) {
-            event.preventDefault();
-            const bSubmit = document.getElementById("tombolSubmitForm");
-            const pinVal = document.getElementById("f-pin-keamanan").value;
+        async function prosesKirimDataKeCloud(e) {
+            e.preventDefault();
+            const pinSandi = document.getElementById("f-pin-keamanan").value;
+            const tombol = document.getElementById("tombolSubmitForm");
 
-            if (pinVal !== PIN_OTORISASI_INPUT) { alert("⚠️ KATA SANDI OTORISASI SALAH! Data ditolak oleh sistem."); return; }
-            if (APPS_SCRIPT_URL.includes("MASUKKAN_URL")) { alert("URL Web App belum terkonfigurasi dengan benar."); return; }
+            if (pinSandi !== PIN_OTORISASI_INPUT) {
+                alert("❌ KATA SANDI OTORISASI (PIN) SALAH! Akses ditolak.");
+                return;
+            }
 
-            if (bSubmit) { bSubmit.disabled = true; bSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Memproses Data...`; }
+            if (tombol) { tombol.disabled = true; tombol.innerText = "Memproses Data..."; }
 
-            const dataPayload = {
+            const paketData = {
                 bulan: document.getElementById("f-bulan").value,
                 tanggal: document.getElementById("f-tanggal").value,
                 uraian: document.getElementById("f-uraian").value,
                 penyetor: document.getElementById("f-penyetor").value,
                 penjelasan: document.getElementById("f-penjelasan").value,
-                jumlah: parseFloat(document.getElementById("f-jumlah").value) || 0,
+                jumlah: Number(document.getElementById("f-jumlah").value) || 0,
                 keterangan: document.getElementById("f-keterangan").value
             };
 
             try {
-                const respon = await fetch(APPS_SCRIPT_URL, {
+                const responCloud = await fetch(APPS_SCRIPT_URL, {
                     method: "POST",
                     mode: "no-cors",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(dataPayload)
+                    body: JSON.stringify(paketData)
                 });
-                alert("✨ Sukses! Data penerimaan kas sewa berhasil disimpan ke Google Sheets Cloud.");
+                
+                alert("🚀 Data Kas Berhasil Disimpan ke Cloud Google Sheets!");
                 tutupModalForm();
-                setTimeout(() => { muatDataSinkronisasiCloud(); }, 800);
-            } catch (err) { console.error(err); alert("Terjadi kesalahan koneksi internet."); }
-            finally { if (bSubmit) { bSubmit.disabled = false; bSubmit.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`; } }
+                muatDataSinkronisasiCloud();
+            } catch (err) {
+                console.error(err);
+                alert("⚠️ Gagal terhubung ke server cloud.");
+            } finally {
+                if (tombol) { tombol.disabled = false; tombol.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`; }
+            }
         }
 
-        window.addEventListener("DOMContentLoaded", () => { muatDataSinkronisasiCloud(); });
+        window.addEventListener("DOMContentLoaded", () => {
+            muatDataSinkronisasiCloud();
+        });
     </script>
 </body>
 </html>
