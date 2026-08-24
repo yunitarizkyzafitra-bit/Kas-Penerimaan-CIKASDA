@@ -83,9 +83,6 @@
                 <button onclick="bukaModalForm()" class="relative z-[10] bg-cikasda-yellow hover:bg-cikasda-lightyellow text-cikasda-blue font-black text-xs px-5 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 tracking-wide uppercase border-b-4 border-cikasda-amber active:scale-95">
                     <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Entri Sewa
                 </button>
-                <button onclick="bukaModalGantiPin()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
-                    <i class="fa-solid fa-shield-halved"></i> Ganti PIN
-                </button>
                 <button onclick="muatDataSinkronisasiCloud()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
                     <i id="icon-sync" class="fa-solid fa-arrow-rotate-dash"></i> Sinkronkan
                 </button>
@@ -120,7 +117,7 @@
                 </div>
                 <div class="w-full sm:w-1/3 text-left sm:text-right flex flex-col justify-center">
                     <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Database Terintegrasi</span>
-                    <span class="text-xs font-black text-cikasda-blue mt-1"><i class="fa-regular fa-file-lines text-cikasda-yellow mr-1"></i> Google Sheets Connected</span>
+                    <span class="text-xs font-black text-cikasda-blue mt-1"><i class="fa-regular fa-file-lines text-cikasda-yellow mr-1"></i> Google Sheets Secured</span>
                 </div>
             </div>
         </div>
@@ -168,6 +165,36 @@
             </div>
         </section>
 
+        <!-- FITUR BARU: JADWAL PENGGUNA LAPANGAN TENIS & BADMINTON -->
+        <section class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-4">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-cikasda-bg pb-3">
+                <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-days text-cikasda-yellow"></i> Jadwal Klub Pengguna Lapangan Tenis & Badminton
+                </h3>
+                <span class="text-[10px] font-bold bg-cikasda-lightyellow border border-cikasda-yellow text-cikasda-blue px-2.5 py-1 rounded-lg">Live Filter Otomatis dari Jurnal</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-cikasda-bg/70 border border-emerald-600/20 rounded-xl p-4">
+                    <h4 class="text-xs font-black uppercase text-emerald-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-table-tennis-paddle-ball text-emerald-600"></i> Klub Pengguna Lapangan Tenis
+                    </h4>
+                    <div id="container-jadwal-tenis" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar text-xs font-semibold">
+                        <!-- Data otomatis terisi dari script -->
+                    </div>
+                </div>
+
+                <div class="bg-cikasda-bg/70 border border-indigo-600/20 rounded-xl p-4">
+                    <h4 class="text-xs font-black uppercase text-indigo-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-shuttlecock text-indigo-600"></i> Klub Pengguna Lapangan Badminton
+                    </h4>
+                    <div id="container-jadwal-badminton" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar text-xs font-semibold">
+                        <!-- Data otomatis terisi dari script -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="glass-panel rounded-2xl p-4 flex flex-col h-[340px] bg-cikasda-cardbg">
                 <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3 flex items-center gap-2">
@@ -206,17 +233,18 @@
             </div>
             
             <div class="overflow-x-auto custom-scrollbar">
-                <table class="w-full text-left text-xs min-w-[1150px]">
+                <table class="w-full text-left text-xs min-w-[1250px]">
                     <thead>
                         <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
                             <th class="p-4 text-center w-16">ID</th>
                             <th class="p-4 text-center w-24">Bulan</th>
                             <th class="p-4 text-center w-28">Tanggal</th>
-                            <th class="p-4 w-40">Uraian Sewa</th>
-                            <th class="p-4 w-40">Penyetor Instansi</th>
-                            <th class="p-4 w-40">Penjelasan Rekap</th>
-                            <th class="p-4 text-right w-32">Jumlah (Rp)</th>
-                            <th class="p-4 text-center w-24">Mekanisme</th>
+                            <th class="p-4 w-36">Uraian Sewa</th>
+                            <th class="p-4 w-36">Nama Klub / Penyetor</th>
+                            <th class="p-4 text-center w-28">Sesi Waktu</th>
+                            <th class="p-4 w-36">Penjelasan Rekap</th>
+                            <th class="p-4 text-right w-28">Jumlah (Rp)</th>
+                            <th class="p-4 text-center w-20">Mekanisme</th>
                             <th class="p-4 text-center w-20">Aksi</th>
                         </tr>
                     </thead>
@@ -257,22 +285,34 @@
                     </div>
                 </div>
 
-                <div>
-                    <label class="block font-bold mb-1 text-cikasda-lightblue">Uraian / Jenis Objek Sewa</label>
-                    <select id="f-uraian" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
-                        <option value="Sewa Rumah Dinas">Sewa Rumah Dinas</option>
-                        <option value="Sewa Kantin">Sewa Kantin</option>
-                        <option value="Sewa Lapangan Tenis">Sewa Lapangan Tenis</option>
-                        <option value="Sewa Lapangan Badminton">Sewa Lapangan Badminton</option>
-                        <option value="Sewa Masjid Raya">Sewa Aula Masjid Raya</option>
-                        <option value="Sewa Pelataran Masjid Raya">Sewa Pelataran Masjid Raya</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold mb-1 text-cikasda-lightblue">Uraian / Jenis Objek Sewa</label>
+                        <select id="f-uraian" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                            <option value="Sewa Rumah Dinas">Sewa Rumah Dinas</option>
+                            <option value="Sewa Kantin">Sewa Kantin</option>
+                            <option value="Sewa Lapangan Tenis">Sewa Lapangan Tenis</option>
+                            <option value="Sewa Lapangan Badminton">Sewa Lapangan Badminton</option>
+                            <option value="Sewa Masjid Raya">Sewa Aula Masjid Raya</option>
+                            <option value="Sewa Pelataran Masjid Raya">Sewa Pelataran Masjid Raya</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1 text-cikasda-lightblue">Sesi Waktu Sewa (Khusus Lapangan)</label>
+                        <select id="f-sesi-waktu" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                            <option value="Pagi">Pagi</option>
+                            <option value="Siang">Siang</option>
+                            <option value="Sore">Sore</option>
+                            <option value="Malam">Malam</option>
+                            <option value="Non-Lapangan">Non-Lapangan / Umum</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div>
-                    <label class="block font-bold mb-1 text-cikasda-lightblue">Nama Penyetor / Instansi</label>
-                    <input type="text" id="f-penyetor" placeholder="Masukkan nama pihak penyetor..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Nama Klub / Penyetor Instansi</label>
+                    <input type="text" id="f-penyetor" placeholder="Masukkan nama klub atau pihak penyetor..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
                 </div>
 
                 <div>
@@ -295,7 +335,7 @@
                 </div>
 
                 <div class="pt-3 border-t-2 border-dashed border-cikasda-yellow">
-                    <label class="block font-black mb-1 text-red-600"><i class="fa-solid fa-lock"></i> KATA SANDI OTORISASI (PIN)</label>
+                    <label class="block font-black mb-1 text-red-600"><i class="fa-solid fa-lock"></i> KATA SANDI OTORISASI (PIN SERVER)</label>
                     <div class="relative w-full">
                         <input type="password" id="f-pin-keamanan" placeholder="Masukkan PIN Otorisasi..." class="w-full bg-red-50 border-2 border-red-200 rounded-xl py-2.5 pl-4 pr-12 font-mono text-center text-sm font-black text-red-700 tracking-widest focus:outline-none focus:border-red-500" required>
                         <button type="button" onclick="toggleTampilanKataSandi('f-pin-keamanan', 'ikon-mata-sandi')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cikasda-blue text-sm px-2 py-1 focus:outline-none">
@@ -314,79 +354,13 @@
         </div>
     </div>
 
-    <!-- Modal Fitur Ganti PIN Keamanan -->
-    <div id="modalGantiPin" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-        <div class="w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col bg-cikasda-cardbg border-2 border-cikasda-blue/10">
-            <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-key text-cikasda-yellow"></i>
-                    <h3 class="font-black text-xs uppercase tracking-widest">Pengaturan Ganti PIN Otorisasi</h3>
-                </div>
-                <button type="button" onclick="tutupModalGantiPin()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <form onsubmit="prosesGantiPinBaru(event)" class="p-5 space-y-4 text-xs text-cikasda-blue">
-                <div>
-                    <label class="block font-bold mb-1 text-cikasda-lightblue">Masukkan PIN Lama</label>
-                    <div class="relative w-full">
-                        <input type="password" id="pin-lama" placeholder="PIN saat ini..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl py-2.5 pl-4 pr-12 font-mono text-sm font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-blue" required>
-                        <button type="button" onclick="toggleTampilanKataSandi('pin-lama', 'ikon-mata-lama')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cikasda-blue text-sm px-2 py-1 focus:outline-none">
-                            <i id="ikon-mata-lama" class="fa-solid fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block font-bold mb-1 text-cikasda-lightblue">Masukkan PIN Baru</label>
-                    <div class="relative w-full">
-                        <input type="password" id="pin-baru" placeholder="PIN baru minimal 5 karakter..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl py-2.5 pl-4 pr-12 font-mono text-sm font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-blue" required>
-                        <button type="button" onclick="toggleTampilanKataSandi('pin-baru', 'ikon-mata-baru')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cikasda-blue text-sm px-2 py-1 focus:outline-none">
-                            <i id="ikon-mata-baru" class="fa-solid fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block font-bold mb-1 text-cikasda-lightblue">Konfirmasi PIN Baru</label>
-                    <div class="relative w-full">
-                        <input type="password" id="pin-konfirmasi" placeholder="Ulangi PIN baru..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl py-2.5 pl-4 pr-12 font-mono text-sm font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-blue" required>
-                        <button type="button" onclick="toggleTampilanKataSandi('pin-konfirmasi', 'ikon-mata-konfirmasi')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cikasda-blue text-sm px-2 py-1 focus:outline-none">
-                            <i id="ikon-mata-konfirmasi" class="fa-solid fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="pt-3 flex items-center justify-end gap-2 border-t border-cikasda-bg">
-                    <button type="button" onclick="tutupModalGantiPin()" class="px-4 py-2 rounded-xl border border-cikasda-yellow bg-cikasda-lightyellow font-bold text-cikasda-blue">Batal</button>
-                    <button type="submit" class="px-4 py-2 rounded-xl bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black shadow-md">Simpan PIN Baru</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <script>
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwk0CqClwTOMsOUn7A6l4ftK_Z6GiQ12NKFTY8ChFNUefZ3hYlbHYXIMlE0QjeTYyvlAw/exec";
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQZQ7vx4hOWlKdcDOldabsMlTkK12wjbBM56cog6gY7vZ3xYvFpVqAiqiHgP-19xcdhA/exec"; 
         
-        // --- KEAMANAN SIBER: HASHING & PENYEMBUNYIAN PIN ---
-        // Default PIN awal (Hash dari "cikasdaok2") disimpan secara tersembunyi agar source code aman
-        const DEFAULT_PIN_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // SHA-256('cikasdaok2')
-
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        async function verifikasiPinOtorisasi(inputPin) {
-            const hashedInput = await sha256(inputPin);
-            const savedHash = localStorage.getItem('cikasda_sec_pin') || DEFAULT_PIN_HASH;
-            return hashedInput === savedHash;
-        }
-
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         let gudangDataLokal = [];
         let instanceGrafikPAD = null;
+        let cacheAkumulasiBulanGlobal = {}; // Untuk cetak PDF ikhtisar bulanan
 
         function konversiKeRupiah(angka) { return "Rp " + Number(angka).toLocaleString('id-ID'); }
 
@@ -401,49 +375,6 @@
                 inputSandi.type = "password";
                 if(ikonMata) ikonMata.className = "fa-solid fa-eye";
             }
-        }
-
-        function bukaModalGantiPin() {
-            const m = document.getElementById("modalGantiPin");
-            if (!m) return;
-            m.classList.remove("opacity-0", "pointer-events-none");
-            if (m.firstElementChild) m.firstElementChild.classList.remove("scale-95");
-        }
-
-        function tutupModalGantiPin() {
-            const m = document.getElementById("modalGantiPin");
-            if (!m) return;
-            m.classList.add("opacity-0", "pointer-events-none");
-            if (m.firstElementChild) m.firstElementChild.classList.add("scale-95");
-        }
-
-        async function prosesGantiPinBaru(e) {
-            e.preventDefault();
-            const pinLama = document.getElementById("pin-lama").value;
-            const pinBaru = document.getElementById("pin-baru").value;
-            const pinKonfirmasi = document.getElementById("pin-konfirmasi").value;
-
-            const isOldValid = await verifikasiPinOtorisasi(pinLama);
-            if (!isOldValid) {
-                alert("❌ PIN Lama yang Anda masukkan salah!");
-                return;
-            }
-
-            if (pinBaru.length < 4) {
-                alert("⚠️ PIN Baru terlalu pendek. Minimal 4 karakter.");
-                return;
-            }
-
-            if (pinBaru !== pinKonfirmasi) {
-                alert("⚠️ Konfirmasi PIN Baru tidak cocok.");
-                return;
-            }
-
-            const newHash = await sha256(pinBaru);
-            localStorage.setItem('cikasda_sec_pin', newHash);
-            alert("🔒 PIN Otorisasi Berhasil Diperbarui dan Disimpan Aman secara Enkripsi.");
-            tutupModalGantiPin();
-            e.target.reset();
         }
 
         function sinkronkanPilihanBulan(tanggalString) {
@@ -475,6 +406,7 @@
                     document.getElementById("f-tanggal").value = dataDipilih.tanggal || "";
                     document.getElementById("f-uraian").value = dataDipilih.uraian || "Sewa Rumah Dinas";
                     document.getElementById("f-penyetor").value = dataDipilih.penyetor || "";
+                    document.getElementById("f-sesi-waktu").value = dataDipilih.sesi_waktu || "Non-Lapangan";
                     document.getElementById("f-penjelasan").value = dataDipilih.penjelasan || "";
                     document.getElementById("f-jumlah").value = dataDipilih.jumlah || 0;
                     document.getElementById("f-keterangan").value = dataDipilih.keterangan || "Non Tunai";
@@ -569,7 +501,7 @@
                 
                 if (badge) {
                     badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
-                    badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Terhubung`;
+                    badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Terhubung Aman`;
                 }
             } catch (kesalahan) {
                 console.error("Sinkronisasi Gagal:", kesalahan);
@@ -583,18 +515,29 @@
         function prosesDanTampilkanSemuaData(dataArray) {
             const tBody = document.getElementById("tabel-jurnal-body");
             const containerBulan = document.getElementById("container-bulanan");
+            const containerTenis = document.getElementById("container-jadwal-tenis");
+            const containerBadminton = document.getElementById("container-jadwal-badminton");
+            
             if (!tBody) return;
             
             tBody.innerHTML = "";
             if (containerBulan) containerBulan.innerHTML = "";
+            if (containerTenis) containerTenis.innerHTML = "";
+            if (containerBadminton) containerBadminton.innerHTML = "";
 
             let totalKas = 0, nominalTunai = 0, nominalNonTunai = 0;
             let akumulasiBulan = {};
             listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
+            cacheAkumulasiBulanGlobal = akumulasiBulan;
+
             let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lain": 0 };
+            let jadwalTenisList = [];
+            let jadwalBadmintonList = [];
 
             if(!dataArray || dataArray.length === 0) {
-                tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa di spreadsheet.</td></tr>`;
+                tBody.innerHTML = `<tr><td colspan="10" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa di spreadsheet.</td></tr>`;
+                if(containerTenis) containerTenis.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada data jadwal tenis.</p>`;
+                if(containerBadminton) containerBadminton.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada data jadwal badminton.</p>`;
                 gambarUlangGrafikPAD(akumulasiBulan);
                 perbaruiTampilanAngka(0, 0, 0, breakdownSewa);
                 renderDaftarBulananKiri(akumulasiBulan);
@@ -607,6 +550,8 @@
                 const bln = (item.bulan || "").trim().toLowerCase();
                 const textUraian = (item.uraian || "").trim().toLowerCase();
                 const idTrans = item.id_transaksi || '-';
+                const sesiWaktu = item.sesi_waktu || 'Non-Lapangan';
+                const namaKlub = item.penyetor || '-';
 
                 totalKas += nominal;
                 if (mekanisme.toLowerCase() === "tunai") nominalTunai += nominal; else nominalNonTunai += nominal;
@@ -614,8 +559,14 @@
 
                 if (textUraian.includes("rumah")) breakdownSewa.rumah += nominal;
                 else if (textUraian.includes("kantin")) breakdownSewa.kantin += nominal;
-                else if (textUraian.includes("tenis")) breakdownSewa.tenis += nominal;
-                else if (textUraian.includes("badminton")) breakdownSewa.badminton += nominal;
+                else if (textUraian.includes("tenis")) {
+                    breakdownSewa.tenis += nominal;
+                    jadwalTenisList.push({ klub: namaKlub, sesi: sesiWaktu, bulan: item.bulan, tanggal: item.tanggal });
+                }
+                else if (textUraian.includes("badminton")) {
+                    breakdownSewa.badminton += nominal;
+                    jadwalBadmintonList.push({ klub: namaKlub, sesi: sesiWaktu, bulan: item.bulan, tanggal: item.tanggal });
+                }
                 else if (textUraian.includes("pelataran")) breakdownSewa.pelataran += nominal;
                 else if (textUraian.includes("masjid")) breakdownSewa.masjid += nominal;
                 else breakdownSewa.lain += nominal;
@@ -628,7 +579,8 @@
                         <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
                         <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
                         <td class="p-4 text-left font-extrabold text-xs text-cikasda-blue">${item.uraian || '-'}</td>
-                        <td class="p-4 text-left font-semibold">${item.penyetor || '-'}</td>
+                        <td class="p-4 text-left font-semibold">${namaKlub}</td>
+                        <td class="p-4 text-center"><span class="bg-yellow-100 text-cikasda-blue px-2 py-0.5 rounded text-[10px] font-black">${sesiWaktu}</span></td>
                         <td class="p-4 text-left text-[11px] text-cikasda-lightblue font-medium max-w-xs truncate">${item.penjelasan || '-'}</td>
                         <td class="p-4 text-right font-mono font-black text-cikasda-blue">${konversiKeRupiah(nominal)}</td>
                         <td class="p-4 text-center"><span class="px-2.5 py-1 rounded text-[10px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
@@ -639,6 +591,24 @@
                         </td>
                     </tr>`;
             });
+
+            // Render Jadwal Tenis
+            if (jadwalTenisList.length === 0) {
+                containerTenis.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada jadwal terdaftar.</p>`;
+            } else {
+                jadwalTenisList.forEach(j => {
+                    containerTenis.innerHTML += `<div class="flex items-center justify-between bg-white p-2 rounded-lg border border-emerald-600/10 shadow-sm"><span class="font-bold text-cikasda-blue"><i class="fa-solid fa-shield text-emerald-600 mr-1.5"></i> ${j.klub}</span><span class="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded text-[10px] font-black uppercase">Sesi ${j.sesi} (${j.tanggal || j.bulan})</span></div>`;
+                });
+            }
+
+            // Render Jadwal Badminton
+            if (jadwalBadmintonList.length === 0) {
+                containerBadminton.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada jadwal terdaftar.</p>`;
+            } else {
+                jadwalBadmintonList.forEach(j => {
+                    containerBadminton.innerHTML += `<div class="flex items-center justify-between bg-white p-2 rounded-lg border border-indigo-600/10 shadow-sm"><span class="font-bold text-cikasda-blue"><i class="fa-solid fa-shield text-indigo-600 mr-1.5"></i> ${j.klub}</span><span class="bg-indigo-100 text-indigo-900 px-2 py-0.5 rounded text-[10px] font-black uppercase">Sesi ${j.sesi} (${j.tanggal || j.bulan})</span></div>`;
+                });
+            }
 
             gambarUlangGrafikPAD(akumulasiBulan);
             perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa);
@@ -655,16 +625,7 @@
             document.getElementById("total-tunai").innerText = konversiKeRupiah(nominalTunai);
             document.getElementById("total-nontunai").innerText = konversiKeRupiah(nominalNonTunai);
 
-            const targetSewa = {
-                rumah: 21360000,
-                kantin: 5000000,
-                tenis: 9000000,
-                badminton: 7500000,
-                masjid: 0,
-                pelataran: 0,
-                lain: 2448000
-            };
-
+            const targetSewa = { rumah: 21360000, kantin: 5000000, tenis: 9000000, badminton: 7500000, masjid: 0, pelataran: 0, lain: 2448000 };
             function hitungPersentase(nominalAktual, nilaiTarget) {
                 if (nilaiTarget === 0) return "0.00%";
                 return ((nominalAktual / nilaiTarget) * 100).toFixed(2) + "%";
@@ -715,7 +676,8 @@
                 "Bulan": item.bulan || "-",
                 "Tanggal": item.tanggal || "-",
                 "Uraian Sewa": item.uraian || "-",
-                "Penyetor / Instansi": item.penyetor || "-",
+                "Nama Klub / Penyetor": item.penyetor || "-",
+                "Sesi Waktu": item.sesi_waktu || "-",
                 "Penjelasan Rekap": item.penjelasan || "-",
                 "Jumlah (Rp)": Number(item.jumlah) || 0,
                 "Mekanisme": item.keterangan || "-"
@@ -727,6 +689,7 @@
             XLSX.writeFile(workbook, "Laporan_MPAD_CIKASDA_2026.xlsx");
         }
 
+        // FITUR CETAK PDF DENGAN IKHTISAR LAPORAN BULANAN
         function eksporKePDF() {
             if (!gudangDataLokal || gudangDataLokal.length === 0) {
                 alert("⚠️ Tidak ada data untuk diexport!");
@@ -739,7 +702,36 @@
             doc.setTextColor(8, 51, 112);
             doc.text("DINAS CIPTA KARYA DAN SUMBER DAYA AIR PROVINSI SULAWESI TENGAH", 14, 15);
             doc.setFontSize(10);
-            doc.text("Executive Dashboard M-PAD 2026 - Laporan Log Transaksi Jurnal Kas", 14, 22);
+            doc.text("Executive Dashboard M-PAD 2026 - Laporan Log Transaksi & Ikhtisar Bulanan", 14, 22);
+
+            let currentY = 28;
+
+            // 1. TABEL IKHTISAR BULANAN DI PDF
+            doc.setFontSize(11);
+            doc.text("A. Ikhtisar Pendapatan Kas Bulanan T.A 2026", 14, currentY);
+            currentY += 4;
+
+            const tableBulananRows = listNamaBulan.map(b => [
+                b, 
+                konversiKeRupiah(cacheAkumulasiBulanGlobal[b.toLowerCase()] || 0)
+            ]);
+
+            doc.autoTable({
+                startY: currentY,
+                head: [['Bulan Pembukuan', 'Total Realisasi Kas (Rp)']],
+                body: tableBulananRows,
+                theme: 'grid',
+                headStyles: { fillColor: [27, 91, 163] },
+                styles: { fontSize: 8 },
+                margin: { left: 14, right: 14 }
+            });
+
+            currentY = doc.lastAutoTable.finalY + 10;
+
+            // 2. TABEL UTAMA LOG TRANSAKSI JURNAL DI PDF
+            doc.setFontSize(11);
+            doc.text("B. Rincian Log Transaksi Jurnal Kas", 14, currentY);
+            currentY += 4;
 
             const tableRows = gudangDataLokal.map((item, index) => [
                 index + 1,
@@ -747,20 +739,22 @@
                 item.tanggal || "-",
                 item.uraian || "-",
                 item.penyetor || "-",
+                item.sesi_waktu || "-",
                 konversiKeRupiah(Number(item.jumlah) || 0),
                 item.keterangan || "-"
             ]);
 
             doc.autoTable({
-                startY: 28,
-                head: [['No', 'Bulan', 'Tanggal', 'Uraian Sewa', 'Penyetor / Instansi', 'Jumlah (Rp)', 'Mekanisme']],
+                startY: currentY,
+                head: [['No', 'Bulan', 'Tanggal', 'Uraian Sewa', 'Klub / Penyetor', 'Sesi', 'Jumlah (Rp)', 'Mekanisme']],
                 body: tableRows,
                 theme: 'grid',
                 headStyles: { fillColor: [8, 51, 112] },
-                styles: { fontSize: 8 }
+                styles: { fontSize: 8 },
+                margin: { left: 14, right: 14 }
             });
 
-            doc.save("Laporan_MPAD_CIKASDA_2026.pdf");
+            doc.save("Laporan_Lengkap_MPAD_CIKASDA_2026.pdf");
         }
 
         async function prosesKirimDataKeCloud(e) {
@@ -769,14 +763,12 @@
             const tombol = document.getElementById("tombolSubmitForm");
             const idTransaksiEdit = document.getElementById("f-id-transaksi").value;
 
-            // Validasi PIN aman via fungsi SHA-256 hash
-            const isPinValid = await verifikasiPinOtorisasi(pinSandiInput);
-            if (!isPinValid) {
-                alert("❌ KATA SANDI OTORISASI (PIN) SALAH! Akses ditolak.");
+            if (!pinSandiInput) {
+                alert("⚠️ Mohon masukkan PIN Otorisasi.");
                 return;
             }
 
-            if (tombol) { tombol.disabled = true; tombol.innerText = "Memproses Data..."; }
+            if (tombol) { tombol.disabled = true; tombol.innerText = "Memverifikasi PIN ke Cloud..."; }
 
             const paketData = {
                 id_transaksi: idTransaksiEdit ? idTransaksiEdit : undefined,
@@ -784,25 +776,33 @@
                 tanggal: document.getElementById("f-tanggal").value,
                 uraian: document.getElementById("f-uraian").value,
                 penyetor: document.getElementById("f-penyetor").value,
+                sesi_waktu: document.getElementById("f-sesi-waktu").value,
                 penjelasan: document.getElementById("f-penjelasan").value,
                 jumlah: Number(document.getElementById("f-jumlah").value) || 0,
-                keterangan: document.getElementById("f-keterangan").value
+                keterangan: document.getElementById("f-keterangan").value,
+                pin_keamanan: pinSandiInput // Diverifikasi langsung di Backend Server
             };
 
             try {
                 const responCloud = await fetch(APPS_SCRIPT_URL, {
                     method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
+                    mode: "cors", 
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify(paketData)
                 });
                 
-                alert("🚀 Data Kas Berhasil Disimpan / Diperbarui ke Cloud Google Sheets!");
-                tutupModalForm();
-                muatDataSinkronisasiCloud();
+                const hasil = await responCloud.json();
+                
+                if (hasil.status === "success") {
+                    alert("🚀 Sukses! " + hasil.message);
+                    tutupModalForm();
+                    muatDataSinkronisasiCloud();
+                } else {
+                    alert("❌ Otorisasi Ditolak: " + hasil.message);
+                }
             } catch (err) {
                 console.error(err);
-                alert("⚠️ Gagal terhubung ke server cloud.");
+                alert("⚠️ Terjadi kesalahan koneksi ke server cloud.");
             } finally {
                 if (tombol) { tombol.disabled = false; tombol.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`; }
             }
