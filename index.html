@@ -74,7 +74,7 @@
                     <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Entri Sewa
                 </button>
                 <button onclick="muatDataSinkronisasiCloud()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
-                    <i id="icon-sync" class="fa-solid fa-arrow-rotate-dash"></i> Sinkronkan
+                    <i id="icon-sync" class="fa-solid fa-arrow-rotate-right"></i> Sinkronkan
                 </button>
             </div>
         </div>
@@ -82,10 +82,11 @@
 
     <main class="flex-1 w-full max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
 
+        <!-- Panel Filter dan Pencarian Otomatis Real-Time -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-cikasda-cardbg p-4 rounded-2xl glass-panel">
             <div>
                 <label class="block text-[10px] font-black uppercase text-cikasda-blue mb-1"><i class="fa-solid fa-filter text-cikasda-yellow"></i> Filter Berdasarkan Bulan</label>
-                <select id="filter-bulan-global" onchange="terapkanFilterGlobal()" class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-3 py-2.5 text-xs font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-lightblue">
+                <select id="filter-bulan-global" onchange="jalankanPencarianDanFilterOtomatis()" class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-3 py-2.5 text-xs font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-lightblue">
                     <option value="SEMUA">-- Semua Bulan (Tahun 2026) --</option>
                     <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
                     <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
@@ -94,8 +95,8 @@
                 </select>
             </div>
             <div class="md:col-span-2">
-                <label class="block text-[10px] font-black uppercase text-cikasda-blue mb-1"><i class="fa-solid fa-magnifying-glass text-cikasda-yellow"></i> Cari Nama Penyetor / Keterangan</label>
-                <input type="text" id="input-cari" oninput="jalankanPencarianTabel()" placeholder="Ketik kata kunci pencarian..." class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-4 py-2.5 text-xs font-semibold text-cikasda-blue placeholder-cikasda-lightblue/50 focus:outline-none focus:border-cikasda-lightblue">
+                <label class="block text-[10px] font-black uppercase text-cikasda-blue mb-1"><i class="fa-solid fa-magnifying-glass text-cikasda-yellow"></i> Cari Nama Penyetor / Keterangan / Uraian</label>
+                <input type="text" id="input-cari" oninput="jalankanPencarianDanFilterOtomatis()" placeholder="Ketik kata kunci pencarian (otomatis menyaring tabel & kartu)..." class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-4 py-2.5 text-xs font-semibold text-cikasda-blue placeholder-cikasda-lightblue/50 focus:outline-none focus:border-cikasda-lightblue">
             </div>
         </div>
 
@@ -373,7 +374,7 @@
     </div>
 
     <script>
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXTTeCKKaNdrjsjnoEjMBr22UKZDS2A1f7ACB4UBxsYCEovHQaGSQkeYoDrw8tZDMM/exec"; 
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxE2Yg9nvSnU_URa6Vp0SBqALGaRdDW6CG7kOqUXTkXYkTP5BYORbE3RQK9iTcm7o3Krg/exec"; 
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         const listNamaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
         
@@ -547,7 +548,7 @@
                 if (!hasilFetch.ok) throw new Error("Jaringan bermasalah");
                 
                 gudangDataLokal = await hasilFetch.json();
-                terapkanFilterGlobal();
+                jalankanPencarianDanFilterOtomatis();
                 
                 if (badge) {
                     badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
@@ -562,12 +563,15 @@
             } finally { if (ikon) ikon.classList.remove("fa-spin"); }
         }
 
-        function terapkanFilterGlobal() {
+        // FUNGSI UTAMA: Menggabungkan Filter Bulan dan Kolom Pencarian secara Real-Time Otomatis
+        function jalankanPencarianDanFilterOtomatis() {
             const bulanDipilih = document.getElementById("filter-bulan-global").value;
+            const kataKunci = document.getElementById("input-cari").value.toLowerCase().trim();
             
             let akumulasiBulan = {};
             listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
 
+            // Hitung keseluruhan data untuk grafik bulanan
             gudangDataLokal.forEach(item => {
                 const nominal = Number(item.jumlah) || 0;
                 const bln = (item.bulan || "").trim().toLowerCase();
@@ -575,9 +579,27 @@
             });
             cacheAkumulasiBulanGlobal = akumulasiBulan;
 
+            // Tahap 1: Saring berdasarkan Bulan terlebih dahulu
             let dataSaringan = gudangDataLokal;
             if (bulanDipilih !== "SEMUA") {
                 dataSaringan = gudangDataLokal.filter(item => String(item.bulan || "").trim().toLowerCase() === bulanDipilih.toLowerCase());
+            }
+
+            // Tahap 2: Saring secara bersamaan berdasarkan Keyword Pencarian (Search)
+            if (kataKunci !== "") {
+                dataSaringan = dataSaringan.filter(item => {
+                    const gabunganTeks = `
+                        ${item.id_transaksi || ''} 
+                        ${item.bulan || ''} 
+                        ${item.tanggal || ''} 
+                        ${item.uraian || ''} 
+                        ${item.penyetor || ''} 
+                        ${item.penjelasan || ''} 
+                        ${item.jumlah || ''} 
+                        ${item.keterangan || ''}
+                    `.toLowerCase();
+                    return gabunganTeks.includes(kataKunci);
+                });
             }
 
             prosesDanTampilkanSemuaData(dataSaringan, bulanDipilih, akumulasiBulan);
@@ -595,7 +617,7 @@
             let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lain": 0 };
 
             if(!dataArray || dataArray.length === 0) {
-                tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa untuk filter ini.</td></tr>`;
+                tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data yang cocok dengan filter atau kata kunci pencarian.</td></tr>`;
                 gambarUlangGrafikPAD(akumulasiBulanPenuh, bulanFilterAktif);
                 perbaruiTampilanAngka(0, 0, 0, breakdownSewa);
                 renderDaftarIkhtisarBulanan(akumulasiBulanPenuh);
@@ -679,16 +701,6 @@
                         <span class="text-cikasda-blue font-extrabold uppercase text-[10px]">${b}</span>
                         <span class="font-mono font-black text-cikasda-lightblue text-xs">${konversiKeRupiah(nilai)}</span>
                     </div>`;
-            });
-        }
-
-        function jalankanPencarianTabel() {
-            const kataKunci = document.getElementById("input-cari").value.toLowerCase();
-            const barisTabel = document.querySelectorAll("#tabel-jurnal-body tr");
-            barisTabel.forEach(tr => {
-                if(tr.cells.length < 2) return;
-                const teksBaris = tr.innerText.toLowerCase();
-                if(teksBaris.includes(kataKunci)) tr.style.display = ""; else tr.style.display = "none";
             });
         }
 
