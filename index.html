@@ -92,6 +92,24 @@
 
     <main class="flex-1 w-full max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
 
+        <!-- PANEL FILTER BULAN GLOBAL & PENCARIAN -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-cikasda-cardbg p-4 rounded-2xl glass-panel">
+            <div>
+                <label class="block text-[10px] font-black uppercase text-cikasda-blue mb-1"><i class="fa-solid fa-filter text-cikasda-yellow"></i> Filter Berdasarkan Bulan</label>
+                <select id="filter-bulan-global" onchange="terapkanFilterGlobal()" class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-3 py-2.5 text-xs font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-lightblue">
+                    <option value="SEMUA">-- Semua Bulan (Tahun 2026) --</option>
+                    <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
+                    <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
+                    <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
+                    <option value="Oktober">Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
+                </select>
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-[10px] font-black uppercase text-cikasda-blue mb-1"><i class="fa-solid fa-magnifying-glass text-cikasda-yellow"></i> Cari Nama Klub / Penyetor / Keterangan</label>
+                <input type="text" id="input-cari" oninput="jalankanPencarianTabel()" placeholder="Ketik kata kunci pencarian..." class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-4 py-2.5 text-xs font-semibold text-cikasda-blue placeholder-cikasda-lightblue/50 focus:outline-none focus:border-cikasda-lightblue">
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="glass-panel rounded-2xl p-6 relative overflow-hidden border-l-4 border-cikasda-yellow bg-cikasda-cardbg">
                 <div class="absolute -right-4 -bottom-4 text-cikasda-bg text-7xl font-black opacity-40"><i class="fa-solid fa-wallet text-cikasda-lightblue"></i></div>
@@ -110,14 +128,15 @@
                 </div>
             </div>
 
-            <div class="md:col-span-2 glass-panel rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-cikasda-cardbg">
-                <div class="w-full sm:w-2/3">
-                    <span class="text-[10px] font-black uppercase tracking-widest text-cikasda-blue block mb-1.5"><i class="fa-solid fa-magnifying-glass"></i> Filter & Cari Jurnal</span>
-                    <input type="text" id="input-cari" oninput="jalankanPencarianTabel()" placeholder="Ketik nama penyetor, instansi, atau keterangan..." class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-4 py-3 text-xs font-semibold text-cikasda-blue placeholder-cikasda-lightblue/50 focus:outline-none focus:border-cikasda-lightblue transition-all">
+            <div class="md:col-span-2 glass-panel rounded-2xl p-5 flex flex-col justify-between bg-cikasda-cardbg">
+                <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
+                    <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-cikasda-lightblue"></i> Grafik Kurva Fluktuasi Pendapatan PAD
+                    </h3>
+                    <span id="label-info-kurva" class="text-[9px] bg-cikasda-lightyellow border border-cikasda-yellow text-cikasda-blue font-black px-2.5 py-0.5 rounded">Tahun 2026</span>
                 </div>
-                <div class="w-full sm:w-1/3 text-left sm:text-right flex flex-col justify-center">
-                    <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Database Terintegrasi</span>
-                    <span class="text-xs font-black text-cikasda-blue mt-1"><i class="fa-regular fa-file-lines text-cikasda-yellow mr-1"></i> Google Sheets Secured</span>
+                <div class="flex-1 relative w-full mt-3 min-h-[160px]">
+                    <canvas id="canvasGrafikPAD"></canvas>
                 </div>
             </div>
         </div>
@@ -130,118 +149,93 @@
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cikasda-blue bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Rumah Dinas</span>
                     <span id="pos-rumah" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
-                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 21.360.000/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cikasda-yellow bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Sewa Kantin</span>
                     <span id="pos-kantin" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
-                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 5.000.000/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-emerald-600 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Lap. Tenis</span>
                     <span id="pos-tenis" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
-                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 9.000.000/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-indigo-600 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Badminton</span>
                     <span id="pos-badminton" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
-                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 7.500.000/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-teal-600 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Aula Masjid Raya</span>
                     <span id="pos-masjid" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
-                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 0 / Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-cyan-500 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Pelataran Msd</span>
                     <span id="pos-pelataran" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
-                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 0/Tahun</span>
                 </div>
                 <div class="glass-panel p-3.5 rounded-xl border-t-4 border-amber-600 bg-cikasda-cardbg">
                     <span class="text-[9px] font-bold text-cikasda-lightblue uppercase block">Lain-Lain</span>
                     <span id="pos-lain" class="text-xs font-black text-cikasda-blue font-mono mt-1 block">Rp 0</span>
-                    <span class="text-[8px] font-bold text-cikasda-lightblue/80 mt-1 block">Target: Rp. 2.448.000/Tahun</span>
                 </div>
             </div>
         </section>
 
-        <!-- FITUR BARU: JADWAL PENGGUNA LAPANGAN TENIS & BADMINTON -->
+        <!-- JADWAL KELOMPOK / KLUB LAPANGAN -->
         <section class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-4">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-cikasda-bg pb-3">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
-                    <i class="fa-solid fa-calendar-days text-cikasda-yellow"></i> Jadwal Klub Pengguna Lapangan Tenis & Badminton
+                    <i class="fa-solid fa-calendar-days text-cikasda-yellow"></i> Jadwal Pengguna Lapangan Tenis & Badminton (Hari, Tanggal, Sesi)
                 </h3>
-                <span class="text-[10px] font-bold bg-cikasda-lightyellow border border-cikasda-yellow text-cikasda-blue px-2.5 py-1 rounded-lg">Live Filter Otomatis dari Jurnal</span>
+                <span class="text-[10px] font-bold bg-cikasda-lightyellow border border-cikasda-yellow text-cikasda-blue px-2.5 py-1 rounded-lg">Sinkron Filter Bulanan</span>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bg-cikasda-bg/70 border border-emerald-600/20 rounded-xl p-4">
                     <h4 class="text-xs font-black uppercase text-emerald-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-table-tennis-paddle-ball text-emerald-600"></i> Klub Pengguna Lapangan Tenis
+                        <i class="fa-solid fa-table-tennis-paddle-ball text-emerald-600"></i> Klub Lapangan Tenis
                     </h4>
-                    <div id="container-jadwal-tenis" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar text-xs font-semibold">
-                        <!-- Data otomatis terisi dari script -->
-                    </div>
+                    <div id="container-jadwal-tenis" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar text-xs font-semibold"></div>
                 </div>
 
                 <div class="bg-cikasda-bg/70 border border-indigo-600/20 rounded-xl p-4">
                     <h4 class="text-xs font-black uppercase text-indigo-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-shuttlecock text-indigo-600"></i> Klub Pengguna Lapangan Badminton
+                        <i class="fa-solid fa-shuttlecock text-indigo-600"></i> Klub Lapangan Badminton
                     </h4>
-                    <div id="container-jadwal-badminton" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar text-xs font-semibold">
-                        <!-- Data otomatis terisi dari script -->
-                    </div>
+                    <div id="container-jadwal-badminton" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar text-xs font-semibold"></div>
                 </div>
             </div>
         </section>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="glass-panel rounded-2xl p-4 flex flex-col h-[340px] bg-cikasda-cardbg">
-                <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-calendar-check text-cikasda-yellow"></i> Ikhtisar Laporan bulanan
-                </p>
-                <div id="container-bulanan" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-cikasda-bg text-xs font-semibold">
-                </div>
-            </div>
-
-            <div class="lg:col-span-2 glass-panel rounded-2xl p-5 flex flex-col justify-between h-[340px] bg-cikasda-cardbg">
-                <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
-                    <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-chart-line text-cikasda-lightblue"></i> Grafik Fluktuasi Pendapatan PAD Bulanan
-                    </h3>
-                    <span class="text-[9px] bg-cikasda-lightyellow border border-cikasda-yellow text-cikasda-blue font-black px-2.5 py-0.5 rounded">T.A 2026</span>
-                </div>
-                <div class="flex-1 relative w-full mt-3">
-                    <canvas id="canvasGrafikPAD"></canvas>
-                </div>
+        <div class="glass-panel rounded-2xl p-4 flex flex-col bg-cikasda-cardbg">
+            <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3 flex items-center gap-2">
+                <i class="fa-solid fa-calendar-check text-cikasda-yellow"></i> Ikhtisar Pendapatan Kas Bulanan
+            </p>
+            <div id="container-bulanan" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 text-xs font-semibold">
             </div>
         </div>
 
         <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
             <div class="bg-cikasda-lightyellow px-5 py-4 border-b-2 border-cikasda-yellow flex flex-wrap items-center justify-between gap-3">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
-                    <i class="fa-solid fa-table-list text-cikasda-lightblue"></i> Lembar Log Transaksi Jurnal Kas (Live Spreadsheet)
+                    <i class="fa-solid fa-table-list text-cikasda-lightblue"></i> Lembar Log Transaksi Jurnal Kas
                 </h3>
                 <div class="flex items-center gap-2">
                     <button onclick="eksporKeExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-3 py-2 rounded-lg shadow transition flex items-center gap-1.5 uppercase">
                         <i class="fa-solid fa-file-excel"></i> Export Excel
                     </button>
-                    <button onclick="eksporKePDF()" class="bg-red-600 hover:bg-red-700 text-white font-bold text-[10px] px-3 py-2 rounded-lg shadow transition flex items-center gap-1.5 uppercase">
-                        <i class="fa-solid fa-file-pdf"></i> Export PDF
+                    <button onclick="bukaModalCetakPDF()" class="bg-red-600 hover:bg-red-700 text-white font-bold text-[10px] px-3 py-2 rounded-lg shadow transition flex items-center gap-1.5 uppercase">
+                        <i class="fa-solid fa-file-pdf"></i> Cetak PDF
                     </button>
                 </div>
             </div>
             
             <div class="overflow-x-auto custom-scrollbar">
-                <table class="w-full text-left text-xs min-w-[1250px]">
+                <table class="w-full text-left text-xs min-w-[1300px]">
                     <thead>
                         <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
                             <th class="p-4 text-center w-16">ID</th>
                             <th class="p-4 text-center w-24">Bulan</th>
-                            <th class="p-4 text-center w-28">Tanggal</th>
+                            <th class="p-4 text-center w-28">Hari, Tanggal</th>
                             <th class="p-4 w-36">Uraian Sewa</th>
                             <th class="p-4 w-36">Nama Klub / Penyetor</th>
-                            <th class="p-4 text-center w-28">Sesi Waktu</th>
+                            <th class="p-4 text-center w-28">Waktu Sesi</th>
                             <th class="p-4 w-36">Penjelasan Rekap</th>
                             <th class="p-4 text-right w-28">Jumlah (Rp)</th>
                             <th class="p-4 text-center w-20">Mekanisme</th>
@@ -269,7 +263,24 @@
             <form id="elemenFormInput" onsubmit="prosesKirimDataKeCloud(event)" class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue">
                 <input type="hidden" id="f-id-transaksi" value="">
                 
+                <div>
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Uraian / Jenis Objek Sewa</label>
+                    <select id="f-uraian" onchange="aturTampilanFormSesuaiUraian()" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                        <option value="Sewa Rumah Dinas">Sewa Rumah Dinas</option>
+                        <option value="Sewa Kantin">Sewa Kantin</option>
+                        <option value="Sewa Lapangan Tenis">Sewa Lapangan Tenis</option>
+                        <option value="Sewa Lapangan Badminton">Sewa Lapangan Badminton</option>
+                        <option value="Sewa Masjid Raya">Sewa Aula Masjid Raya</option>
+                        <option value="Sewa Pelataran Masjid Raya">Sewa Pelataran Masjid Raya</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
                 <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold mb-1 text-cikasda-lightblue">Tanggal Transaksi</label>
+                        <input type="date" id="f-tanggal" onchange="otomatisIsiHariDanBulan(this.value)" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2 text-sm font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                    </div>
                     <div>
                         <label class="block font-bold mb-1 text-cikasda-lightblue">Bulan Pembukuan</label>
                         <select id="f-bulan" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
@@ -279,40 +290,34 @@
                             <option value="Oktober">Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block font-bold mb-1 text-cikasda-lightblue">Tanggal Transaksi</label>
-                        <input type="date" id="f-tanggal" onchange="sinkronkanPilihanBulan(this.value)" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2 text-sm font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
-                    </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Hari Transaksi</label>
+                    <input type="text" id="f-hari" readonly class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-2.5 font-bold text-gray-700" placeholder="Otomatis terisi...">
+                </div>
+
+                <!-- KOTAK KHUSUS LAPANGAN TENIS & BADMINTON -->
+                <div id="kotak-khusus-lapangan" class="p-3 bg-yellow-50 border-2 border-cikasda-yellow/50 rounded-xl space-y-3 hidden">
+                    <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-wider"><i class="fa-solid fa-medal text-cikasda-amber"></i> Pengaturan Khusus Jadwal Lapangan</p>
                     <div>
-                        <label class="block font-bold mb-1 text-cikasda-lightblue">Uraian / Jenis Objek Sewa</label>
-                        <select id="f-uraian" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
-                            <option value="Sewa Rumah Dinas">Sewa Rumah Dinas</option>
-                            <option value="Sewa Kantin">Sewa Kantin</option>
-                            <option value="Sewa Lapangan Tenis">Sewa Lapangan Tenis</option>
-                            <option value="Sewa Lapangan Badminton">Sewa Lapangan Badminton</option>
-                            <option value="Sewa Masjid Raya">Sewa Aula Masjid Raya</option>
-                            <option value="Sewa Pelataran Masjid Raya">Sewa Pelataran Masjid Raya</option>
-                            <option value="Lainnya">Lainnya</option>
-                        </select>
+                        <label class="block font-bold mb-1 text-cikasda-blue">Nama Klub / Perkumpulan</label>
+                        <input type="text" id="f-nama-club" placeholder="Masukkan Nama Club..." class="w-full bg-white border border-cikasda-yellow rounded-xl p-2 font-bold text-cikasda-blue">
                     </div>
                     <div>
-                        <label class="block font-bold mb-1 text-cikasda-lightblue">Sesi Waktu Sewa (Khusus Lapangan)</label>
-                        <select id="f-sesi-waktu" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                        <label class="block font-bold mb-1 text-cikasda-blue">Waktu Penggunaan Sesi Lapangan</label>
+                        <select id="f-sesi-waktu" class="w-full bg-white border border-cikasda-yellow rounded-xl p-2 font-bold text-cikasda-blue">
                             <option value="Pagi">Pagi</option>
                             <option value="Siang">Siang</option>
                             <option value="Sore">Sore</option>
                             <option value="Malam">Malam</option>
-                            <option value="Non-Lapangan">Non-Lapangan / Umum</option>
                         </select>
                     </div>
                 </div>
 
-                <div>
-                    <label class="block font-bold mb-1 text-cikasda-lightblue">Nama Klub / Penyetor Instansi</label>
-                    <input type="text" id="f-penyetor" placeholder="Masukkan nama klub atau pihak penyetor..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                <div id="kotak-penyetor-umum">
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Nama Penyewa / Penyetor</label>
+                    <input type="text" id="f-penyetor" placeholder="Masukkan nama penyetor..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none">
                 </div>
 
                 <div>
@@ -354,13 +359,38 @@
         </div>
     </div>
 
+    <!-- Modal Pilihan Cetak PDF -->
+    <div id="modalCetakPDF" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 bg-cikasda-cardbg border-2 border-cikasda-blue/10 p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
+                <h3 class="font-black text-xs uppercase text-cikasda-blue"><i class="fa-solid fa-file-pdf text-red-600 mr-1.5"></i> Konfigurasi Cetak PDF</h3>
+                <button type="button" onclick="tutupModalCetakPDF()" class="text-gray-500 hover:text-cikasda-blue"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div>
+                <label class="block font-bold text-[11px] text-cikasda-lightblue mb-1">Pilih Periode Cetak Laporan:</label>
+                <select id="pilihan-bulan-pdf" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-xs text-cikasda-blue">
+                    <option value="SEMUA">Semua Bulan (Full T.A 2026)</option>
+                    <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
+                    <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
+                    <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
+                    <option value="Oktober">Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
+                </select>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button type="button" onclick="tutupModalCetakPDF()" class="px-3 py-2 bg-gray-200 text-cikasda-blue font-bold rounded-xl text-xs">Batal</button>
+                <button type="button" onclick="eksporKePDFAction()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-black rounded-xl text-xs shadow">Download PDF</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQZQ7vx4hOWlKdcDOldabsMlTkK12wjbBM56cog6gY7vZ3xYvFpVqAiqiHgP-19xcdhA/exec"; 
-        
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx_1S8vfzWeywpBLksItno-4iTQXUhwoY7iot52tahcLUsSCGQI1D9o-vT-5GRV_z4R6A/exec"; 
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const listNamaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        
         let gudangDataLokal = [];
         let instanceGrafikPAD = null;
-        let cacheAkumulasiBulanGlobal = {}; // Untuk cetak PDF ikhtisar bulanan
+        let cacheAkumulasiBulanGlobal = {};
 
         function konversiKeRupiah(angka) { return "Rp " + Number(angka).toLocaleString('id-ID'); }
 
@@ -377,15 +407,32 @@
             }
         }
 
-        function sinkronkanPilihanBulan(tanggalString) {
+        function otomatisIsiHariDanBulan(tanggalString) {
             if (!tanggalString) return;
-            const b = tanggalString.split("-");
-            if (b.length >= 2) {
-                const indeksBulan = parseInt(b[1], 10) - 1;
-                if (indeksBulan >= 0 && indeksBulan < 12) {
-                    const selectBln = document.getElementById("f-bulan");
-                    if (selectBln) selectBln.value = listNamaBulan[indeksBulan];
-                }
+            const dObj = new Date(tanggalString);
+            if (!isNaN(dObj.getTime())) {
+                const namaHari = listNamaHari[dObj.getDay()];
+                document.getElementById("f-hari").value = namaHari;
+                const indeksBln = dObj.getMonth();
+                document.getElementById("f-bulan").value = listNamaBulan[indeksBln];
+            }
+        }
+
+        function aturTampilanFormSesuaiUraian() {
+            const uraianVal = document.getElementById("f-uraian").value;
+            const kotakLapangan = document.getElementById("kotak-khusus-lapangan");
+            const kotakPenyetorUmum = document.getElementById("kotak-penyetor-umum");
+            
+            if (uraianVal.includes("Tenis") || uraianVal.includes("Badminton")) {
+                kotakLapangan.classList.remove("hidden");
+                kotakPenyetorUmum.classList.add("hidden");
+                document.getElementById("f-nama-club").required = true;
+                document.getElementById("f-penyetor").required = false;
+            } else {
+                kotakLapangan.classList.add("hidden");
+                kotakPenyetorUmum.classList.remove("hidden");
+                document.getElementById("f-nama-club").required = false;
+                document.getElementById("f-penyetor").required = true;
             }
         }
 
@@ -402,11 +449,20 @@
                 const dataDipilih = gudangDataLokal.find(item => String(item.id_transaksi) === String(idData));
                 if (dataDipilih) {
                     document.getElementById("f-id-transaksi").value = dataDipilih.id_transaksi || "";
+                    document.getElementById("f-uraian").value = dataDipilih.uraian || "Sewa Rumah Dinas";
+                    aturTampilanFormSesuaiUraian();
+                    
                     document.getElementById("f-bulan").value = dataDipilih.bulan || "Januari";
                     document.getElementById("f-tanggal").value = dataDipilih.tanggal || "";
-                    document.getElementById("f-uraian").value = dataDipilih.uraian || "Sewa Rumah Dinas";
-                    document.getElementById("f-penyetor").value = dataDipilih.penyetor || "";
-                    document.getElementById("f-sesi-waktu").value = dataDipilih.sesi_waktu || "Non-Lapangan";
+                    otomatisIsiHariDanBulan(dataDipilih.tanggal || "");
+
+                    if (dataDipilih.uraian && (dataDipilih.uraian.includes("Tenis") || dataDipilih.uraian.includes("Badminton"))) {
+                        document.getElementById("f-nama-club").value = dataDipilih.penyetor || "";
+                        document.getElementById("f-sesi-waktu").value = dataDipilih.sesi_waktu || "Pagi";
+                    } else {
+                        document.getElementById("f-penyetor").value = dataDipilih.penyetor || "";
+                    }
+                    
                     document.getElementById("f-penjelasan").value = dataDipilih.penjelasan || "";
                     document.getElementById("f-jumlah").value = dataDipilih.jumlah || 0;
                     document.getElementById("f-keterangan").value = dataDipilih.keterangan || "Non Tunai";
@@ -416,16 +472,16 @@
                 const formObj = document.getElementById("elemenFormInput");
                 if (formObj) formObj.reset();
                 document.getElementById("f-id-transaksi").value = "";
+                aturTampilanFormSesuaiUraian();
                 
                 try {
                     const d = new Date();
                     const tahun = d.getFullYear();
                     const bulan = String(d.getMonth() + 1).padStart(2, '0');
                     const hari = String(d.getDate()).padStart(2, '0');
-                    const inputTgl = document.getElementById("f-tanggal");
-                    const selectBln = document.getElementById("f-bulan");
-                    if (inputTgl) inputTgl.value = `${tahun}-${bulan}-${hari}`;
-                    if (selectBln) selectBln.value = listNamaBulan[d.getMonth()];
+                    const tglString = `${tahun}-${bulan}-${hari}`;
+                    document.getElementById("f-tanggal").value = tglString;
+                    otomatisIsiHariDanBulan(tglString);
                 } catch (err) { console.warn(err); }
             }
         }
@@ -439,13 +495,39 @@
             if (formObj) formObj.reset();
         }
 
-        function gambarUlangGrafikPAD(petaBulanan) {
+        function bukaModalCetakPDF() {
+            const m = document.getElementById("modalCetakPDF");
+            if (m) {
+                m.classList.remove("opacity-0", "pointer-events-none");
+                const filterBlnAktif = document.getElementById("filter-bulan-global").value;
+                document.getElementById("pilihan-bulan-pdf").value = filterBlnAktif;
+            }
+        }
+
+        function tutupModalCetakPDF() {
+            const m = document.getElementById("modalCetakPDF");
+            if (m) m.classList.add("opacity-0", "pointer-events-none");
+        }
+
+        function gambarUlangGrafikPAD(petaBulanan, bulanFilterAktif) {
             const canvasEl = document.getElementById('canvasGrafikPAD');
+            const labelInfo = document.getElementById('label-info-kurva');
             if (!canvasEl) return;
             const ctx = canvasEl.getContext('2d');
-            const nilaiSumbuY = listNamaBulan.map(b => petaBulanan[b.toLowerCase()] || 0);
+
+            let labelsSumbu = listNamaBulan;
+            let nilaiSumbuY = listNamaBulan.map(b => petaBulanan[b.toLowerCase()] || 0);
+
+            if (bulanFilterAktif !== "SEMUA") {
+                labelsSumbu = [bulanFilterAktif];
+                nilaiSumbuY = [petaBulanan[bulanFilterAktif.toLowerCase()] || 0];
+                if(labelInfo) labelInfo.innerText = "Bulan: " + bulanFilterAktif;
+            } else {
+                if(labelInfo) labelInfo.innerText = "Tahun 2026 (Full)";
+            }
 
             if (instanceGrafikPAD) {
+                instanceGrafikPAD.data.labels = labelsSumbu;
                 instanceGrafikPAD.data.datasets[0].data = nilaiSumbuY;
                 instanceGrafikPAD.update();
                 return;
@@ -454,7 +536,7 @@
             instanceGrafikPAD = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: listNamaBulan,
+                    labels: labelsSumbu,
                     datasets: [{
                         label: 'Realisasi Kas (Rp)',
                         data: nilaiSumbuY,
@@ -463,7 +545,7 @@
                         borderWidth: 3,
                         pointBackgroundColor: '#f1c40f',
                         pointBorderColor: '#083370',
-                        pointRadius: 4,
+                        pointRadius: 5,
                         fill: true,
                         tension: 0.25
                     }]
@@ -481,11 +563,8 @@
         }
 
         async function muatDataSinkronisasiCloud() {
-            const tBody = document.getElementById("tabel-jurnal-body");
             const ikon = document.getElementById("icon-sync");
             const badge = document.getElementById("status-badge");
-            
-            if (!tBody) return;
             if (ikon) ikon.classList.add("fa-spin");
 
             try {
@@ -493,11 +572,10 @@
                     method: "GET",
                     headers: { "Accept": "application/json" }
                 });
-                
                 if (!hasilFetch.ok) throw new Error("Jaringan bermasalah");
                 
                 gudangDataLokal = await hasilFetch.json();
-                prosesDanTampilkanSemuaData(gudangDataLokal);
+                terapkanFilterGlobal();
                 
                 if (badge) {
                     badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
@@ -512,60 +590,77 @@
             } finally { if (ikon) ikon.classList.remove("fa-spin"); }
         }
 
-        function prosesDanTampilkanSemuaData(dataArray) {
+        function terapkanFilterGlobal() {
+            const bulanDipilih = document.getElementById("filter-bulan-global").value;
+            
+            // Hitung akumulasi full untuk grafik & ikhtisar bawah
+            let akumulasiBulan = {};
+            listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
+
+            gudangDataLokal.forEach(item => {
+                const nominal = Number(item.jumlah) || 0;
+                const bln = (item.bulan || "").trim().toLowerCase();
+                if (akumulasiBulan.hasOwnProperty(bln)) akumulasiBulan[bln] += nominal;
+            });
+            cacheAkumulasiBulanGlobal = akumulasiBulan;
+
+            // Filter data sesuai dropdown bulan aktif untuk tabel & kartu saldo
+            let dataSaringan = gudangDataLokal;
+            if (bulanDipilih !== "SEMUA") {
+                dataSaringan = gudangDataLokal.filter(item => String(item.bulan || "").trim().toLowerCase() === bulanDipilih.toLowerCase());
+            }
+
+            prosesDanTampilkanSemuaData(dataSaringan, bulanDipilih, akumulasiBulan);
+        }
+
+        function prosesDanTampilkanSemuaData(dataArray, bulanFilterAktif, akumulasiBulanPenuh) {
             const tBody = document.getElementById("tabel-jurnal-body");
             const containerBulan = document.getElementById("container-bulanan");
             const containerTenis = document.getElementById("container-jadwal-tenis");
             const containerBadminton = document.getElementById("container-jadwal-badminton");
             
             if (!tBody) return;
-            
             tBody.innerHTML = "";
             if (containerBulan) containerBulan.innerHTML = "";
             if (containerTenis) containerTenis.innerHTML = "";
             if (containerBadminton) containerBadminton.innerHTML = "";
 
             let totalKas = 0, nominalTunai = 0, nominalNonTunai = 0;
-            let akumulasiBulan = {};
-            listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
-            cacheAkumulasiBulanGlobal = akumulasiBulan;
-
             let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lain": 0 };
             let jadwalTenisList = [];
             let jadwalBadmintonList = [];
 
             if(!dataArray || dataArray.length === 0) {
-                tBody.innerHTML = `<tr><td colspan="10" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa di spreadsheet.</td></tr>`;
-                if(containerTenis) containerTenis.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada data jadwal tenis.</p>`;
-                if(containerBadminton) containerBadminton.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada data jadwal badminton.</p>`;
-                gambarUlangGrafikPAD(akumulasiBulan);
+                tBody.innerHTML = `<tr><td colspan="10" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa untuk filter ini.</td></tr>`;
+                if(containerTenis) containerTenis.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada jadwal tenis.</p>`;
+                if(containerBadminton) containerBadminton.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada jadwal badminton.</p>`;
+                gambarUlangGrafikPAD(akumulasiBulanPenuh, bulanFilterAktif);
                 perbaruiTampilanAngka(0, 0, 0, breakdownSewa);
-                renderDaftarBulananKiri(akumulasiBulan);
+                renderDaftarIkhtisarBulanan(akumulasiBulanPenuh);
                 return;
             }
 
             dataArray.forEach(item => {
                 const nominal = Number(item.jumlah) || 0;
                 const mekanisme = (item.keterangan || "Non Tunai").trim();
-                const bln = (item.bulan || "").trim().toLowerCase();
                 const textUraian = (item.uraian || "").trim().toLowerCase();
                 const idTrans = item.id_transaksi || '-';
-                const sesiWaktu = item.sesi_waktu || 'Non-Lapangan';
-                const namaKlub = item.penyetor || '-';
+                const sesiWaktu = item.sesi_waktu || '-';
+                const namaPenyetorClub = item.penyetor || '-';
+                const hariTanggal = (item.hari ? item.hari + ", " : "") + (item.tanggal || '-');
 
                 totalKas += nominal;
                 if (mekanisme.toLowerCase() === "tunai") nominalTunai += nominal; else nominalNonTunai += nominal;
-                if (akumulasiBulan.hasOwnProperty(bln)) akumulasiBulan[bln] += nominal;
 
                 if (textUraian.includes("rumah")) breakdownSewa.rumah += nominal;
                 else if (textUraian.includes("kantin")) breakdownSewa.kantin += nominal;
                 else if (textUraian.includes("tenis")) {
                     breakdownSewa.tenis += nominal;
-                    jadwalTenisList.push({ klub: namaKlub, sesi: sesiWaktu, bulan: item.bulan, tanggal: item.tanggal });
+                    jadwalTenisList.push({ klub: namaPenyetorClub, sesi: sesiWaktu, tanggalLengkap: hariTanggal, bulan: item.bulan });
                 }
                 else if (textUraian.includes("badminton")) {
                     breakdownSewa.badminton += nominal;
-                    jadwalBadmintonList.push({ klub: namaKlub, sesi: sesiWaktu, bulan: item.bulan, tanggal: item.tanggal });
+                    jadwalBadmintonList.push({ klub: namaPenyetorClub, sesi: sesiWaktu, tanggalLengkap: hariTanggal, bulan: item.bulan });
                 }
                 else if (textUraian.includes("pelataran")) breakdownSewa.pelataran += nominal;
                 else if (textUraian.includes("masjid")) breakdownSewa.masjid += nominal;
@@ -577,10 +672,10 @@
                     <tr class="hover:bg-cikasda-bg/60 transition-colors border-b border-cikasda-bg font-bold">
                         <td class="p-4 text-center font-mono text-cikasda-lightblue">#${idTrans}</td>
                         <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
-                        <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
+                        <td class="p-4 text-center text-cikasda-lightblue font-mono">${hariTanggal}</td>
                         <td class="p-4 text-left font-extrabold text-xs text-cikasda-blue">${item.uraian || '-'}</td>
-                        <td class="p-4 text-left font-semibold">${namaKlub}</td>
-                        <td class="p-4 text-center"><span class="bg-yellow-100 text-cikasda-blue px-2 py-0.5 rounded text-[10px] font-black">${sesiWaktu}</span></td>
+                        <td class="p-4 text-left font-semibold">${namaPenyetorClub}</td>
+                        <td class="p-4 text-center"><span class="bg-yellow-100 text-cikasda-blue px-2.5 py-1 rounded text-[10px] font-black uppercase">${sesiWaktu}</span></td>
                         <td class="p-4 text-left text-[11px] text-cikasda-lightblue font-medium max-w-xs truncate">${item.penjelasan || '-'}</td>
                         <td class="p-4 text-right font-mono font-black text-cikasda-blue">${konversiKeRupiah(nominal)}</td>
                         <td class="p-4 text-center"><span class="px-2.5 py-1 rounded text-[10px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
@@ -592,27 +687,27 @@
                     </tr>`;
             });
 
-            // Render Jadwal Tenis
+            // Render Jadwal Lapangan Tenis
             if (jadwalTenisList.length === 0) {
-                containerTenis.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada jadwal terdaftar.</p>`;
+                containerTenis.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada jadwal tenis pada filter ini.</p>`;
             } else {
                 jadwalTenisList.forEach(j => {
-                    containerTenis.innerHTML += `<div class="flex items-center justify-between bg-white p-2 rounded-lg border border-emerald-600/10 shadow-sm"><span class="font-bold text-cikasda-blue"><i class="fa-solid fa-shield text-emerald-600 mr-1.5"></i> ${j.klub}</span><span class="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded text-[10px] font-black uppercase">Sesi ${j.sesi} (${j.tanggal || j.bulan})</span></div>`;
+                    containerTenis.innerHTML += `<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white p-2.5 rounded-xl border border-emerald-600/10 shadow-sm gap-1"><span class="font-black text-cikasda-blue text-xs"><i class="fa-solid fa-shield text-emerald-600 mr-1.5"></i> ${j.klub}</span><div class="flex items-center gap-1.5"><span class="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded text-[9px] font-bold">${j.tanggalLengkap}</span><span class="bg-cikasda-yellow text-cikasda-blue px-2 py-0.5 rounded text-[9px] font-black uppercase">Sesi ${j.sesi}</span></div></div>`;
                 });
             }
 
-            // Render Jadwal Badminton
+            // Render Jadwal Lapangan Badminton
             if (jadwalBadmintonList.length === 0) {
-                containerBadminton.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada jadwal terdaftar.</p>`;
+                containerBadminton.innerHTML = `<p class="text-xs text-cikasda-lightblue italic">Belum ada jadwal badminton pada filter ini.</p>`;
             } else {
                 jadwalBadmintonList.forEach(j => {
-                    containerBadminton.innerHTML += `<div class="flex items-center justify-between bg-white p-2 rounded-lg border border-indigo-600/10 shadow-sm"><span class="font-bold text-cikasda-blue"><i class="fa-solid fa-shield text-indigo-600 mr-1.5"></i> ${j.klub}</span><span class="bg-indigo-100 text-indigo-900 px-2 py-0.5 rounded text-[10px] font-black uppercase">Sesi ${j.sesi} (${j.tanggal || j.bulan})</span></div>`;
+                    containerBadminton.innerHTML += `<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white p-2.5 rounded-xl border border-indigo-600/10 shadow-sm gap-1"><span class="font-black text-cikasda-blue text-xs"><i class="fa-solid fa-shield text-indigo-600 mr-1.5"></i> ${j.klub}</span><div class="flex items-center gap-1.5"><span class="bg-indigo-100 text-indigo-900 px-2 py-0.5 rounded text-[9px] font-bold">${j.tanggalLengkap}</span><span class="bg-cikasda-yellow text-cikasda-blue px-2 py-0.5 rounded text-[9px] font-black uppercase">Sesi ${j.sesi}</span></div></div>`;
                 });
             }
 
-            gambarUlangGrafikPAD(akumulasiBulan);
+            gambarUlangGrafikPAD(akumulasiBulanPenuh, bulanFilterAktif);
             perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa);
-            renderDaftarBulananKiri(akumulasiBulan);
+            renderDaftarIkhtisarBulanan(akumulasiBulanPenuh);
         }
 
         function perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa) {
@@ -620,27 +715,21 @@
             let capaianTotalPersen = targetPADUtama > 0 ? ((totalKas / targetPADUtama) * 100).toFixed(2) : 0;
 
             document.getElementById("grand-total").innerText = konversiKeRupiah(totalKas);
-            document.getElementById("target-pad-tahun").innerText = "Target PAD: " + konversiKeRupiah(targetPADUtama);
-            document.getElementById("persen-capaian-pad").innerText = "Capaian Target: " + capaianTotalPersen + "%";
+            document.getElementById("target-pad-tahun").innerText = "Akumulasi PAD: Sesuai Filter";
+            document.getElementById("persen-capaian-pad").innerText = "Kontribusi Target: " + capaianTotalPersen + "%";
             document.getElementById("total-tunai").innerText = konversiKeRupiah(nominalTunai);
             document.getElementById("total-nontunai").innerText = konversiKeRupiah(nominalNonTunai);
 
-            const targetSewa = { rumah: 21360000, kantin: 5000000, tenis: 9000000, badminton: 7500000, masjid: 0, pelataran: 0, lain: 2448000 };
-            function hitungPersentase(nominalAktual, nilaiTarget) {
-                if (nilaiTarget === 0) return "0.00%";
-                return ((nominalAktual / nilaiTarget) * 100).toFixed(2) + "%";
-            }
-
-            document.getElementById("pos-rumah").innerText = konversiKeRupiah(breakdownSewa.rumah) + " (" + hitungPersentase(breakdownSewa.rumah, targetSewa.rumah) + ")";
-            document.getElementById("pos-kantin").innerText = konversiKeRupiah(breakdownSewa.kantin) + " (" + hitungPersentase(breakdownSewa.kantin, targetSewa.kantin) + ")";
-            document.getElementById("pos-tenis").innerText = konversiKeRupiah(breakdownSewa.tenis) + " (" + hitungPersentase(breakdownSewa.tenis, targetSewa.tenis) + ")";
-            document.getElementById("pos-badminton").innerText = konversiKeRupiah(breakdownSewa.badminton) + " (" + hitungPersentase(breakdownSewa.badminton, targetSewa.badminton) + ")";
-            document.getElementById("pos-masjid").innerText = konversiKeRupiah(breakdownSewa.masjid) + " (" + hitungPersentase(breakdownSewa.masjid, targetSewa.masjid) + ")";
-            document.getElementById("pos-pelataran").innerText = konversiKeRupiah(breakdownSewa.pelataran) + " (" + hitungPersentase(breakdownSewa.pelataran, targetSewa.pelataran) + ")";
-            document.getElementById("pos-lain").innerText = konversiKeRupiah(breakdownSewa.lain) + " (" + hitungPersentase(breakdownSewa.lain, targetSewa.lain) + ")";
+            document.getElementById("pos-rumah").innerText = konversiKeRupiah(breakdownSewa.rumah);
+            document.getElementById("pos-kantin").innerText = konversiKeRupiah(breakdownSewa.kantin);
+            document.getElementById("pos-tenis").innerText = konversiKeRupiah(breakdownSewa.tenis);
+            document.getElementById("pos-badminton").innerText = konversiKeRupiah(breakdownSewa.badminton);
+            document.getElementById("pos-masjid").innerText = konversiKeRupiah(breakdownSewa.masjid);
+            document.getElementById("pos-pelataran").innerText = konversiKeRupiah(breakdownSewa.pelataran);
+            document.getElementById("pos-lain").innerText = konversiKeRupiah(breakdownSewa.lain);
         }
 
-        function renderDaftarBulananKiri(petaBulanan) {
+        function renderDaftarIkhtisarBulanan(petaBulanan) {
             const containerBulan = document.getElementById("container-bulanan");
             if (!containerBulan) return;
             containerBulan.innerHTML = "";
@@ -648,9 +737,9 @@
             listNamaBulan.forEach(b => {
                 const nilai = petaBulanan[b.toLowerCase()] || 0;
                 containerBulan.innerHTML += `
-                    <div class="py-2.5 flex items-center justify-between border-b border-cikasda-bg/50">
-                        <span class="text-cikasda-blue font-bold uppercase tracking-wide text-[11px]">${b}</span>
-                        <span class="font-mono font-black text-cikasda-lightblue">${konversiKeRupiah(nilai)}</span>
+                    <div class="p-3 bg-cikasda-bg/70 rounded-xl border border-cikasda-lightblue/10 flex items-center justify-between">
+                        <span class="text-cikasda-blue font-extrabold uppercase text-[10px]">${b}</span>
+                        <span class="font-mono font-black text-cikasda-lightblue text-xs">${konversiKeRupiah(nilai)}</span>
                     </div>`;
             });
         }
@@ -674,11 +763,12 @@
                 "No": index + 1,
                 "ID Transaksi": item.id_transaksi || "-",
                 "Bulan": item.bulan || "-",
+                "Hari": item.hari || "-",
                 "Tanggal": item.tanggal || "-",
                 "Uraian Sewa": item.uraian || "-",
-                "Nama Klub / Penyetor": item.penyetor || "-",
+                "Klub / Penyetor": item.penyetor || "-",
                 "Sesi Waktu": item.sesi_waktu || "-",
-                "Penjelasan Rekap": item.penjelasan || "-",
+                "Penjelasan": item.penjelasan || "-",
                 "Jumlah (Rp)": Number(item.jumlah) || 0,
                 "Mekanisme": item.keterangan || "-"
             }));
@@ -689,12 +779,20 @@
             XLSX.writeFile(workbook, "Laporan_MPAD_CIKASDA_2026.xlsx");
         }
 
-        // FITUR CETAK PDF DENGAN IKHTISAR LAPORAN BULANAN
-        function eksporKePDF() {
-            if (!gudangDataLokal || gudangDataLokal.length === 0) {
-                alert("⚠️ Tidak ada data untuk diexport!");
+        function eksporKePDFAction() {
+            tutupModalCetakPDF();
+            const bulanCetak = document.getElementById("pilihan-bulan-pdf").value;
+
+            let dataPDF = gudangDataLokal;
+            if (bulanCetak !== "SEMUA") {
+                dataPDF = gudangDataLokal.filter(item => String(item.bulan || "").trim().toLowerCase() === bulanCetak.toLowerCase());
+            }
+
+            if (!dataPDF || dataPDF.length === 0) {
+                alert("⚠️ Tidak ada data untuk dicetak pada periode bulan tersebut!");
                 return;
             }
+
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('l', 'mm', 'a4');
 
@@ -702,7 +800,7 @@
             doc.setTextColor(8, 51, 112);
             doc.text("DINAS CIPTA KARYA DAN SUMBER DAYA AIR PROVINSI SULAWESI TENGAH", 14, 15);
             doc.setFontSize(10);
-            doc.text("Executive Dashboard M-PAD 2026 - Laporan Log Transaksi & Ikhtisar Bulanan", 14, 22);
+            doc.text(`Executive Dashboard M-PAD 2026 - Laporan Periode: ${bulanCetak.toUpperCase()}`, 14, 22);
 
             let currentY = 28;
 
@@ -711,10 +809,12 @@
             doc.text("A. Ikhtisar Pendapatan Kas Bulanan T.A 2026", 14, currentY);
             currentY += 4;
 
-            const tableBulananRows = listNamaBulan.map(b => [
-                b, 
-                konversiKeRupiah(cacheAkumulasiBulanGlobal[b.toLowerCase()] || 0)
-            ]);
+            let tableBulananRows = [];
+            if (bulanCetak === "SEMUA") {
+                tableBulananRows = listNamaBulan.map(b => [b, konversiKeRupiah(cacheAkumulasiBulanGlobal[b.toLowerCase()] || 0)]);
+            } else {
+                tableBulananRows = [[bulanCetak, konversiKeRupiah(cacheAkumulasiBulanGlobal[bulanCetak.toLowerCase()] || 0)]];
+            }
 
             doc.autoTable({
                 startY: currentY,
@@ -730,13 +830,13 @@
 
             // 2. TABEL UTAMA LOG TRANSAKSI JURNAL DI PDF
             doc.setFontSize(11);
-            doc.text("B. Rincian Log Transaksi Jurnal Kas", 14, currentY);
+            doc.text(`B. Rincian Log Transaksi Jurnal Kas (${bulanCetak})`, 14, currentY);
             currentY += 4;
 
-            const tableRows = gudangDataLokal.map((item, index) => [
+            const tableRows = dataPDF.map((item, index) => [
                 index + 1,
                 item.bulan || "-",
-                item.tanggal || "-",
+                (item.hari ? item.hari + ", " : "") + (item.tanggal || "-"),
                 item.uraian || "-",
                 item.penyetor || "-",
                 item.sesi_waktu || "-",
@@ -746,7 +846,7 @@
 
             doc.autoTable({
                 startY: currentY,
-                head: [['No', 'Bulan', 'Tanggal', 'Uraian Sewa', 'Klub / Penyetor', 'Sesi', 'Jumlah (Rp)', 'Mekanisme']],
+                head: [['No', 'Bulan', 'Hari, Tanggal', 'Uraian Sewa', 'Klub / Penyetor', 'Sesi', 'Jumlah (Rp)', 'Mekanisme']],
                 body: tableRows,
                 theme: 'grid',
                 headStyles: { fillColor: [8, 51, 112] },
@@ -754,7 +854,7 @@
                 margin: { left: 14, right: 14 }
             });
 
-            doc.save("Laporan_Lengkap_MPAD_CIKASDA_2026.pdf");
+            doc.save(`Laporan_MPAD_CIKASDA_${bulanCetak}.pdf`);
         }
 
         async function prosesKirimDataKeCloud(e) {
@@ -762,10 +862,21 @@
             const pinSandiInput = document.getElementById("f-pin-keamanan").value;
             const tombol = document.getElementById("tombolSubmitForm");
             const idTransaksiEdit = document.getElementById("f-id-transaksi").value;
+            const uraianVal = document.getElementById("f-uraian").value;
 
             if (!pinSandiInput) {
                 alert("⚠️ Mohon masukkan PIN Otorisasi.");
                 return;
+            }
+
+            let namaPenyetorFinal = "";
+            let sesiWaktuFinal = "Non-Lapangan";
+
+            if (uraianVal.includes("Tenis") || uraianVal.includes("Badminton")) {
+                namaPenyetorFinal = document.getElementById("f-nama-club").value;
+                sesiWaktuFinal = document.getElementById("f-sesi-waktu").value;
+            } else {
+                namaPenyetorFinal = document.getElementById("f-penyetor").value;
             }
 
             if (tombol) { tombol.disabled = true; tombol.innerText = "Memverifikasi PIN ke Cloud..."; }
@@ -774,13 +885,14 @@
                 id_transaksi: idTransaksiEdit ? idTransaksiEdit : undefined,
                 bulan: document.getElementById("f-bulan").value,
                 tanggal: document.getElementById("f-tanggal").value,
-                uraian: document.getElementById("f-uraian").value,
-                penyetor: document.getElementById("f-penyetor").value,
-                sesi_waktu: document.getElementById("f-sesi-waktu").value,
+                hari: document.getElementById("f-hari").value,
+                uraian: uraianVal,
+                penyetor: namaPenyetorFinal,
+                sesi_waktu: sesiWaktuFinal,
                 penjelasan: document.getElementById("f-penjelasan").value,
                 jumlah: Number(document.getElementById("f-jumlah").value) || 0,
                 keterangan: document.getElementById("f-keterangan").value,
-                pin_keamanan: pinSandiInput // Diverifikasi langsung di Backend Server
+                pin_keamanan: pinSandiInput
             };
 
             try {
