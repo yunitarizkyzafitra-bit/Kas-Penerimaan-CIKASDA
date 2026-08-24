@@ -18,7 +18,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=600;800&family=Plus+Jakarta+Sans:wght=400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tambahan Library untuk Export Excel & PDF -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -76,7 +81,7 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-3">
-                <button onclick="bukaModalForm()" class="relative z-[999] bg-cikasda-yellow hover:bg-cikasda-lightyellow text-cikasda-blue font-black text-xs px-5 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 tracking-wide uppercase border-b-4 border-cikasda-amber active:scale-95">
+                <button onclick="bukaModalForm()" class="relative z-[10] bg-cikasda-yellow hover:bg-cikasda-lightyellow text-cikasda-blue font-black text-xs px-5 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 tracking-wide uppercase border-b-4 border-cikasda-amber active:scale-95">
                     <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Entri Sewa
                 </button>
                 <button onclick="muatDataSinkronisasiCloud()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
@@ -184,24 +189,34 @@
         </div>
 
         <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
-            <div class="bg-cikasda-lightyellow px-5 py-4 border-b-2 border-cikasda-yellow flex items-center justify-between">
+            <div class="bg-cikasda-lightyellow px-5 py-4 border-b-2 border-cikasda-yellow flex flex-wrap items-center justify-between gap-3">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
                     <i class="fa-solid fa-table-list text-cikasda-lightblue"></i> Lembar Log Transaksi Jurnal Kas (Live Spreadsheet)
                 </h3>
+                <!-- Tombol Ekspor PDF & Excel Baru -->
+                <div class="flex items-center gap-2">
+                    <button onclick="eksporKeExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-3 py-2 rounded-lg shadow transition flex items-center gap-1.5 uppercase">
+                        <i class="fa-solid fa-file-excel"></i> Export Excel
+                    </button>
+                    <button onclick="eksporKePDF()" class="bg-red-600 hover:bg-red-700 text-white font-bold text-[10px] px-3 py-2 rounded-lg shadow transition flex items-center gap-1.5 uppercase">
+                        <i class="fa-solid fa-file-pdf"></i> Export PDF
+                    </button>
+                </div>
             </div>
             
             <div class="overflow-x-auto custom-scrollbar">
-                <table class="w-full text-left text-xs min-w-[1050px]">
+                <table class="w-full text-left text-xs min-w-[1150px]">
                     <thead>
                         <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
                             <th class="p-4 text-center w-16">ID</th>
                             <th class="p-4 text-center w-24">Bulan</th>
                             <th class="p-4 text-center w-28">Tanggal</th>
-                            <th class="p-4 w-44">Uraian Sewa</th>
-                            <th class="p-4 w-44">Penyetor Instansi</th>
-                            <th class="p-4 w-44">Penjelasan Rekap</th>
-                            <th class="p-4 text-right w-36">Jumlah (Rp)</th>
-                            <th class="p-4 text-center w-28">Mekanisme</th>
+                            <th class="p-4 w-40">Uraian Sewa</th>
+                            <th class="p-4 w-40">Penyetor Instansi</th>
+                            <th class="p-4 w-40">Penjelasan Rekap</th>
+                            <th class="p-4 text-right w-32">Jumlah (Rp)</th>
+                            <th class="p-4 text-center w-24">Mekanisme</th>
+                            <th class="p-4 text-center w-20">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="tabel-jurnal-body" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue">
@@ -216,12 +231,14 @@
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-money-check-dollar text-cikasda-yellow"></i>
-                    <h3 class="font-black text-xs uppercase tracking-widest">Input Kas Penerimaan Baru</h3>
+                    <h3 id="modal-title-text" class="font-black text-xs uppercase tracking-widest">Input Kas Penerimaan Baru</h3>
                 </div>
                 <button type="button" onclick="tutupModalForm()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
             <form id="elemenFormInput" onsubmit="prosesKirimDataKeCloud(event)" class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue">
+                <input type="hidden" id="f-id-transaksi" value="">
+                
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold mb-1 text-cikasda-lightblue">Bulan Pembukuan</label>
@@ -330,22 +347,44 @@
             }
         }
 
-        function bukaModalForm() {
+        function bukaModalForm(idData = null) {
             const m = document.getElementById("modalFormTransaksi");
+            const judulModal = document.getElementById("modal-title-text");
             if (!m) return;
+            
             m.classList.remove("opacity-0", "pointer-events-none");
             if (m.firstElementChild) m.firstElementChild.classList.remove("scale-95");
             
-            try {
-                const d = new Date();
-                const tahun = d.getFullYear();
-                const bulan = String(d.getMonth() + 1).padStart(2, '0');
-                const hari = String(d.getDate()).padStart(2, '0');
-                const inputTgl = document.getElementById("f-tanggal");
-                const selectBln = document.getElementById("f-bulan");
-                if (inputTgl) inputTgl.value = `${tahun}-${bulan}-${hari}`;
-                if (selectBln) selectBln.value = listNamaBulan[d.getMonth()];
-            } catch (err) { console.warn(err); }
+            if (idData !== null) {
+                if (judulModal) judulModal.innerText = "Edit Entri Sewa Jurnal Kas";
+                const dataDipilih = gudangDataLokal.find(item => String(item.id_transaksi) === String(idData));
+                if (dataDipilih) {
+                    document.getElementById("f-id-transaksi").value = dataDipilih.id_transaksi || "";
+                    document.getElementById("f-bulan").value = dataDipilih.bulan || "Januari";
+                    document.getElementById("f-tanggal").value = dataDipilih.tanggal || "";
+                    document.getElementById("f-uraian").value = dataDipilih.uraian || "Sewa Rumah Dinas";
+                    document.getElementById("f-penyetor").value = dataDipilih.penyetor || "";
+                    document.getElementById("f-penjelasan").value = dataDipilih.penjelasan || "";
+                    document.getElementById("f-jumlah").value = dataDipilih.jumlah || 0;
+                    document.getElementById("f-keterangan").value = dataDipilih.keterangan || "Non Tunai";
+                }
+            } else {
+                if (judulModal) judulModal.innerText = "Input Kas Penerimaan Baru";
+                const formObj = document.getElementById("elemenFormInput");
+                if (formObj) formObj.reset();
+                document.getElementById("f-id-transaksi").value = "";
+                
+                try {
+                    const d = new Date();
+                    const tahun = d.getFullYear();
+                    const bulan = String(d.getMonth() + 1).padStart(2, '0');
+                    const hari = String(d.getDate()).padStart(2, '0');
+                    const inputTgl = document.getElementById("f-tanggal");
+                    const selectBln = document.getElementById("f-bulan");
+                    if (inputTgl) inputTgl.value = `${tahun}-${bulan}-${hari}`;
+                    if (selectBln) selectBln.value = listNamaBulan[d.getMonth()];
+                } catch (err) { console.warn(err); }
+            }
         }
 
         function tutupModalForm() {
@@ -405,7 +444,7 @@
             
             if (!tBody) return;
             if (APPS_SCRIPT_URL.includes("MASUKKAN_URL")) {
-                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-500 font-extrabold">⚠️ KODE BELUM SIAP! Silakan isi variabel APPS_SCRIPT_URL dengan tautan Web App Anda.</td></tr>`;
+                tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-red-500 font-extrabold">⚠️ KODE BELUM SIAP! Silakan isi variabel APPS_SCRIPT_URL dengan tautan Web App Anda.</td></tr>`;
                 return;
             }
             
@@ -449,7 +488,7 @@
             let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lain": 0 };
 
             if(!dataArray || dataArray.length === 0) {
-                tBody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa di spreadsheet.</td></tr>`;
+                tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data sewa di spreadsheet.</td></tr>`;
                 gambarUlangGrafikPAD(akumulasiBulan);
                 perbaruiTampilanAngka(0, 0, 0, breakdownSewa);
                 renderDaftarBulananKiri(akumulasiBulan);
@@ -461,6 +500,7 @@
                 const mekanisme = (item.keterangan || "Non Tunai").trim();
                 const bln = (item.bulan || "").trim().toLowerCase();
                 const textUraian = (item.uraian || "").trim().toLowerCase();
+                const idTrans = item.id_transaksi || '-';
 
                 totalKas += nominal;
                 if (mekanisme.toLowerCase() === "tunai") nominalTunai += nominal; else nominalNonTunai += nominal;
@@ -478,7 +518,7 @@
 
                 tBody.innerHTML += `
                     <tr class="hover:bg-cikasda-bg/60 transition-colors border-b border-cikasda-bg font-bold">
-                        <td class="p-4 text-center font-mono text-cikasda-lightblue">#${item.id_transaksi || '-'}</td>
+                        <td class="p-4 text-center font-mono text-cikasda-lightblue">#${idTrans}</td>
                         <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
                         <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
                         <td class="p-4 text-left font-extrabold text-xs text-cikasda-blue">${item.uraian || '-'}</td>
@@ -486,6 +526,11 @@
                         <td class="p-4 text-left text-[11px] text-cikasda-lightblue font-medium max-w-xs truncate">${item.penjelasan || '-'}</td>
                         <td class="p-4 text-right font-mono font-black text-cikasda-blue">${konversiKeRupiah(nominal)}</td>
                         <td class="p-4 text-center"><span class="px-2.5 py-1 rounded text-[10px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
+                        <td class="p-4 text-center">
+                            <button onclick="bukaModalForm('${idTrans}')" class="bg-cikasda-blue hover:bg-cikasda-lightblue text-white px-3 py-1.5 rounded-lg text-[10px] shadow transition flex items-center justify-center gap-1 mx-auto">
+                                <i class="fa-solid fa-pen-to-square"></i> Edit
+                            </button>
+                        </td>
                     </tr>`;
             });
 
@@ -519,17 +564,15 @@
                 return ((nominalAktual / nilaiTarget) * 100).toFixed(2) + "%";
             }
 
-            // Semua kolom sekarang mengambil nilai dinamis dari variabel breakdownSewa
             document.getElementById("pos-rumah").innerText = konversiKeRupiah(breakdownSewa.rumah) + " (" + hitungPersentase(breakdownSewa.rumah, targetSewa.rumah) + ")";
             document.getElementById("pos-kantin").innerText = konversiKeRupiah(breakdownSewa.kantin) + " (" + hitungPersentase(breakdownSewa.kantin, targetSewa.kantin) + ")";
             document.getElementById("pos-tenis").innerText = konversiKeRupiah(breakdownSewa.tenis) + " (" + hitungPersentase(breakdownSewa.tenis, targetSewa.tenis) + ")";
             document.getElementById("pos-badminton").innerText = konversiKeRupiah(breakdownSewa.badminton) + " (" + hitungPersentase(breakdownSewa.badminton, targetSewa.badminton) + ")";
             document.getElementById("pos-masjid").innerText = konversiKeRupiah(breakdownSewa.masjid) + " (" + hitungPersentase(breakdownSewa.masjid, targetSewa.masjid) + ")";
             document.getElementById("pos-pelataran").innerText = konversiKeRupiah(breakdownSewa.pelataran) + " (" + hitungPersentase(breakdownSewa.pelataran, targetSewa.pelataran) + ")";
-            
-            // Kolom Lain-lain sekarang bersifat dinamis mengikuti data sistem
             document.getElementById("pos-lain").innerText = konversiKeRupiah(breakdownSewa.lain) + " (" + hitungPersentase(breakdownSewa.lain, targetSewa.lain) + ")";
         }
+
         function renderDaftarBulananKiri(petaBulanan) {
             const containerBulan = document.getElementById("container-bulanan");
             if (!containerBulan) return;
@@ -555,10 +598,72 @@
             });
         }
 
+        // Fitur Tambahan: Export Excel (.xlsx)
+        function eksporKeExcel() {
+            if (!gudangDataLokal || gudangDataLokal.length === 0) {
+                alert("⚠️ Tidak ada data untuk diexport!");
+                return;
+            }
+            const dataSheet = gudangDataLokal.map((item, index) => ({
+                "No": index + 1,
+                "ID Transaksi": item.id_transaksi || "-",
+                "Bulan": item.bulan || "-",
+                "Tanggal": item.tanggal || "-",
+                "Uraian Sewa": item.uraian || "-",
+                "Penyetor / Instansi": item.penyetor || "-",
+                "Penjelasan Rekap": item.penjelasan || "-",
+                "Jumlah (Rp)": Number(item.jumlah) || 0,
+                "Mekanisme": item.keterangan || "-"
+            }));
+
+            const worksheet = XLSX.utils.json_to_sheet(dataSheet);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Log Jurnal Kas PAD");
+            XLSX.writeFile(workbook, "Laporan_MPAD_CIKASDA_2026.xlsx");
+        }
+
+        // Fitur Tambahan: Export PDF (.pdf)
+        function eksporKePDF() {
+            if (!gudangDataLokal || gudangDataLokal.length === 0) {
+                alert("⚠️ Tidak ada data untuk diexport!");
+                return;
+            }
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('l', 'mm', 'a4');
+
+            doc.setFontSize(14);
+            doc.setTextColor(8, 51, 112);
+            doc.text("DINAS CIPTA KARYA DAN SUMBER DAYA AIR PROVINSI SULAWESI TENGAH", 14, 15);
+            doc.setFontSize(10);
+            doc.text("Executive Dashboard M-PAD 2026 - Laporan Log Transaksi Jurnal Kas", 14, 22);
+
+            const tableRows = gudangDataLokal.map((item, index) => [
+                index + 1,
+                item.bulan || "-",
+                item.tanggal || "-",
+                item.uraian || "-",
+                item.penyetor || "-",
+                konversiKeRupiah(Number(item.jumlah) || 0),
+                item.keterangan || "-"
+            ]);
+
+            doc.autoTable({
+                startY: 28,
+                head: [['No', 'Bulan', 'Tanggal', 'Uraian Sewa', 'Penyetor / Instansi', 'Jumlah (Rp)', 'Mekanisme']],
+                body: tableRows,
+                theme: 'grid',
+                headStyles: { fillColor: [8, 51, 112] },
+                styles: { fontSize: 8 }
+            });
+
+            doc.save("Laporan_MPAD_CIKASDA_2026.pdf");
+        }
+
         async function prosesKirimDataKeCloud(e) {
             e.preventDefault();
             const pinSandi = document.getElementById("f-pin-keamanan").value;
             const tombol = document.getElementById("tombolSubmitForm");
+            const idTransaksiEdit = document.getElementById("f-id-transaksi").value;
 
             if (pinSandi !== PIN_OTORISASI_INPUT) {
                 alert("❌ KATA SANDI OTORISASI (PIN) SALAH! Akses ditolak.");
@@ -568,6 +673,7 @@
             if (tombol) { tombol.disabled = true; tombol.innerText = "Memproses Data..."; }
 
             const paketData = {
+                id_transaksi: idTransaksiEdit ? idTransaksiEdit : undefined,
                 bulan: document.getElementById("f-bulan").value,
                 tanggal: document.getElementById("f-tanggal").value,
                 uraian: document.getElementById("f-uraian").value,
@@ -585,7 +691,7 @@
                     body: JSON.stringify(paketData)
                 });
                 
-                alert("🚀 Data Kas Berhasil Disimpan ke Cloud Google Sheets!");
+                alert("🚀 Data Kas Berhasil Disimpan / Diperbarui ke Cloud Google Sheets!");
                 tutupModalForm();
                 muatDataSinkronisasiCloud();
             } catch (err) {
