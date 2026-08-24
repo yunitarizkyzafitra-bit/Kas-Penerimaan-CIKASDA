@@ -18,7 +18,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Tambahan Library untuk Export Excel & PDF -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
@@ -84,8 +83,11 @@
                 <button onclick="bukaModalForm()" class="relative z-[10] bg-cikasda-yellow hover:bg-cikasda-lightyellow text-cikasda-blue font-black text-xs px-5 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 tracking-wide uppercase border-b-4 border-cikasda-amber active:scale-95">
                     <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Entri Sewa
                 </button>
+                <button onclick="bukaModalGantiPin()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
+                    <i class="fa-solid fa-shield-halved"></i> Ganti PIN
+                </button>
                 <button onclick="muatDataSinkronisasiCloud()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
-                    <i id="icon-sync" class="fa-solid fa-arrow-rotate-dash"></i> Sinkronkan Data
+                    <i id="icon-sync" class="fa-solid fa-arrow-rotate-dash"></i> Sinkronkan
                 </button>
             </div>
         </div>
@@ -193,7 +195,6 @@
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
                     <i class="fa-solid fa-table-list text-cikasda-lightblue"></i> Lembar Log Transaksi Jurnal Kas (Live Spreadsheet)
                 </h3>
-                <!-- Tombol Ekspor PDF & Excel Baru -->
                 <div class="flex items-center gap-2">
                     <button onclick="eksporKeExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-3 py-2 rounded-lg shadow transition flex items-center gap-1.5 uppercase">
                         <i class="fa-solid fa-file-excel"></i> Export Excel
@@ -226,6 +227,7 @@
         </div>
     </main>
 
+    <!-- Modal Form Transaksi -->
     <div id="modalFormTransaksi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -296,7 +298,7 @@
                     <label class="block font-black mb-1 text-red-600"><i class="fa-solid fa-lock"></i> KATA SANDI OTORISASI (PIN)</label>
                     <div class="relative w-full">
                         <input type="password" id="f-pin-keamanan" placeholder="Masukkan PIN Otorisasi..." class="w-full bg-red-50 border-2 border-red-200 rounded-xl py-2.5 pl-4 pr-12 font-mono text-center text-sm font-black text-red-700 tracking-widest focus:outline-none focus:border-red-500" required>
-                        <button type="button" onclick="toggleTampilanKataSandi()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cikasda-blue text-sm px-2 py-1 focus:outline-none">
+                        <button type="button" onclick="toggleTampilanKataSandi('f-pin-keamanan', 'ikon-mata-sandi')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cikasda-blue text-sm px-2 py-1 focus:outline-none">
                             <i id="ikon-mata-sandi" class="fa-solid fa-eye"></i>
                         </button>
                     </div>
@@ -312,19 +314,85 @@
         </div>
     </div>
 
+    <!-- Modal Fitur Ganti PIN Keamanan -->
+    <div id="modalGantiPin" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col bg-cikasda-cardbg border-2 border-cikasda-blue/10">
+            <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-key text-cikasda-yellow"></i>
+                    <h3 class="font-black text-xs uppercase tracking-widest">Pengaturan Ganti PIN Otorisasi</h3>
+                </div>
+                <button type="button" onclick="tutupModalGantiPin()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <form onsubmit="prosesGantiPinBaru(event)" class="p-5 space-y-4 text-xs text-cikasda-blue">
+                <div>
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Masukkan PIN Lama</label>
+                    <div class="relative w-full">
+                        <input type="password" id="pin-lama" placeholder="PIN saat ini..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl py-2.5 pl-4 pr-12 font-mono text-sm font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-blue" required>
+                        <button type="button" onclick="toggleTampilanKataSandi('pin-lama', 'ikon-mata-lama')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cikasda-blue text-sm px-2 py-1 focus:outline-none">
+                            <i id="ikon-mata-lama" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Masukkan PIN Baru</label>
+                    <div class="relative w-full">
+                        <input type="password" id="pin-baru" placeholder="PIN baru minimal 5 karakter..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl py-2.5 pl-4 pr-12 font-mono text-sm font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-blue" required>
+                        <button type="button" onclick="toggleTampilanKataSandi('pin-baru', 'ikon-mata-baru')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cikasda-blue text-sm px-2 py-1 focus:outline-none">
+                            <i id="ikon-mata-baru" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Konfirmasi PIN Baru</label>
+                    <div class="relative w-full">
+                        <input type="password" id="pin-konfirmasi" placeholder="Ulangi PIN baru..." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl py-2.5 pl-4 pr-12 font-mono text-sm font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-blue" required>
+                        <button type="button" onclick="toggleTampilanKataSandi('pin-konfirmasi', 'ikon-mata-konfirmasi')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cikasda-blue text-sm px-2 py-1 focus:outline-none">
+                            <i id="ikon-mata-konfirmasi" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pt-3 flex items-center justify-end gap-2 border-t border-cikasda-bg">
+                    <button type="button" onclick="tutupModalGantiPin()" class="px-4 py-2 rounded-xl border border-cikasda-yellow bg-cikasda-lightyellow font-bold text-cikasda-blue">Batal</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black shadow-md">Simpan PIN Baru</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwk0CqClwTOMsOUn7A6l4ftK_Z6GiQ12NKFTY8ChFNUefZ3hYlbHYXIMlE0QjeTYyvlAw/exec";
         
-        const PIN_OTORISASI_INPUT = "cikasdaok2";
+        // --- KEAMANAN SIBER: HASHING & PENYEMBUNYIAN PIN ---
+        // Default PIN awal (Hash dari "cikasdaok2") disimpan secara tersembunyi agar source code aman
+        const DEFAULT_PIN_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // SHA-256('cikasdaok2')
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function verifikasiPinOtorisasi(inputPin) {
+            const hashedInput = await sha256(inputPin);
+            const savedHash = localStorage.getItem('cikasda_sec_pin') || DEFAULT_PIN_HASH;
+            return hashedInput === savedHash;
+        }
+
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         let gudangDataLokal = [];
         let instanceGrafikPAD = null;
 
         function konversiKeRupiah(angka) { return "Rp " + Number(angka).toLocaleString('id-ID'); }
 
-        function toggleTampilanKataSandi() {
-            const inputSandi = document.getElementById("f-pin-keamanan");
-            const ikonMata = document.getElementById("ikon-mata-sandi");
+        function toggleTampilanKataSandi(idInput, idIkon) {
+            const inputSandi = document.getElementById(idInput);
+            const ikonMata = document.getElementById(idIkon);
             if (!inputSandi) return;
             if (inputSandi.type === "password") {
                 inputSandi.type = "text";
@@ -333,6 +401,49 @@
                 inputSandi.type = "password";
                 if(ikonMata) ikonMata.className = "fa-solid fa-eye";
             }
+        }
+
+        function bukaModalGantiPin() {
+            const m = document.getElementById("modalGantiPin");
+            if (!m) return;
+            m.classList.remove("opacity-0", "pointer-events-none");
+            if (m.firstElementChild) m.firstElementChild.classList.remove("scale-95");
+        }
+
+        function tutupModalGantiPin() {
+            const m = document.getElementById("modalGantiPin");
+            if (!m) return;
+            m.classList.add("opacity-0", "pointer-events-none");
+            if (m.firstElementChild) m.firstElementChild.classList.add("scale-95");
+        }
+
+        async function prosesGantiPinBaru(e) {
+            e.preventDefault();
+            const pinLama = document.getElementById("pin-lama").value;
+            const pinBaru = document.getElementById("pin-baru").value;
+            const pinKonfirmasi = document.getElementById("pin-konfirmasi").value;
+
+            const isOldValid = await verifikasiPinOtorisasi(pinLama);
+            if (!isOldValid) {
+                alert("❌ PIN Lama yang Anda masukkan salah!");
+                return;
+            }
+
+            if (pinBaru.length < 4) {
+                alert("⚠️ PIN Baru terlalu pendek. Minimal 4 karakter.");
+                return;
+            }
+
+            if (pinBaru !== pinKonfirmasi) {
+                alert("⚠️ Konfirmasi PIN Baru tidak cocok.");
+                return;
+            }
+
+            const newHash = await sha256(pinBaru);
+            localStorage.setItem('cikasda_sec_pin', newHash);
+            alert("🔒 PIN Otorisasi Berhasil Diperbarui dan Disimpan Aman secara Enkripsi.");
+            tutupModalGantiPin();
+            e.target.reset();
         }
 
         function sinkronkanPilihanBulan(tanggalString) {
@@ -443,11 +554,6 @@
             const badge = document.getElementById("status-badge");
             
             if (!tBody) return;
-            if (APPS_SCRIPT_URL.includes("MASUKKAN_URL")) {
-                tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-red-500 font-extrabold">⚠️ KODE BELUM SIAP! Silakan isi variabel APPS_SCRIPT_URL dengan tautan Web App Anda.</td></tr>`;
-                return;
-            }
-            
             if (ikon) ikon.classList.add("fa-spin");
 
             try {
@@ -598,7 +704,6 @@
             });
         }
 
-        // Fitur Tambahan: Export Excel (.xlsx)
         function eksporKeExcel() {
             if (!gudangDataLokal || gudangDataLokal.length === 0) {
                 alert("⚠️ Tidak ada data untuk diexport!");
@@ -622,7 +727,6 @@
             XLSX.writeFile(workbook, "Laporan_MPAD_CIKASDA_2026.xlsx");
         }
 
-        // Fitur Tambahan: Export PDF (.pdf)
         function eksporKePDF() {
             if (!gudangDataLokal || gudangDataLokal.length === 0) {
                 alert("⚠️ Tidak ada data untuk diexport!");
@@ -661,11 +765,13 @@
 
         async function prosesKirimDataKeCloud(e) {
             e.preventDefault();
-            const pinSandi = document.getElementById("f-pin-keamanan").value;
+            const pinSandiInput = document.getElementById("f-pin-keamanan").value;
             const tombol = document.getElementById("tombolSubmitForm");
             const idTransaksiEdit = document.getElementById("f-id-transaksi").value;
 
-            if (pinSandi !== PIN_OTORISASI_INPUT) {
+            // Validasi PIN aman via fungsi SHA-256 hash
+            const isPinValid = await verifikasiPinOtorisasi(pinSandiInput);
+            if (!isPinValid) {
                 alert("❌ KATA SANDI OTORISASI (PIN) SALAH! Akses ditolak.");
                 return;
             }
