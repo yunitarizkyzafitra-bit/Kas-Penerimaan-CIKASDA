@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <!-- KARTU KATEGORI OBJEK SEWA (TANPA PERSENTASE HIJAU DI POJOK ATAS) -->
+        <!-- KARTU KATEGORI OBJEK SEWA -->
         <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-3">
             <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
@@ -301,7 +301,7 @@
         </div>
     </main>
 
-    <!-- Modal Laporan Analisis Ekonomi & Fiskal (Diperbarui dengan Narasi Ahli Ekonomi) -->
+    <!-- Modal Laporan Analisis Ekonomi & Fiskal -->
     <div id="modalAnalisisEkonomi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -314,7 +314,6 @@
             
             <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue leading-relaxed">
                 
-                <!-- Eksekutif Summary -->
                 <div class="p-4 bg-cikasda-lightyellow rounded-xl border border-cikasda-yellow space-y-1.5">
                     <h4 class="font-black text-cikasda-blue text-sm uppercase flex items-center gap-2">
                         <i class="fa-solid fa-bullseye text-cikasda-amber"></i> Ringkasan Eksekutif & Posisi Anggaran
@@ -324,7 +323,6 @@
                     </p>
                 </div>
 
-                <!-- Bagian 1: Analisis Struktur Target -->
                 <div class="space-y-2">
                     <h4 class="font-black uppercase text-cikasda-lightblue flex items-center gap-1.5">
                         <i class="fa-solid fa-file-invoice-dollar text-cikasda-yellow"></i> I. Evaluasi Komposisi Target Retribusi & Bobot Fiskal
@@ -360,24 +358,22 @@
                     </div>
                 </div>
 
-                <!-- Bagian 2: Analisis Likuiditas & Mekanisme Transaksi -->
                 <div class="space-y-2">
                     <h4 class="font-black uppercase text-cikasda-lightblue flex items-center gap-1.5">
                         <i class="fa-solid fa-scale-balanced text-cikasda-yellow"></i> II. Analisis Likuiditas & Efisiensi Kanal Pembayaran
                     </h4>
                     <p class="text-justify">
-                        Penerapan sistem pencatatan transaksi terintegrasi melalui mekanisme kanal <em>Non-Tunai</em> dan <em>Tunai</em> menunjukkan tingkat akuntabilitas perbendaharaan yang tinggi. Penggunaan kanal non-tunai diutamakan guna meminimalisasi risiko operasional (<em>operational risk</em>), mempercepat rekonsiliasi bank kas daerah, serta memastikan transparansi arus kas masuk (<em>cash inflow</em>) secara real-time ke dalam sistem keuangan instansi.
+                        Penerapan sistem pencatatan transaksi terintegrasi melalui mekanisme kanal <em>Non-Tunai</em> dan <em>Tunai</em> menunjukkan tingkat akuntabilitas perbendaharaan yang tinggi. Penggunaan kanal non-tunai diutamakan guna meminimalisasi risiko operasional, mempercepat rekonsiliasi bank kas daerah, serta memastikan transparansi arus kas masuk secara real-time.
                     </p>
                 </div>
 
-                <!-- Bagian 3: Rekomendasi Kebijakan -->
                 <div class="space-y-2">
                     <h4 class="font-black uppercase text-cikasda-lightblue flex items-center gap-1.5">
                         <i class="fa-solid fa-lightbulb text-cikasda-yellow"></i> III. Rekomendasi Strategis & Intensifikasi Aset
                     </h4>
                     <ul class="list-disc pl-5 space-y-1.5 font-semibold text-justify">
-                        <li><strong>Optimalisasi Sektor Unggulan:</strong> Pos Rumah Dinas dan Lapangan Tenis menyumbang kontribusi dominan dari total target fiskal, sehingga pemeliharaan fasilitas pada klaster ini harus diprioritaskan guna menjaga tingkat utilitas penyewa.</li>
-                        <li><strong>Ekstensifikasi Potensi Pasif:</strong> Perlu dilakukan kajian peninjauan tarif sewa yang disesuaikan dengan tingkat inflasi daerah serta valuasi pasar wajar (<em>fair market value</em>) demi mendongkrak potensi surplus pendapatan di tahun anggaran berikutnya.</li>
+                        <li><strong>Optimalisasi Sektor Unggulan:</strong> Pos Rumah Dinas dan Lapangan Tenis menyumbang kontribusi dominan dari total target fiskal, sehingga pemeliharaan fasilitas pada klaster ini harus diprioritaskan.</li>
+                        <li><strong>Ekstensifikasi Potensi Pasif:</strong> Perlu dilakukan kajian peninjauan tarif sewa yang disesuaikan dengan tingkat inflasi daerah serta valuasi pasar wajar demi mendongkrak potensi surplus pendapatan di tahun anggaran berikutnya.</li>
                         <li><strong>Digitalisasi Pengawasan:</strong> Penggunaan sistem ID Transaksi otomatis berbasis penomoran sekuensial menjamin tertib administrasi pembukuan tanpa celah duplikasi data ganda.</li>
                     </ul>
                 </div>
@@ -518,7 +514,6 @@
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxE2Yg9nvSnU_URa6Vp0SBqALGaRdDW6CG7kOqUXTkXYkTP5BYORbE3RQK9iTcm7o3Krg/exec"; 
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         
-        // TARGET RESMI BERDASARKAN PARAMETER MASTER
         const TARGET_OBJEK_RESMI = {
             rumah: 21360000,
             tenis: 9000000,
@@ -528,7 +523,7 @@
             masjid: 0,
             pelataran: 0
         };
-        const TARGET_PAD_UTAMA = Object.values(TARGET_OBJEK_RESMI).reduce((a, b) => a + b, 0); // Rp 45.308.000
+        const TARGET_PAD_UTAMA = Object.values(TARGET_OBJEK_RESMI).reduce((a, b) => a + b, 0);
 
         let gudangDataLokal = [];
         let instanceGrafikPAD = null;
@@ -550,6 +545,7 @@
             }
         }
 
+        // FUNGSI PEMBUATAN ID OTOMATIS BERDASARKAN LANJUTAN NOMOR TRANSAKSI PADA LOG YANG ADA
         function generateOtomatisIDTransaksi(tanggalString) {
             let tglObj = tanggalString ? new Date(tanggalString) : new Date();
             if (isNaN(tglObj.getTime())) tglObj = new Date();
@@ -560,8 +556,25 @@
 
             let counter = 1;
             if (gudangDataLokal && gudangDataLokal.length > 0) {
-                const existingMatches = gudangDataLokal.filter(item => String(item.id_transaksi || "").startsWith(prefix));
-                counter = existingMatches.length + 1;
+                // Menyaring ID yang memiliki awalan prefix tahun & bulan yang sama
+                const existingMatches = gudangDataLokal.filter(item => {
+                    const idVal = String(item.id_transaksi || "").trim();
+                    return idVal.startsWith(prefix);
+                });
+
+                if (existingMatches.length > 0) {
+                    let maxNum = 0;
+                    existingMatches.forEach(item => {
+                        const parts = String(item.id_transaksi).split("-");
+                        if (parts.length >= 3) {
+                            const angkaUrut = parseInt(parts[2], 10);
+                            if (!isNaN(angkaUrut) && angkaUrut > maxNum) {
+                                maxNum = angkaUrut;
+                            }
+                        }
+                    });
+                    counter = maxNum + 1;
+                }
             }
 
             return prefix + String(counter).padStart(3, '0');
