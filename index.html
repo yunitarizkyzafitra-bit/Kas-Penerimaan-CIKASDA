@@ -132,12 +132,12 @@
             </div>
         </div>
 
-        <!-- DIAGRAM DONAT & PERSENTASE (TERTINGGI KE TERENDAH) -->
+        <!-- DIAGRAM DONAT & PERSENTASE (SELARAS DENGAN AKUMULASI TARGET) -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg flex flex-col justify-between">
                 <div class="border-b border-cikasda-bg pb-3">
                     <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Proporsi Sewa (Tertinggi → Terendah)
+                        <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Proporsi & Capaian Target Sewa
                     </h3>
                     <p id="info-porsi-tertinggi" class="text-[10px] font-bold text-cikasda-lightblue mt-1">Kategori Tertinggi: Memuat...</p>
                 </div>
@@ -145,7 +145,7 @@
                     <canvas id="canvasDonatSewa"></canvas>
                 </div>
                 <div class="text-[10px] text-gray-500 text-center font-semibold border-t border-cikasda-bg pt-2">
-                    Diagram otomatis diurutkan dari persentase terbesar ke terkecil.
+                    Persentase didasarkan pada realisasi terhadap target masing-masing kategori.
                 </div>
             </div>
 
@@ -214,7 +214,6 @@
                             <span id="target-pelataran" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 1.500.000</span>
                         </div>
                     </div>
-                    <!-- KARTU SEWA LAIN-LAIN (TULISAN POS PAD SAH DIHAPUS) -->
                     <div class="glass-panel p-4 rounded-xl border-t-4 border-amber-500 bg-cikasda-cardbg space-y-2 sm:col-span-2 lg:col-span-3">
                         <div class="flex justify-between items-start">
                             <span class="text-[10px] font-bold text-cikasda-lightblue uppercase"><i class="fa-solid fa-folder-open text-amber-500 mr-1"></i> Sewa Lain-Lain</span>
@@ -563,35 +562,29 @@
             if (!canvasDonat) return;
             const ctxD = canvasDonat.getContext('2d');
 
+            // Memastikan persentase di diagram donat konsisten menggunakan persentase target masing-masing kategori
             let rawDataKategori = [
-                { label: 'Rumah Dinas', value: breakdownSewa.rumah || 0, color: '#083370' },
-                { label: 'Sewa Kantin', value: breakdownSewa.kantin || 0, color: '#f1c40f' },
-                { label: 'Lapangan Tenis', value: breakdownSewa.tenis || 0, color: '#059669' },
-                { label: 'Badminton', value: breakdownSewa.badminton || 0, color: '#4f46e5' },
-                { label: 'Aula Masjid Raya', value: breakdownSewa.masjid || 0, color: '#0d9488' },
-                { label: 'Pelataran Masjid', value: breakdownSewa.pelataran || 0, color: '#06b6d4' },
-                { label: 'Sewa Lain-Lain', value: breakdownSewa.lainlain || 0, color: '#d97706' }
+                { label: 'Rumah Dinas', value: Number((((breakdownSewa.rumah || 0) / TARGET_KATEGORI.rumah) * 100).toFixed(2)), nominal: breakdownSewa.rumah || 0, color: '#083370' },
+                { label: 'Sewa Kantin', value: Number((((breakdownSewa.kantin || 0) / TARGET_KATEGORI.kantin) * 100).toFixed(2)), nominal: breakdownSewa.kantin || 0, color: '#f1c40f' },
+                { label: 'Lapangan Tenis', value: Number((((breakdownSewa.tenis || 0) / TARGET_KATEGORI.tenis) * 100).toFixed(2)), nominal: breakdownSewa.tenis || 0, color: '#059669' },
+                { label: 'Badminton', value: Number((((breakdownSewa.badminton || 0) / TARGET_KATEGORI.badminton) * 100).toFixed(2)), nominal: breakdownSewa.badminton || 0, color: '#4f46e5' },
+                { label: 'Aula Masjid Raya', value: Number((((breakdownSewa.masjid || 0) / TARGET_KATEGORI.masjid) * 100).toFixed(2)), nominal: breakdownSewa.masjid || 0, color: '#0d9488' },
+                { label: 'Pelataran Masjid', value: Number((((breakdownSewa.pelataran || 0) / TARGET_KATEGORI.pelataran) * 100).toFixed(2)), nominal: breakdownSewa.pelataran || 0, color: '#06b6d4' },
+                { label: 'Sewa Lain-Lain', value: Number((((breakdownSewa.lainlain || 0) / TARGET_KATEGORI.lainlain) * 100).toFixed(2)), nominal: breakdownSewa.lainlain || 0, color: '#d97706' }
             ];
 
-            // Sorting persentase dari tertinggi ke terendah secara otomatis
+            // Sorting dari persentase capaian tertinggi ke terendah
             rawDataKategori.sort((a, b) => b.value - a.value);
 
-            const totalSemua = rawDataKategori.reduce((sum, item) => sum + item.value, 0);
-
-            const labelsTerurut = rawDataKategori.map(item => {
-                const pct = totalSemua > 0 ? ((item.value / totalSemua) * 100).toFixed(1) : 0;
-                return `${item.label} (${pct}%)`;
-            });
-
+            const labelsTerurut = rawDataKategori.map(item => `${item.label} (${item.value.toFixed(1)}%)`);
             const dataNilaiTerurut = rawDataKategori.map(item => item.value);
             const warnaTerurut = rawDataKategori.map(item => item.color);
 
             if (infoTertinggi) {
-                if (totalSemua > 0 && rawDataKategori[0].value > 0) {
-                    const pctMax = ((rawDataKategori[0].value / totalSemua) * 100).toFixed(2);
-                    infoTertinggi.innerHTML = `Tertinggi: <span class="text-cikasda-blue font-black">${rawDataKategori[0].label}</span> (${pctMax}%)`;
+                if (rawDataKategori.length > 0 && rawDataKategori[0].value > 0) {
+                    infoTertinggi.innerHTML = `Capaian Tertinggi: <span class="text-cikasda-blue font-black">${rawDataKategori[0].label}</span> (${rawDataKategori[0].value.toFixed(2)}%)`;
                 } else {
-                    infoTertinggi.innerHTML = `Kategori Tertinggi: Belum ada transaksi`;
+                    infoTertinggi.innerHTML = `Capaian Tertinggi: Belum ada realisasi`;
                 }
             }
 
@@ -628,10 +621,9 @@
                                     const data = chart.data;
                                     if (data.labels.length && data.datasets.length) {
                                         return data.labels.map((label, i) => {
-                                            const val = data.datasets[0].data[i];
-                                            const percentage = totalSemua > 0 ? ((val / totalSemua) * 100).toFixed(1) : 0;
+                                            const pct = data.datasets[0].data[i];
                                             return {
-                                                text: `${rawDataKategori[i].label}: ${percentage}%`,
+                                                text: `${rawDataKategori[i].label}: ${pct.toFixed(1)}%`,
                                                 fillStyle: data.datasets[0].backgroundColor[i],
                                                 strokeStyle: '#ffffff',
                                                 lineWidth: 2,
@@ -647,10 +639,8 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    const val = context.raw || 0;
-                                    const pct = totalSemua > 0 ? ((val / totalSemua) * 100).toFixed(2) : 0;
-                                    const rawName = rawDataKategori[context.dataIndex].label;
-                                    return ` ${rawName}: Rp ${val.toLocaleString('id-ID')} (${pct}%)`;
+                                    const itemRaw = rawDataKategori[context.dataIndex];
+                                    return ` ${itemRaw.label}: Rp ${itemRaw.nominal.toLocaleString('id-ID')} (${itemRaw.value.toFixed(2)}% dari target)`;
                                 }
                             }
                         }
