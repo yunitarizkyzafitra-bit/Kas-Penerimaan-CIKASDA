@@ -283,7 +283,7 @@
                 <table class="w-full text-left text-xs min-w-[1200px]">
                     <thead>
                         <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
-                            <th class="p-4 text-center w-28">ID Transaksi</th>
+                            <th class="p-4 text-center w-16">No</th>
                             <th class="p-4 text-center w-24">Bulan</th>
                             <th class="p-4 text-center w-36">Tanggal</th>
                             <th class="p-4 w-44">Uraian Sewa</th>
@@ -313,7 +313,6 @@
             </div>
             
             <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue leading-relaxed">
-                
                 <div class="p-4 bg-cikasda-lightyellow rounded-xl border border-cikasda-yellow space-y-1.5">
                     <h4 class="font-black text-cikasda-blue text-sm uppercase flex items-center gap-2">
                         <i class="fa-solid fa-bullseye text-cikasda-amber"></i> Ringkasan Eksekutif & Posisi Anggaran
@@ -374,10 +373,9 @@
                     <ul class="list-disc pl-5 space-y-1.5 font-semibold text-justify">
                         <li><strong>Optimalisasi Sektor Unggulan:</strong> Pos Rumah Dinas dan Lapangan Tenis menyumbang kontribusi dominan dari total target fiskal, sehingga pemeliharaan fasilitas pada klaster ini harus diprioritaskan.</li>
                         <li><strong>Ekstensifikasi Potensi Pasif:</strong> Perlu dilakukan kajian peninjauan tarif sewa yang disesuaikan dengan tingkat inflasi daerah serta valuasi pasar wajar demi mendongkrak potensi surplus pendapatan di tahun anggaran berikutnya.</li>
-                        <li><strong>Digitalisasi Pengawasan:</strong> Penggunaan sistem ID Transaksi otomatis berbasis penomoran sekuensial menjamin tertib administrasi pembukuan tanpa celah duplikasi data ganda.</li>
+                        <li><strong>Digitalisasi Pengawasan:</strong> Penggunaan penomoran urut otomatis menjamin tertib administrasi pembukuan tanpa celah duplikasi data ganda.</li>
                     </ul>
                 </div>
-
             </div>
 
             <div class="p-4 bg-gray-50 border-t flex justify-end">
@@ -398,10 +396,8 @@
             </div>
             
             <form id="elemenFormInput" onsubmit="prosesKirimDataKeCloud(event)" class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue">
-                <div>
-                    <label class="block font-bold mb-1 text-cikasda-lightblue">Nomor ID Transaksi (Otomatis Berurutan)</label>
-                    <input type="text" id="f-id-transaksi" readonly class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-2.5 font-mono font-black text-cikasda-blue" placeholder="Digenerate otomatis oleh sistem...">
-                </div>
+                <!-- Kolom ID disembunyikan/dihapus dari form input agar murni menggunakan nomor urut otomatis (1, 2, 3...) -->
+                <input type="hidden" id="f-id-transaksi" value="">
 
                 <div>
                     <label class="block font-bold mb-1 text-cikasda-lightblue">Uraian / Jenis Objek Sewa</label>
@@ -419,7 +415,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold mb-1 text-cikasda-lightblue">Tanggal Transaksi</label>
-                        <input type="date" id="f-tanggal" onchange="otomatisIsiBulanDanID(this.value)" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2 text-sm font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                        <input type="date" id="f-tanggal" onchange="otomatisIsiBulan(this.value)" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2 text-sm font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
                     </div>
                     <div>
                         <label class="block font-bold mb-1 text-cikasda-lightblue">Bulan Pembukuan</label>
@@ -545,48 +541,12 @@
             }
         }
 
-        // FUNGSI PEMBUATAN ID OTOMATIS BERDASARKAN LANJUTAN NOMOR TRANSAKSI PADA LOG YANG ADA
-        function generateOtomatisIDTransaksi(tanggalString) {
-            let tglObj = tanggalString ? new Date(tanggalString) : new Date();
-            if (isNaN(tglObj.getTime())) tglObj = new Date();
-
-            const tahun = tglObj.getFullYear();
-            const bulanNum = String(tglObj.getMonth() + 1).padStart(2, '0');
-            const prefix = `TRX-${tahun}${bulanNum}-`;
-
-            let counter = 1;
-            if (gudangDataLokal && gudangDataLokal.length > 0) {
-                // Menyaring ID yang memiliki awalan prefix tahun & bulan yang sama
-                const existingMatches = gudangDataLokal.filter(item => {
-                    const idVal = String(item.id_transaksi || "").trim();
-                    return idVal.startsWith(prefix);
-                });
-
-                if (existingMatches.length > 0) {
-                    let maxNum = 0;
-                    existingMatches.forEach(item => {
-                        const parts = String(item.id_transaksi).split("-");
-                        if (parts.length >= 3) {
-                            const angkaUrut = parseInt(parts[2], 10);
-                            if (!isNaN(angkaUrut) && angkaUrut > maxNum) {
-                                maxNum = angkaUrut;
-                            }
-                        }
-                    });
-                    counter = maxNum + 1;
-                }
-            }
-
-            return prefix + String(counter).padStart(3, '0');
-        }
-
-        function otomatisIsiBulanDanID(tanggalString) {
+        function otomatisIsiBulan(tanggalString) {
             if (!tanggalString) return;
             const dObj = new Date(tanggalString);
             if (!isNaN(dObj.getTime())) {
                 const indeksBln = dObj.getMonth();
                 document.getElementById("f-bulan").value = listNamaBulan[indeksBln];
-                document.getElementById("f-id-transaksi").value = generateOtomatisIDTransaksi(tanggalString);
             }
         }
 
@@ -614,6 +574,7 @@
                 if (judulModal) judulModal.innerText = "Input Kas Penerimaan Baru";
                 const formObj = document.getElementById("elemenFormInput");
                 if (formObj) formObj.reset();
+                document.getElementById("f-id-transaksi").value = "";
                 
                 try {
                     const d = new Date();
@@ -622,10 +583,9 @@
                     const hari = String(d.getDate()).padStart(2, '0');
                     const tglString = `${tahun}-${bulan}-${hari}`;
                     document.getElementById("f-tanggal").value = tglString;
-                    otomatisIsiBulanDanID(tglString);
+                    otomatisIsiBulan(tglString);
                 } catch (err) { 
                     console.warn(err); 
-                    document.getElementById("f-id-transaksi").value = generateOtomatisIDTransaksi(null);
                 }
             }
         }
@@ -822,7 +782,6 @@
             if (kataKunci !== "") {
                 dataSaringan = dataSaringan.filter(item => {
                     const gabunganTeks = `
-                        ${item.id_transaksi || ''} 
                         ${item.bulan || ''} 
                         ${item.tanggal || ''} 
                         ${item.uraian || ''} 
@@ -849,7 +808,7 @@
             let totalKasSaringan = 0, nominalTunai = 0, nominalNonTunai = 0;
             let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lainlain": 0 };
 
-            dataArray.forEach(item => {
+            dataArray.forEach((item, index) => {
                 const nominal = Number(item.jumlah) || 0;
                 const textUraian = (item.uraian || "").trim().toLowerCase();
                 totalKasSaringan += nominal;
@@ -869,7 +828,7 @@
 
                 tBody.innerHTML += `
                     <tr class="hover:bg-cikasda-bg/60 transition-colors border-b border-cikasda-bg font-bold">
-                        <td class="p-4 text-center font-mono font-black text-cikasda-blue">${item.id_transaksi || '-'}</td>
+                        <td class="p-4 text-center font-mono font-black text-cikasda-blue">${index + 1}</td>
                         <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
                         <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
                         <td class="p-4 text-left font-extrabold text-xs text-cikasda-blue">${item.uraian || '-'}</td>
@@ -878,7 +837,7 @@
                         <td class="p-4 text-right font-mono font-black text-cikasda-blue">${konversiKeRupiah(nominal)}</td>
                         <td class="p-4 text-center"><span class="px-2.5 py-1 rounded text-[10px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
                         <td class="p-4 text-center">
-                            <button onclick="bukaModalForm('${item.id_transaksi}')" class="bg-cikasda-blue hover:bg-cikasda-lightblue text-white px-3 py-1.5 rounded-lg text-[10px] shadow transition flex items-center justify-center gap-1 mx-auto">
+                            <button onclick="bukaModalForm('${item.id_transaksi || index}')" class="bg-cikasda-blue hover:bg-cikasda-lightblue text-white px-3 py-1.5 rounded-lg text-[10px] shadow transition flex items-center justify-center gap-1 mx-auto">
                                 <i class="fa-solid fa-pen-to-square"></i> Edit
                             </button>
                         </td>
@@ -978,7 +937,6 @@
             }
             const dataSheet = gudangDataLokal.map((item, index) => ({
                 "No": index + 1,
-                "ID Transaksi": item.id_transaksi || "-",
                 "Bulan": item.bulan || "-",
                 "Tanggal": item.tanggal || "-",
                 "Uraian Sewa": item.uraian || "-",
@@ -1048,7 +1006,6 @@
 
             const tableRows = dataPDF.map((item, index) => [
                 index + 1,
-                item.id_transaksi || "-",
                 item.bulan || "-",
                 item.tanggal || "-",
                 item.uraian || "-",
@@ -1059,12 +1016,12 @@
 
             doc.autoTable({
                 startY: currentY,
-                head: [['No', 'ID Transaksi', 'Bulan', 'Tanggal', 'Uraian Sewa', 'Penyetor', 'Jumlah (Rp)', 'Mekanisme']],
+                head: [['No', 'Bulan', 'Tanggal', 'Uraian Sewa', 'Penyetor', 'Jumlah (Rp)', 'Mekanisme']],
                 body: tableRows,
                 theme: 'grid',
                 headStyles: { fillColor: [8, 51, 112] },
                 styles: { fontSize: 8 },
-                columnStyles: { 6: { font: 'courier', fontStyle: 'bold' } },
+                columnStyles: { 5: { font: 'courier', fontStyle: 'bold' } },
                 margin: { left: 14, right: 14 }
             });
 
@@ -1103,7 +1060,7 @@
             if (tombol) { tombol.disabled = true; tombol.innerText = "Memverifikasi PIN ke Cloud..."; }
 
             const paketData = {
-                id_transaksi: idTransaksiEdit || generateOtomatisIDTransaksi(document.getElementById("f-tanggal").value),
+                id_transaksi: idTransaksiEdit || "",
                 bulan: document.getElementById("f-bulan").value,
                 tanggal: document.getElementById("f-tanggal").value,
                 hari: "-",
