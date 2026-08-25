@@ -82,7 +82,6 @@
 
     <main class="flex-1 w-full max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
 
-        <!-- Panel Filter dan Pencarian Otomatis Real-Time -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-cikasda-cardbg p-4 rounded-2xl glass-panel">
             <div>
                 <label class="block text-[10px] font-black uppercase text-cikasda-blue mb-1"><i class="fa-solid fa-filter text-cikasda-yellow"></i> Filter Berdasarkan Bulan</label>
@@ -215,18 +214,15 @@
                             <span id="target-pelataran" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 1.500.000</span>
                         </div>
                     </div>
-                    <!-- KARTU SEWA LAIN-LAIN DIKEMBALIKAN -->
+                    <!-- KARTU SEWA LAIN-LAIN (TULISAN POS PAD SAH DIHAPUS) -->
                     <div class="glass-panel p-4 rounded-xl border-t-4 border-amber-500 bg-cikasda-cardbg space-y-2 sm:col-span-2 lg:col-span-3">
                         <div class="flex justify-between items-start">
-                            <span class="text-[10px] font-bold text-cikasda-lightblue uppercase"><i class="fa-solid fa-folder-open text-amber-500 mr-1"></i> Sewa Lain-Lain (Penerimaan Daerah)</span>
+                            <span class="text-[10px] font-bold text-cikasda-lightblue uppercase"><i class="fa-solid fa-folder-open text-amber-500 mr-1"></i> Sewa Lain-Lain</span>
                             <span id="pct-lainlain" class="text-[10px] font-black font-mono bg-amber-100 text-amber-900 px-2 py-0.5 rounded">0.00%</span>
                         </div>
-                        <div class="flex justify-between items-end">
-                            <div>
-                                <span id="pos-lainlain" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                                <span id="target-lainlain" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 1.360.000</span>
-                            </div>
-                            <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded border border-amber-200">Pos PAD Sah</span>
+                        <div>
+                            <span id="pos-lainlain" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
+                            <span id="target-lainlain" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 1.360.000</span>
                         </div>
                     </div>
                 </div>
@@ -278,7 +274,7 @@
         </div>
     </main>
 
-    <!-- Modal Form Transaksi (INPUT HARI DIHAPUS) -->
+    <!-- Modal Form Transaksi -->
     <div id="modalFormTransaksi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -567,7 +563,7 @@
             if (!canvasDonat) return;
             const ctxD = canvasDonat.getContext('2d');
 
-            // Susun data mentah terlebih dahulu untuk diurutkan dari tertinggi ke terendah
+            // Susun data mentah lalu diurutkan otomatis dari persentase tertinggi ke terendah
             let rawDataKategori = [
                 { label: 'Rumah Dinas', value: breakdownSewa.rumah || 0, color: '#083370' },
                 { label: 'Sewa Kantin', value: breakdownSewa.kantin || 0, color: '#f1c40f' },
@@ -578,7 +574,7 @@
                 { label: 'Sewa Lain-Lain', value: breakdownSewa.lainlain || 0, color: '#d97706' }
             ];
 
-            // Sorting otomatis dari nilai terbesar ke terkecil (Tertinggi -> Terendah)
+            // Algoritma sorting dari nilai terbesar ke terkecil (Tertinggi -> Terendah)
             rawDataKategori.sort((a, b) => b.value - a.value);
 
             const labelsTerurut = rawDataKategori.map(item => item.label);
@@ -742,7 +738,7 @@
                 else if (textUraian.includes("pelataran")) breakdownSewa.pelataran += nominal;
                 else if (textUraian.includes("masjid")) breakdownSewa.masjid += nominal;
                 else if (textUraian.includes("lain-lain") || textUraian.includes("lain")) breakdownSewa.lainlain += nominal;
-                else breakdownSewa.lainlain += nominal; // Fallback mapping ke lain-lain jika uraian khusus
+                else breakdownSewa.lainlain += nominal;
 
                 const warnaBadge = mekanisme.toLowerCase() === "tunai" ? "bg-amber-100 text-cikasda-blue border border-cikasda-yellow" : "bg-blue-100 text-cikasda-blue border border-blue-200";
 
@@ -905,7 +901,6 @@
                 margin: { left: 14, right: 14 }
             });
 
-            // Tanda Tangan Bendahara Penerima di PDF
             let finalY = doc.lastAutoTable.finalY + 15;
             const pageHeight = doc.internal.pageSize.getHeight();
             if (finalY > pageHeight - 45) {
@@ -944,7 +939,7 @@
                 id_transaksi: (idTransaksiEdit && idTransaksiEdit !== "(Otomatis Sistem)") ? idTransaksiEdit : "",
                 bulan: document.getElementById("f-bulan").value,
                 tanggal: document.getElementById("f-tanggal").value,
-                hari: "-", // Hari dihilangkan dari input form
+                hari: "-",
                 uraian: document.getElementById("f-uraian").value,
                 penyetor: document.getElementById("f-penyetor").value,
                 sesi_waktu: "-",
