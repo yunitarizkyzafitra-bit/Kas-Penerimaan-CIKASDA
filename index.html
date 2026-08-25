@@ -563,7 +563,6 @@
             if (!canvasDonat) return;
             const ctxD = canvasDonat.getContext('2d');
 
-            // Susun data mentah lalu diurutkan otomatis dari persentase tertinggi ke terendah
             let rawDataKategori = [
                 { label: 'Rumah Dinas', value: breakdownSewa.rumah || 0, color: '#083370' },
                 { label: 'Sewa Kantin', value: breakdownSewa.kantin || 0, color: '#f1c40f' },
@@ -574,14 +573,18 @@
                 { label: 'Sewa Lain-Lain', value: breakdownSewa.lainlain || 0, color: '#d97706' }
             ];
 
-            // Algoritma sorting dari nilai terbesar ke terkecil (Tertinggi -> Terendah)
+            // Sorting persentase dari tertinggi ke terendah secara otomatis
             rawDataKategori.sort((a, b) => b.value - a.value);
 
-            const labelsTerurut = rawDataKategori.map(item => item.label);
+            const totalSemua = rawDataKategori.reduce((sum, item) => sum + item.value, 0);
+
+            const labelsTerurut = rawDataKategori.map(item => {
+                const pct = totalSemua > 0 ? ((item.value / totalSemua) * 100).toFixed(1) : 0;
+                return `${item.label} (${pct}%)`;
+            });
+
             const dataNilaiTerurut = rawDataKategori.map(item => item.value);
             const warnaTerurut = rawDataKategori.map(item => item.color);
-
-            const totalSemua = dataNilaiTerurut.reduce((a, b) => a + b, 0);
 
             if (infoTertinggi) {
                 if (totalSemua > 0 && rawDataKategori[0].value > 0) {
@@ -617,14 +620,37 @@
                     plugins: {
                         legend: {
                             position: 'bottom',
-                            labels: { boxWidth: 10, font: { size: 9, weight: 'bold' }, color: '#083370' }
+                            labels: { 
+                                boxWidth: 10, 
+                                font: { size: 9, weight: 'bold' }, 
+                                color: '#083370',
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map((label, i) => {
+                                            const val = data.datasets[0].data[i];
+                                            const percentage = totalSemua > 0 ? ((val / totalSemua) * 100).toFixed(1) : 0;
+                                            return {
+                                                text: `${rawDataKategori[i].label}: ${percentage}%`,
+                                                fillStyle: data.datasets[0].backgroundColor[i],
+                                                strokeStyle: '#ffffff',
+                                                lineWidth: 2,
+                                                hidden: false,
+                                                index: i
+                                            };
+                                        });
+                                    }
+                                    return [];
+                                }
+                            }
                         },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
                                     const val = context.raw || 0;
                                     const pct = totalSemua > 0 ? ((val / totalSemua) * 100).toFixed(2) : 0;
-                                    return ` ${context.label}: Rp ${val.toLocaleString('id-ID')} (${pct}%)`;
+                                    const rawName = rawDataKategori[context.dataIndex].label;
+                                    return ` ${rawName}: Rp ${val.toLocaleString('id-ID')} (${pct}%)`;
                                 }
                             }
                         }
