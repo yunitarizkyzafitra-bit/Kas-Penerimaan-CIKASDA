@@ -111,7 +111,8 @@
                     <h2 id="grand-total" class="text-3xl font-black text-cikasda-blue font-mono tracking-wider mt-3">Rp 0</h2>
                     
                     <div style="font-size: 11px; margin-top: 8px;" class="font-bold text-cikasda-lightblue/80">
-                        <div id="persen-capaian-pad" class="text-emerald-700 mt-1 font-mono font-black text-sm">Capaian Realisasi PAD 2026</div>
+                        <div class="text-gray-600 font-mono">Target PAD: <span class="font-black text-cikasda-blue">Rp 21.360.000 / Tahun</span></div>
+                        <div id="persen-capaian-pad" class="text-emerald-700 mt-1 font-mono font-black text-sm">Capaian Realisasi: 0.00%</div>
                     </div>
                 </div>
 
@@ -519,7 +520,7 @@
             masjid: 0,
             pelataran: 0
         };
-        const TARGET_PAD_UTAMA = Object.values(TARGET_OBJEK_RESMI).reduce((a, b) => a + b, 0);
+        const TARGET_PAD_UTAMA = 21360000;
 
         let gudangDataLokal = [];
         let instanceGrafikPAD = null;
@@ -857,7 +858,7 @@
             let capaianPersen = TARGET_PAD_UTAMA > 0 ? ((totalKasSaringan / TARGET_PAD_UTAMA) * 100).toFixed(2) : "0.00";
 
             document.getElementById("grand-total").innerText = konversiKeRupiah(totalKasSaringan);
-            document.getElementById("persen-capaian-pad").innerText = "Capaian Realisasi: " + capaianPersen + "% dari Target Utama";
+            document.getElementById("persen-capaian-pad").innerText = "Capaian Realisasi: " + capaianPersen + "%";
             document.getElementById("total-tunai").innerText = konversiKeRupiah(nominalTunai);
             document.getElementById("total-nontunai").innerText = konversiKeRupiah(nominalNonTunai);
 
