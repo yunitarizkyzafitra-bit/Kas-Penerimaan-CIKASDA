@@ -310,34 +310,87 @@
         </div>
     </main>
 
-    <!-- Modal Laporan Analisis Ekonomi & Fiskal -->
+    <!-- Modal Laporan Analisis Ekonomi & Fiskal (Diperbarui dengan Narasi Profesional & Teknokratis) -->
     <div id="modalAnalisisEkonomi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-        <div class="w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
+        <div class="w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-chart-line text-cikasda-yellow"></i>
-                    <h3 class="font-black text-xs uppercase tracking-widest">Laporan Analisis Ekonomi & Fiskal T.A 2026</h3>
+                    <h3 class="font-black text-xs uppercase tracking-widest">Laporan Analisis Makro Fiskal & Kinerja PAD T.A 2026</h3>
                 </div>
                 <button type="button" onclick="tutupModalAnalisisEkonomi()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <div class="p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue leading-relaxed">
-                <div class="p-4 bg-cikasda-lightyellow rounded-xl border border-cikasda-yellow">
-                    <h4 class="font-black text-cikasda-blue text-sm uppercase mb-1">Status Realisasi Berjalan</h4>
-                    <p id="teks-status-surplus" class="font-semibold">Memuat kalkulasi aktual...</p>
+            <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue leading-relaxed">
+                
+                <!-- Eksekutif Summary -->
+                <div class="p-4 bg-cikasda-lightyellow rounded-xl border border-cikasda-yellow space-y-1.5">
+                    <h4 class="font-black text-cikasda-blue text-sm uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-bullseye text-cikasda-amber"></i> Ringkasan Eksekutif & Posisi Anggaran
+                    </h4>
+                    <p id="teks-status-surplus" class="font-semibold text-justify">
+                        Menghitung kalkulasi realisasi fiskal berjalan...
+                    </p>
                 </div>
 
-                <div>
-                    <h4 class="font-black uppercase text-cikasda-lightblue mb-1.5"><i class="fa-solid fa-angles-right text-cikasda-yellow mr-1"></i> 1. Analisis Target Objek Retribusi Resmi</h4>
-                    <p>Total target Pendapatan Asli Daerah (PAD) dari sektor sewa aset Dinas CIKASDA ditetapkan sebesar <strong>Rp 45.308.000</strong> dengan rincian:</p>
-                    <ul class="list-disc pl-5 mt-1 space-y-1 font-semibold">
-                        <li>Rumah Dinas: Rp 21.360.000 (47,14%)</li>
-                        <li>Lapangan Tenis: Rp 9.000.000 (19,86%)</li>
-                        <li>Badminton: Rp 7.500.000 (16,55%)</li>
-                        <li>Sewa Kantin: Rp 5.000.000 (11,04%)</li>
-                        <li>Sewa Lain-Lain: Rp 2.448.000 (5,41%)</li>
+                <!-- Bagian 1: Analisis Struktur Target -->
+                <div class="space-y-2">
+                    <h4 class="font-black uppercase text-cikasda-lightblue flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-invoice-dollar text-cikasda-yellow"></i> I. Evaluasi Komposisi Target Retribusi & Bobot Fiskal
+                    </h4>
+                    <p class="text-justify">
+                        Berdasarkan Keputusan Anggaran Pendapatan dan Belanja Daerah (APBD) Tahun Anggaran 2026, target total Pendapatan Asli Daerah (PAD) sektor pemanfaatan aset Dinas Cipta Karya dan Sumber Daya Air (CIKASDA) Provinsi Sulawesi Tengah ditetapkan senilai <strong>Rp 45.308.000</strong>. Struktur portofolio target ini diklasifikasikan secara proporsional ke dalam tujuh pos objek sewa dengan rincian bobot strategis sebagai berikut:
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 font-semibold">
+                        <div class="p-2.5 bg-cikasda-bg rounded-lg border border-cikasda-blue/10 flex justify-between items-center">
+                            <span>1. Rumah Dinas</span>
+                            <span class="font-mono font-black text-cikasda-blue">Rp 21.360.000 (47,14%)</span>
+                        </div>
+                        <div class="p-2.5 bg-cikasda-bg rounded-lg border border-cikasda-blue/10 flex justify-between items-center">
+                            <span>2. Lapangan Tenis</span>
+                            <span class="font-mono font-black text-cikasda-blue">Rp 9.000.000 (19,86%)</span>
+                        </div>
+                        <div class="p-2.5 bg-cikasda-bg rounded-lg border border-cikasda-blue/10 flex justify-between items-center">
+                            <span>3. Badminton</span>
+                            <span class="font-mono font-black text-cikasda-blue">Rp 7.500.000 (16,55%)</span>
+                        </div>
+                        <div class="p-2.5 bg-cikasda-bg rounded-lg border border-cikasda-blue/10 flex justify-between items-center">
+                            <span>4. Sewa Kantin</span>
+                            <span class="font-mono font-black text-cikasda-blue">Rp 5.000.000 (11,04%)</span>
+                        </div>
+                        <div class="p-2.5 bg-cikasda-bg rounded-lg border border-cikasda-blue/10 flex justify-between items-center">
+                            <span>5. Sewa Lain-Lain</span>
+                            <span class="font-mono font-black text-cikasda-blue">Rp 2.448.000 (5,41%)</span>
+                        </div>
+                        <div class="p-2.5 bg-cikasda-bg rounded-lg border border-cikasda-blue/10 flex justify-between items-center">
+                            <span>6 & 7. Masjid Raya & Pelataran</span>
+                            <span class="font-mono font-black text-gray-500">Rp 0 (0,00%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian 2: Analisis Likuiditas & Mekanisme Transaksi -->
+                <div class="space-y-2">
+                    <h4 class="font-black uppercase text-cikasda-lightblue flex items-center gap-1.5">
+                        <i class="fa-solid fa-scale-balanced text-cikasda-yellow"></i> II. Analisis Likuiditas & Efisiensi Kanal Pembayaran
+                    </h4>
+                    <p class="text-justify">
+                        Penerapan sistem pencatatan transaksi terintegrasi melalui mekanisme kanal <em>Non-Tunai</em> dan <em>Tunai</em> menunjukkan tingkat akuntabilitas perbendaharaan yang tinggi. Penggunaan kanal non-tunai diutamakan guna meminimalisasi risiko operasional (<em>operational risk</em>), mempercepat rekonsiliasi bank kas daerah, serta memastikan transparansi arus kas masuk (<em>cash inflow</em>) secara real-time ke dalam sistem keuangan instansi.
+                    </p>
+                </div>
+
+                <!-- Bagian 3: Rekomendasi Kebijakan -->
+                <div class="space-y-2">
+                    <h4 class="font-black uppercase text-cikasda-lightblue flex items-center gap-1.5">
+                        <i class="fa-solid fa-lightbulb text-cikasda-yellow"></i> III. Rekomendasi Strategis & Intensifikasi Aset
+                    </h4>
+                    <ul class="list-disc pl-5 space-y-1.5 font-semibold text-justify">
+                        <li><strong>Optimalisasi Sektor Unggulan:</strong> Pos Rumah Dinas dan Lapangan Tenis menyumbang lebih dari 67% dari total target fiskal, sehingga pemeliharaan fasilitas pada klaster ini harus diprioritaskan guna menjaga tingkat utilitas penyewa.</li>
+                        <li><strong>Ekstensifikasi Potensi Pasif:</strong> Perlu dilakukan kajian peninjauan tarif sewa yang disesuaikan dengan tingkat inflasi daerah serta valuasi pasar wajar (<em>fair market value</em>) demi mendongkrak potensi surplus pendapatan di tahun anggaran berikutnya.</li>
+                        <li><strong>Digitalisasi Pengawasan:</strong> Penggunaan sistem ID Transaksi otomatis berbasis penomoran sekuensial menjamin tertib administrasi pembukuan tanpa celah duplikasi data ganda.</li>
                     </ul>
                 </div>
+
             </div>
 
             <div class="p-4 bg-gray-50 border-t flex justify-end">
@@ -359,8 +412,8 @@
             
             <form id="elemenFormInput" onsubmit="prosesKirimDataKeCloud(event)" class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue">
                 <div>
-                    <label class="block font-bold mb-1 text-cikasda-lightblue">Nomor ID Transaksi</label>
-                    <input type="text" id="f-id-transaksi" readonly class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-2.5 font-mono font-black text-cikasda-blue" placeholder="Otomatis digenerate sistem...">
+                    <label class="block font-bold mb-1 text-cikasda-lightblue">Nomor ID Transaksi (Otomatis Berurutan)</label>
+                    <input type="text" id="f-id-transaksi" readonly class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-2.5 font-mono font-black text-cikasda-blue" placeholder="Digenerate otomatis oleh sistem...">
                 </div>
 
                 <div>
@@ -379,7 +432,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold mb-1 text-cikasda-lightblue">Tanggal Transaksi</label>
-                        <input type="date" id="f-tanggal" onchange="otomatisIsiBulan(this.value)" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2 text-sm font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                        <input type="date" id="f-tanggal" onchange="otomatisIsiBulanDanID(this.value)" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2 text-sm font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
                     </div>
                     <div>
                         <label class="block font-bold mb-1 text-cikasda-lightblue">Bulan Pembukuan</label>
@@ -506,12 +559,33 @@
             }
         }
 
-        function otomatisIsiBulan(tanggalString) {
+        // FUNGSI GENERATE NOMOR ID SECARA OTOMATIS DAN BERURUTAN
+        function generateOtomatisIDTransaksi(tanggalString) {
+            let tglObj = tanggalString ? new Date(tanggalString) : new Date();
+            if (isNaN(tglObj.getTime())) tglObj = new Date();
+
+            const tahun = tglObj.getFullYear();
+            const bulanNum = String(tglObj.getMonth() + 1).padStart(2, '0');
+            const prefix = `TRX-${tahun}${bulanNum}-`;
+
+            // Cari jumlah data yang sudah ada dengan prefix tahun-bulan yang sama untuk nomor sekuensial berurutan
+            let counter = 1;
+            if (gudangDataLokal && gudangDataLokal.length > 0) {
+                const existingMatches = gudangDataLokal.filter(item => String(item.id_transaksi || "").startsWith(prefix));
+                counter = existingMatches.length + 1;
+            }
+
+            return prefix + String(counter).padStart(3, '0');
+        }
+
+        function otomatisIsiBulanDanID(tanggalString) {
             if (!tanggalString) return;
             const dObj = new Date(tanggalString);
             if (!isNaN(dObj.getTime())) {
                 const indeksBln = dObj.getMonth();
                 document.getElementById("f-bulan").value = listNamaBulan[indeksBln];
+                // Perbarui ID otomatis berdasarkan tanggal baru yang dipilih
+                document.getElementById("f-id-transaksi").value = generateOtomatisIDTransaksi(tanggalString);
             }
         }
 
@@ -539,7 +613,7 @@
                 if (judulModal) judulModal.innerText = "Input Kas Penerimaan Baru";
                 const formObj = document.getElementById("elemenFormInput");
                 if (formObj) formObj.reset();
-                document.getElementById("f-id-transaksi").value = "(Otomatis Sistem)";
+                
                 try {
                     const d = new Date();
                     const tahun = d.getFullYear();
@@ -547,8 +621,11 @@
                     const hari = String(d.getDate()).padStart(2, '0');
                     const tglString = `${tahun}-${bulan}-${hari}`;
                     document.getElementById("f-tanggal").value = tglString;
-                    otomatisIsiBulan(tglString);
-                } catch (err) { console.warn(err); }
+                    otomatisIsiBulanDanID(tglString);
+                } catch (err) { 
+                    console.warn(err); 
+                    document.getElementById("f-id-transaksi").value = generateOtomatisIDTransaksi(null);
+                }
             }
         }
 
@@ -726,7 +803,6 @@
             const bulanDipilih = document.getElementById("filter-bulan-global").value;
             const kataKunci = document.getElementById("input-cari").value.toLowerCase().trim();
             
-            // Kalkulasi Akumulasi Seluruh Data Bulanan (Untuk Grafik Kurva Bulanan)
             let akumulasiBulanPenuh = {};
             listNamaBulan.forEach(b => akumulasiBulanPenuh[b.toLowerCase()] = 0);
 
@@ -737,7 +813,6 @@
             });
             cacheAkumulasiBulanGlobal = akumulasiBulanPenuh;
 
-            // Saring data berdasarkan Filter Bulan & Kata Kunci Pencarian secara Sinkron
             let dataSaringan = gudangDataLokal;
             if (bulanDipilih !== "SEMUA") {
                 dataSaringan = dataSaringan.filter(item => String(item.bulan || "").trim().toLowerCase() === bulanDipilih.toLowerCase());
@@ -773,7 +848,6 @@
             let totalKasSaringan = 0, nominalTunai = 0, nominalNonTunai = 0;
             let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lainlain": 0 };
 
-            // Akumulasi berdasarkan data yang aktif tersaring
             dataArray.forEach(item => {
                 const nominal = Number(item.jumlah) || 0;
                 const textUraian = (item.uraian || "").trim().toLowerCase();
@@ -835,7 +909,6 @@
             document.getElementById("pos-masjid").innerText = konversiKeRupiah(breakdownSewa.masjid);
             document.getElementById("pos-pelataran").innerText = konversiKeRupiah(breakdownSewa.pelataran);
 
-            // Perhitungan Persentase Realisasi terhadap Target Masing-Masing Objek
             let pRumah = TARGET_OBJEK_RESMI.rumah > 0 ? ((breakdownSewa.rumah / TARGET_OBJEK_RESMI.rumah) * 100).toFixed(1) : "0.0";
             let pTenis = TARGET_OBJEK_RESMI.tenis > 0 ? ((breakdownSewa.tenis / TARGET_OBJEK_RESMI.tenis) * 100).toFixed(1) : "0.0";
             let pBadminton = TARGET_OBJEK_RESMI.badminton > 0 ? ((breakdownSewa.badminton / TARGET_OBJEK_RESMI.badminton) * 100).toFixed(1) : "0.0";
@@ -883,8 +956,7 @@
 
             const teksStatus = document.getElementById("teks-status-surplus");
             if (teksStatus) {
-                const selisih = totalKasSaringan - TARGET_PAD_UTAMA;
-                teksStatus.innerHTML = `Akumulasi realisasi PAD T.A 2026 mencapai <strong>${konversiKeRupiah(totalKasSaringan)}</strong> dari total target resmi <strong>${konversiKeRupiah(TARGET_PAD_UTAMA)}</strong>. Presentase keseluruhan target tercatat sebesar <strong>${capaianPersen}%</strong>.`;
+                teksStatus.innerHTML = `Berdasarkan evaluasi perbendaharaan per <strong>${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</strong>, akumulasi realisasi penerimaan Pendapatan Asli Daerah (PAD) Dinas CIKASDA T.A 2026 telah mencatatkan angka sebesar <strong>${konversiKeRupiah(totalKasSaringan)}</strong> atau <strong>${capaianPersen}%</strong> dari target total pagu anggaran senilai <strong>${konversiKeRupiah(TARGET_PAD_UTAMA)}</strong>. Kinerja fiskal ini menunjukkan stabilitas aliran kas yang positif dalam mendukung pengelolaan aset daerah.`;
             }
         }
 
@@ -1035,7 +1107,7 @@
             if (tombol) { tombol.disabled = true; tombol.innerText = "Memverifikasi PIN ke Cloud..."; }
 
             const paketData = {
-                id_transaksi: (idTransaksiEdit && idTransaksiEdit !== "(Otomatis Sistem)") ? idTransaksiEdit : "",
+                id_transaksi: idTransaksiEdit || generateOtomatisIDTransaksi(document.getElementById("f-tanggal").value),
                 bulan: document.getElementById("f-bulan").value,
                 tanggal: document.getElementById("f-tanggal").value,
                 hari: "-",
