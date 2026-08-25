@@ -101,20 +101,22 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass-panel rounded-2xl p-6 relative overflow-hidden border-l-4 border-cikasda-yellow bg-cikasda-cardbg">
-                <div class="absolute -right-4 -bottom-4 text-cikasda-bg text-7xl font-black opacity-40"><i class="fa-solid fa-wallet text-cikasda-lightblue"></i></div>
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-cikasda-lightblue block">TOTAL KAS PENERIMAAN PAD</span>
-                <h2 id="grand-total" class="text-3xl font-black text-cikasda-blue font-digital tracking-wider mt-3">Rp 0</h2>
-                
-                <div style="font-size: 11px; margin-top: 8px;" class="font-bold text-cikasda-lightblue/80">
-                    <div id="target-pad-tahun">Target PAD: Rp 21.360.000</div>
-                    <div id="persen-capaian-pad" class="text-cikasda-lightblue mt-0.5">Capaian Target: 0.00%</div>
+            <div class="glass-panel rounded-2xl p-6 relative overflow-hidden border-l-4 border-cikasda-yellow bg-cikasda-cardbg flex flex-col justify-between">
+                <div>
+                    <div class="absolute -right-4 -bottom-4 text-cikasda-bg text-7xl font-black opacity-40"><i class="fa-solid fa-wallet text-cikasda-lightblue"></i></div>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cikasda-lightblue block">TOTAL KAS PENERIMAAN PAD</span>
+                    <h2 id="grand-total" class="text-3xl font-black text-cikasda-blue font-mono tracking-wider mt-3">Rp 0</h2>
+                    
+                    <div style="font-size: 11px; margin-top: 8px;" class="font-bold text-cikasda-lightblue/80">
+                        <div id="target-pad-tahun">Target PAD: Rp 21.360.000</div>
+                        <div id="persen-capaian-pad" class="text-cikasda-lightblue mt-0.5 font-mono">Capaian Target: 0.00%</div>
+                    </div>
                 </div>
 
                 <div class="flex items-center gap-4 mt-4 text-[11px] font-bold border-t border-cikasda-bg pt-3 text-cikasda-lightblue">
-                    <div>Tunai: <span id="total-tunai" class="text-cikasda-blue">Rp 0</span></div>
+                    <div>Tunai: <span id="total-tunai" class="text-cikasda-blue font-mono">Rp 0</span></div>
                     <div class="w-px h-3 bg-cikasda-yellow"></div>
-                    <div>Non-Tunai: <span id="total-nontunai" class="text-cikasda-blue">Rp 0</span></div>
+                    <div>Non-Tunai: <span id="total-nontunai" class="text-cikasda-blue font-mono">Rp 0</span></div>
                 </div>
             </div>
 
@@ -131,83 +133,91 @@
             </div>
         </div>
 
-        <section class="space-y-3">
-            <h3 class="text-xs font-black uppercase tracking-widest text-cikasda-blue flex items-center gap-2 pl-1">
-                <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Akumulasi Saldo, Target, & Persentase Per Kategori Uraian Sewa
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="glass-panel p-4 rounded-xl border-t-4 border-cikasda-blue bg-cikasda-cardbg space-y-2">
-                    <div class="flex justify-between items-start">
-                        <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Rumah Dinas</span>
-                        <span id="pct-rumah" class="text-[10px] font-black bg-blue-100 text-cikasda-blue px-2 py-0.5 rounded">0.00%</span>
-                    </div>
-                    <div>
-                        <span id="pos-rumah" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                        <span id="target-rumah" class="text-[10px] font-semibold text-gray-500">Target: Rp 5.000.000</span>
-                    </div>
+        <!-- DIAGRAM DONAT & PERSENTASE TERTINGGI SEWA -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg flex flex-col justify-between">
+                <div class="border-b border-cikasda-bg pb-3">
+                    <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Proporsi Sewa & Tertinggi
+                    </h3>
+                    <p id="info-porsi-tertinggi" class="text-[10px] font-bold text-cikasda-lightblue mt-1">Kategori Tertinggi: Memuat...</p>
                 </div>
-                <div class="glass-panel p-4 rounded-xl border-t-4 border-cikasda-yellow bg-cikasda-cardbg space-y-2">
-                    <div class="flex justify-between items-start">
-                        <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Sewa Kantin</span>
-                        <span id="pct-kantin" class="text-[10px] font-black bg-yellow-100 text-cikasda-blue px-2 py-0.5 rounded">0.00%</span>
-                    </div>
-                    <div>
-                        <span id="pos-kantin" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                        <span id="target-kantin" class="text-[10px] font-semibold text-gray-500">Target: Rp 3.000.000</span>
-                    </div>
+                <div class="relative w-full h-[220px] my-3 flex items-center justify-center">
+                    <canvas id="canvasDonatSewa"></canvas>
                 </div>
-                <div class="glass-panel p-4 rounded-xl border-t-4 border-emerald-600 bg-cikasda-cardbg space-y-2">
-                    <div class="flex justify-between items-start">
-                        <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Lapangan Tenis</span>
-                        <span id="pct-tenis" class="text-[10px] font-black bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded">0.00%</span>
-                    </div>
-                    <div>
-                        <span id="pos-tenis" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                        <span id="target-tenis" class="text-[10px] font-semibold text-gray-500">Target: Rp 4.000.000</span>
-                    </div>
+                <div class="text-[10px] text-gray-500 text-center font-semibold border-t border-cikasda-bg pt-2">
+                    Persentase dihitung dari total akumulasi seluruh kategori sewa.
                 </div>
-                <div class="glass-panel p-4 rounded-xl border-t-4 border-indigo-600 bg-cikasda-cardbg space-y-2">
-                    <div class="flex justify-between items-start">
-                        <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Badminton</span>
-                        <span id="pct-badminton" class="text-[10px] font-black bg-indigo-100 text-indigo-900 px-2 py-0.5 rounded">0.00%</span>
+            </div>
+
+            <div class="lg:col-span-2 space-y-3">
+                <h3 class="text-xs font-black uppercase tracking-widest text-cikasda-blue flex items-center gap-2 pl-1">
+                    <i class="fa-solid fa-layer-group text-cikasda-yellow"></i> Akumulasi Saldo, Target, & Persentase Per Kategori Uraian Sewa
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="glass-panel p-4 rounded-xl border-t-4 border-cikasda-blue bg-cikasda-cardbg space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Rumah Dinas</span>
+                            <span id="pct-rumah" class="text-[10px] font-black font-mono bg-blue-100 text-cikasda-blue px-2 py-0.5 rounded">0.00%</span>
+                        </div>
+                        <div>
+                            <span id="pos-rumah" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
+                            <span id="target-rumah" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 5.000.000</span>
+                        </div>
                     </div>
-                    <div>
-                        <span id="pos-badminton" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                        <span id="target-badminton" class="text-[10px] font-semibold text-gray-500">Target: Rp 3.500.000</span>
+                    <div class="glass-panel p-4 rounded-xl border-t-4 border-cikasda-yellow bg-cikasda-cardbg space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Sewa Kantin</span>
+                            <span id="pct-kantin" class="text-[10px] font-black font-mono bg-yellow-100 text-cikasda-blue px-2 py-0.5 rounded">0.00%</span>
+                        </div>
+                        <div>
+                            <span id="pos-kantin" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
+                            <span id="target-kantin" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 3.000.000</span>
+                        </div>
                     </div>
-                </div>
-                <div class="glass-panel p-4 rounded-xl border-t-4 border-teal-600 bg-cikasda-cardbg space-y-2">
-                    <div class="flex justify-between items-start">
-                        <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Aula Masjid Raya</span>
-                        <span id="pct-masjid" class="text-[10px] font-black bg-teal-100 text-teal-900 px-2 py-0.5 rounded">0.00%</span>
+                    <div class="glass-panel p-4 rounded-xl border-t-4 border-emerald-600 bg-cikasda-cardbg space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Lapangan Tenis</span>
+                            <span id="pct-tenis" class="text-[10px] font-black font-mono bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded">0.00%</span>
+                        </div>
+                        <div>
+                            <span id="pos-tenis" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
+                            <span id="target-tenis" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 4.000.000</span>
+                        </div>
                     </div>
-                    <div>
-                        <span id="pos-masjid" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                        <span id="target-masjid" class="text-[10px] font-semibold text-gray-500">Target: Rp 3.000.000</span>
+                    <div class="glass-panel p-4 rounded-xl border-t-4 border-indigo-600 bg-cikasda-cardbg space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Badminton</span>
+                            <span id="pct-badminton" class="text-[10px] font-black font-mono bg-indigo-100 text-indigo-900 px-2 py-0.5 rounded">0.00%</span>
+                        </div>
+                        <div>
+                            <span id="pos-badminton" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
+                            <span id="target-badminton" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 3.500.000</span>
+                        </div>
                     </div>
-                </div>
-                <div class="glass-panel p-4 rounded-xl border-t-4 border-cyan-500 bg-cikasda-cardbg space-y-2">
-                    <div class="flex justify-between items-start">
-                        <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Pelataran Masjid</span>
-                        <span id="pct-pelataran" class="text-[10px] font-black bg-cyan-100 text-cyan-900 px-2 py-0.5 rounded">0.00%</span>
+                    <div class="glass-panel p-4 rounded-xl border-t-4 border-teal-600 bg-cikasda-cardbg space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Aula Masjid Raya</span>
+                            <span id="pct-masjid" class="text-[10px] font-black font-mono bg-teal-100 text-teal-900 px-2 py-0.5 rounded">0.00%</span>
+                        </div>
+                        <div>
+                            <span id="pos-masjid" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
+                            <span id="target-masjid" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 3.000.000</span>
+                        </div>
                     </div>
-                    <div>
-                        <span id="pos-pelataran" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                        <span id="target-pelataran" class="text-[10px] font-semibold text-gray-500">Target: Rp 1.500.000</span>
-                    </div>
-                </div>
-                <div class="glass-panel p-4 rounded-xl border-t-4 border-amber-600 bg-cikasda-cardbg space-y-2 sm:col-span-2 lg:col-span-2">
-                    <div class="flex justify-between items-start">
-                        <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Lain-Lain</span>
-                        <span id="pct-lain" class="text-[10px] font-black bg-amber-100 text-amber-900 px-2 py-0.5 rounded">0.00%</span>
-                    </div>
-                    <div>
-                        <span id="pos-lain" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                        <span id="target-lain" class="text-[10px] font-semibold text-gray-500">Target: Rp 1.360.000</span>
+                    <div class="glass-panel p-4 rounded-xl border-t-4 border-cyan-500 bg-cikasda-cardbg space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-cikasda-lightblue uppercase">Pelataran Masjid</span>
+                            <span id="pct-pelataran" class="text-[10px] font-black font-mono bg-cyan-100 text-cyan-900 px-2 py-0.5 rounded">0.00%</span>
+                        </div>
+                        <div>
+                            <span id="pos-pelataran" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
+                            <span id="target-pelataran" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 1.500.000</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
         <div class="glass-panel rounded-2xl p-4 flex flex-col bg-cikasda-cardbg">
             <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3 flex items-center gap-2">
@@ -349,22 +359,32 @@
         </div>
     </div>
 
-    <!-- Modal Pilihan Cetak PDF -->
+    <!-- Modal Pilihan Cetak PDF & Input Bendahara Penerima -->
     <div id="modalCetakPDF" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-        <div class="w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 bg-cikasda-cardbg border-2 border-cikasda-blue/10 p-5 space-y-4">
+        <div class="w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 bg-cikasda-cardbg border-2 border-cikasda-blue/10 p-5 space-y-4">
             <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
-                <h3 class="font-black text-xs uppercase text-cikasda-blue"><i class="fa-solid fa-file-pdf text-red-600 mr-1.5"></i> Konfigurasi Cetak PDF</h3>
+                <h3 class="font-black text-xs uppercase text-cikasda-blue"><i class="fa-solid fa-file-pdf text-red-600 mr-1.5"></i> Konfigurasi Cetak PDF & Tanda Tangan</h3>
                 <button type="button" onclick="tutupModalCetakPDF()" class="text-gray-500 hover:text-cikasda-blue"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div>
-                <label class="block font-bold text-[11px] text-cikasda-lightblue mb-1">Pilih Periode Cetak Laporan:</label>
-                <select id="pilihan-bulan-pdf" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-xs text-cikasda-blue">
-                    <option value="SEMUA">Semua Bulan (Full T.A 2026)</option>
-                    <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
-                    <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
-                    <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
-                    <option value="Oktober">Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
-                </select>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-cikasda-lightblue mb-1">Pilih Periode Cetak Laporan:</label>
+                    <select id="pilihan-bulan-pdf" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue">
+                        <option value="SEMUA">Semua Bulan (Full T.A 2026)</option>
+                        <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
+                        <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
+                        <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
+                        <option value="Oktober">Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-cikasda-lightblue mb-1">Nama Lengkap Bendahara Penerima:</label>
+                    <input type="text" id="pdf-nama-bendahara" value="Hj. Siti Rahma, S.E." class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-bold text-cikasda-blue" placeholder="Nama & Gelar Bendahara">
+                </div>
+                <div>
+                    <label class="block font-bold text-cikasda-lightblue mb-1">NIP Bendahara Penerima:</label>
+                    <input type="text" id="pdf-nip-bendahara" value="19820628 200501 2 008" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2.5 font-mono font-bold text-cikasda-blue" placeholder="Nomor Induk Pegawai (NIP)">
+                </div>
             </div>
             <div class="flex justify-end gap-2 pt-2">
                 <button type="button" onclick="tutupModalCetakPDF()" class="px-3 py-2 bg-gray-200 text-cikasda-blue font-bold rounded-xl text-xs">Batal</button>
@@ -384,13 +404,13 @@
             tenis: 4000000,
             badminton: 3500000,
             masjid: 3000000,
-            pelataran: 1500000,
-            lain: 1360000
+            pelataran: 1500000
         };
         const TARGET_TOTAL_PAD = 21360000;
 
         let gudangDataLokal = [];
         let instanceGrafikPAD = null;
+        let instanceDonatSewa = null;
         let cacheAkumulasiBulanGlobal = {};
 
         function konversiKeRupiah(angka) { return "Rp " + Number(angka).toLocaleString('id-ID'); }
@@ -528,9 +548,88 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { grid: { color: 'rgba(8, 51, 112, 0.04)' }, ticks: { callback: v => 'Rp ' + v.toLocaleString('id-ID'), color: '#083370', font: { size: 9, weight: 'bold' } } },
+                        y: { grid: { color: 'rgba(8, 51, 112, 0.04)' }, ticks: { callback: v => 'Rp ' + v.toLocaleString('id-ID'), color: '#083370', font: { size: 9, weight: 'bold', family: 'monospace' } } },
                         x: { grid: { display: false }, ticks: { color: '#083370', font: { size: 10, weight: 'bold' } } }
                     }
+                }
+            });
+        }
+
+        function gambarDiagramDonatSewa(breakdownSewa) {
+            const canvasDonat = document.getElementById('canvasDonatSewa');
+            const infoTertinggi = document.getElementById('info-porsi-tertinggi');
+            if (!canvasDonat) return;
+            const ctxD = canvasDonat.getContext('2d');
+
+            const labelKategori = ['Rumah Dinas', 'Sewa Kantin', 'Lapangan Tenis', 'Badminton', 'Aula Masjid Raya', 'Pelataran Masjid'];
+            const dataNilai = [
+                breakdownSewa.rumah || 0,
+                breakdownSewa.kantin || 0,
+                breakdownSewa.tenis || 0,
+                breakdownSewa.badminton || 0,
+                breakdownSewa.masjid || 0,
+                breakdownSewa.pelataran || 0
+            ];
+
+            const totalSemua = dataNilai.reduce((a, b) => a + b, 0);
+
+            // Cari kategori persentase tertinggi
+            let maxNilai = -1;
+            let maxIndex = 0;
+            dataNilai.forEach((val, idx) => {
+                if (val > maxNilai) {
+                    maxNilai = val;
+                    maxIndex = idx;
+                }
+            });
+
+            const porsiTertinggi = totalSemua > 0 ? ((maxNilai / totalSemua) * 100).toFixed(2) : 0;
+            if (infoTertinggi) {
+                if (totalSemua > 0) {
+                    infoTertinggi.innerHTML = `Tertinggi: <span class="text-cikasda-blue font-black">${labelKategori[maxIndex]}</span> (${porsiTertinggi}%)`;
+                } else {
+                    infoTertinggi.innerHTML = `Kategori Tertinggi: Belum ada transaksi`;
+                }
+            }
+
+            const warnaPalette = ['#083370', '#f1c40f', '#059669', '#4f46e5', '#0d9488', '#06b6d4'];
+
+            if (instanceDonatSewa) {
+                instanceDonatSewa.data.datasets[0].data = dataNilai;
+                instanceDonatSewa.update();
+                return;
+            }
+
+            instanceDonatSewa = new Chart(ctxD, {
+                type: 'doughnut',
+                data: {
+                    labels: labelKategori,
+                    datasets: [{
+                        data: dataNilai,
+                        backgroundColor: warnaPalette,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { boxWidth: 10, font: { size: 9, weight: 'bold' }, color: '#083370' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const val = context.raw || 0;
+                                    const pct = totalSemua > 0 ? ((val / totalSemua) * 100).toFixed(2) : 0;
+                                    return ` ${context.label}: Rp ${val.toLocaleString('id-ID')} (${pct}%)`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
                 }
             });
         }
@@ -563,7 +662,6 @@
             } finally { if (ikon) ikon.classList.remove("fa-spin"); }
         }
 
-        // FUNGSI UTAMA: Menggabungkan Filter Bulan dan Kolom Pencarian secara Real-Time Otomatis
         function jalankanPencarianDanFilterOtomatis() {
             const bulanDipilih = document.getElementById("filter-bulan-global").value;
             const kataKunci = document.getElementById("input-cari").value.toLowerCase().trim();
@@ -571,7 +669,6 @@
             let akumulasiBulan = {};
             listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
 
-            // Hitung keseluruhan data untuk grafik bulanan
             gudangDataLokal.forEach(item => {
                 const nominal = Number(item.jumlah) || 0;
                 const bln = (item.bulan || "").trim().toLowerCase();
@@ -579,13 +676,11 @@
             });
             cacheAkumulasiBulanGlobal = akumulasiBulan;
 
-            // Tahap 1: Saring berdasarkan Bulan terlebih dahulu
             let dataSaringan = gudangDataLokal;
             if (bulanDipilih !== "SEMUA") {
                 dataSaringan = gudangDataLokal.filter(item => String(item.bulan || "").trim().toLowerCase() === bulanDipilih.toLowerCase());
             }
 
-            // Tahap 2: Saring secara bersamaan berdasarkan Keyword Pencarian (Search)
             if (kataKunci !== "") {
                 dataSaringan = dataSaringan.filter(item => {
                     const gabunganTeks = `
@@ -614,11 +709,12 @@
             if (containerBulan) containerBulan.innerHTML = "";
 
             let totalKas = 0, nominalTunai = 0, nominalNonTunai = 0;
-            let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lain": 0 };
+            let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0 };
 
             if(!dataArray || dataArray.length === 0) {
                 tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data yang cocok dengan filter atau kata kunci pencarian.</td></tr>`;
                 gambarUlangGrafikPAD(akumulasiBulanPenuh, bulanFilterAktif);
+                gambarDiagramDonatSewa(breakdownSewa);
                 perbaruiTampilanAngka(0, 0, 0, breakdownSewa);
                 renderDaftarIkhtisarBulanan(akumulasiBulanPenuh);
                 return;
@@ -641,7 +737,7 @@
                 else if (textUraian.includes("badminton")) breakdownSewa.badminton += nominal;
                 else if (textUraian.includes("pelataran")) breakdownSewa.pelataran += nominal;
                 else if (textUraian.includes("masjid")) breakdownSewa.masjid += nominal;
-                else breakdownSewa.lain += nominal;
+                else breakdownSewa.rumah += nominal; // Default fallback
 
                 const warnaBadge = mekanisme.toLowerCase() === "tunai" ? "bg-amber-100 text-cikasda-blue border border-cikasda-yellow" : "bg-blue-100 text-cikasda-blue border border-blue-200";
 
@@ -664,6 +760,7 @@
             });
 
             gambarUlangGrafikPAD(akumulasiBulanPenuh, bulanFilterAktif);
+            gambarDiagramDonatSewa(breakdownSewa);
             perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa);
             renderDaftarIkhtisarBulanan(akumulasiBulanPenuh);
         }
@@ -677,7 +774,7 @@
             document.getElementById("total-tunai").innerText = konversiKeRupiah(nominalTunai);
             document.getElementById("total-nontunai").innerText = konversiKeRupiah(nominalNonTunai);
 
-            const kategoriArray = ['rumah', 'kantin', 'tenis', 'badminton', 'masjid', 'pelataran', 'lain'];
+            const kategoriArray = ['rumah', 'kantin', 'tenis', 'badminton', 'masjid', 'pelataran'];
             kategoriArray.forEach(kat => {
                 const nilaiAktual = breakdownSewa[kat] || 0;
                 const targetKat = TARGET_KATEGORI[kat] || 1;
@@ -731,6 +828,8 @@
         function eksporKePDFAction() {
             tutupModalCetakPDF();
             const bulanCetak = document.getElementById("pilihan-bulan-pdf").value;
+            const namaBendahara = document.getElementById("pdf-nama-bendahara").value || "Hj. Siti Rahma, S.E.";
+            const nipBendahara = document.getElementById("pdf-nip-bendahara").value || "19820628 200501 2 008";
 
             let dataPDF = gudangDataLokal;
             if (bulanCetak !== "SEMUA") {
@@ -770,7 +869,7 @@
                 body: tableBulananRows,
                 theme: 'grid',
                 headStyles: { fillColor: [27, 91, 163] },
-                styles: { fontSize: 8 },
+                styles: { fontSize: 8, font: 'helvetica' },
                 margin: { left: 14, right: 14 }
             });
 
@@ -798,8 +897,28 @@
                 theme: 'grid',
                 headStyles: { fillColor: [8, 51, 112] },
                 styles: { fontSize: 8 },
+                columnStyles: { 6: { font: 'courier', fontStyle: 'bold' } },
                 margin: { left: 14, right: 14 }
             });
+
+            // Tanda Tangan Bendahara Penerima
+            let finalY = doc.lastAutoTable.finalY + 15;
+            const pageHeight = doc.internal.pageSize.getHeight();
+            if (finalY > pageHeight - 45) {
+                doc.addPage();
+                finalY = 25;
+            }
+
+            const ttdX = 210; // Posisi sebelah kanan kertas Landscape A4 (297 mm)
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            doc.text("Palu, " + new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }), ttdX, finalY);
+            doc.text("Bendahara Penerima,", ttdX, finalY + 6);
+
+            doc.setFont('helvetica', 'bold');
+            doc.text(namaBendahara, ttdX, finalY + 30);
+            doc.setFont('helvetica', 'normal');
+            doc.text("NIP. " + nipBendahara, ttdX, finalY + 35);
 
             doc.save(`Laporan_MPAD_CIKASDA_${bulanCetak}.pdf`);
         }
