@@ -133,12 +133,12 @@
             </div>
         </div>
 
-        <!-- DIAGRAM DONAT & PERSENTASE TERTINGGI SEWA -->
+        <!-- DIAGRAM DONAT & PERSENTASE (TERTINGGI KE TERENDAH) -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg flex flex-col justify-between">
                 <div class="border-b border-cikasda-bg pb-3">
                     <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Proporsi Sewa & Tertinggi
+                        <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Proporsi Sewa (Tertinggi → Terendah)
                     </h3>
                     <p id="info-porsi-tertinggi" class="text-[10px] font-bold text-cikasda-lightblue mt-1">Kategori Tertinggi: Memuat...</p>
                 </div>
@@ -146,7 +146,7 @@
                     <canvas id="canvasDonatSewa"></canvas>
                 </div>
                 <div class="text-[10px] text-gray-500 text-center font-semibold border-t border-cikasda-bg pt-2">
-                    Persentase dihitung dari total akumulasi seluruh kategori sewa.
+                    Diagram otomatis diurutkan dari persentase terbesar ke terkecil.
                 </div>
             </div>
 
@@ -215,6 +215,20 @@
                             <span id="target-pelataran" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 1.500.000</span>
                         </div>
                     </div>
+                    <!-- KARTU SEWA LAIN-LAIN DIKEMBALIKAN -->
+                    <div class="glass-panel p-4 rounded-xl border-t-4 border-amber-500 bg-cikasda-cardbg space-y-2 sm:col-span-2 lg:col-span-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-cikasda-lightblue uppercase"><i class="fa-solid fa-folder-open text-amber-500 mr-1"></i> Sewa Lain-Lain (Penerimaan Daerah)</span>
+                            <span id="pct-lainlain" class="text-[10px] font-black font-mono bg-amber-100 text-amber-900 px-2 py-0.5 rounded">0.00%</span>
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <span id="pos-lainlain" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
+                                <span id="target-lainlain" class="text-[10px] font-semibold text-gray-500 font-mono">Target: Rp 1.360.000</span>
+                            </div>
+                            <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded border border-amber-200">Pos PAD Sah</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -248,8 +262,8 @@
                         <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
                             <th class="p-4 text-center w-28">ID Transaksi</th>
                             <th class="p-4 text-center w-24">Bulan</th>
-                            <th class="p-4 text-center w-28">Hari, Tanggal</th>
-                            <th class="p-4 w-40">Uraian Sewa</th>
+                            <th class="p-4 text-center w-36">Tanggal</th>
+                            <th class="p-4 w-44">Uraian Sewa</th>
                             <th class="p-4 w-44">Nama Penyetor</th>
                             <th class="p-4 w-48">Penjelasan Rekap</th>
                             <th class="p-4 text-right w-32">Jumlah (Rp)</th>
@@ -264,7 +278,7 @@
         </div>
     </main>
 
-    <!-- Modal Form Transaksi -->
+    <!-- Modal Form Transaksi (INPUT HARI DIHAPUS) -->
     <div id="modalFormTransaksi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -290,14 +304,14 @@
                         <option value="Sewa Lapangan Badminton">Sewa Lapangan Badminton</option>
                         <option value="Sewa Masjid Raya">Sewa Aula Masjid Raya</option>
                         <option value="Sewa Pelataran Masjid Raya">Sewa Pelataran Masjid Raya</option>
-                        <option value="Lainnya">Lainnya</option>
+                        <option value="Sewa Lain-Lain">Sewa Lain-Lain</option>
                     </select>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold mb-1 text-cikasda-lightblue">Tanggal Transaksi</label>
-                        <input type="date" id="f-tanggal" onchange="otomatisIsiHariDanBulan(this.value)" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2 text-sm font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
+                        <input type="date" id="f-tanggal" onchange="otomatisIsiBulan(this.value)" class="w-full bg-cikasda-bg border-2 border-cikasda-yellow/30 rounded-xl p-2 text-sm font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
                     </div>
                     <div>
                         <label class="block font-bold mb-1 text-cikasda-lightblue">Bulan Pembukuan</label>
@@ -308,11 +322,6 @@
                             <option value="Oktober">Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
                         </select>
                     </div>
-                </div>
-
-                <div>
-                    <label class="block font-bold mb-1 text-cikasda-lightblue">Hari Transaksi</label>
-                    <input type="text" id="f-hari" readonly class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-2.5 font-bold text-gray-700" placeholder="Otomatis terisi...">
                 </div>
 
                 <div>
@@ -359,7 +368,7 @@
         </div>
     </div>
 
-    <!-- Modal Pilihan Cetak PDF & Input Bendahara Penerima -->
+    <!-- Modal Pilihan Cetak PDF & Tanda Tangan Bendahara Penerima -->
     <div id="modalCetakPDF" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 bg-cikasda-cardbg border-2 border-cikasda-blue/10 p-5 space-y-4">
             <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
@@ -396,7 +405,6 @@
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxE2Yg9nvSnU_URa6Vp0SBqALGaRdDW6CG7kOqUXTkXYkTP5BYORbE3RQK9iTcm7o3Krg/exec"; 
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-        const listNamaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
         
         const TARGET_KATEGORI = {
             rumah: 5000000,
@@ -404,7 +412,8 @@
             tenis: 4000000,
             badminton: 3500000,
             masjid: 3000000,
-            pelataran: 1500000
+            pelataran: 1500000,
+            lainlain: 1360000
         };
         const TARGET_TOTAL_PAD = 21360000;
 
@@ -428,12 +437,10 @@
             }
         }
 
-        function otomatisIsiHariDanBulan(tanggalString) {
+        function otomatisIsiBulan(tanggalString) {
             if (!tanggalString) return;
             const dObj = new Date(tanggalString);
             if (!isNaN(dObj.getTime())) {
-                const namaHari = listNamaHari[dObj.getDay()];
-                document.getElementById("f-hari").value = namaHari;
                 const indeksBln = dObj.getMonth();
                 document.getElementById("f-bulan").value = listNamaBulan[indeksBln];
             }
@@ -455,7 +462,6 @@
                     document.getElementById("f-uraian").value = dataDipilih.uraian || "Sewa Rumah Dinas";
                     document.getElementById("f-bulan").value = dataDipilih.bulan || "Januari";
                     document.getElementById("f-tanggal").value = dataDipilih.tanggal || "";
-                    otomatisIsiHariDanBulan(dataDipilih.tanggal || "");
                     document.getElementById("f-penyetor").value = dataDipilih.penyetor || "";
                     document.getElementById("f-penjelasan").value = dataDipilih.penjelasan || "";
                     document.getElementById("f-jumlah").value = dataDipilih.jumlah || 0;
@@ -474,7 +480,7 @@
                     const hari = String(d.getDate()).padStart(2, '0');
                     const tglString = `${tahun}-${bulan}-${hari}`;
                     document.getElementById("f-tanggal").value = tglString;
-                    otomatisIsiHariDanBulan(tglString);
+                    otomatisIsiBulan(tglString);
                 } catch (err) { console.warn(err); }
             }
         }
@@ -561,41 +567,39 @@
             if (!canvasDonat) return;
             const ctxD = canvasDonat.getContext('2d');
 
-            const labelKategori = ['Rumah Dinas', 'Sewa Kantin', 'Lapangan Tenis', 'Badminton', 'Aula Masjid Raya', 'Pelataran Masjid'];
-            const dataNilai = [
-                breakdownSewa.rumah || 0,
-                breakdownSewa.kantin || 0,
-                breakdownSewa.tenis || 0,
-                breakdownSewa.badminton || 0,
-                breakdownSewa.masjid || 0,
-                breakdownSewa.pelataran || 0
+            // Susun data mentah terlebih dahulu untuk diurutkan dari tertinggi ke terendah
+            let rawDataKategori = [
+                { label: 'Rumah Dinas', value: breakdownSewa.rumah || 0, color: '#083370' },
+                { label: 'Sewa Kantin', value: breakdownSewa.kantin || 0, color: '#f1c40f' },
+                { label: 'Lapangan Tenis', value: breakdownSewa.tenis || 0, color: '#059669' },
+                { label: 'Badminton', value: breakdownSewa.badminton || 0, color: '#4f46e5' },
+                { label: 'Aula Masjid Raya', value: breakdownSewa.masjid || 0, color: '#0d9488' },
+                { label: 'Pelataran Masjid', value: breakdownSewa.pelataran || 0, color: '#06b6d4' },
+                { label: 'Sewa Lain-Lain', value: breakdownSewa.lainlain || 0, color: '#d97706' }
             ];
 
-            const totalSemua = dataNilai.reduce((a, b) => a + b, 0);
+            // Sorting otomatis dari nilai terbesar ke terkecil (Tertinggi -> Terendah)
+            rawDataKategori.sort((a, b) => b.value - a.value);
 
-            // Cari kategori persentase tertinggi
-            let maxNilai = -1;
-            let maxIndex = 0;
-            dataNilai.forEach((val, idx) => {
-                if (val > maxNilai) {
-                    maxNilai = val;
-                    maxIndex = idx;
-                }
-            });
+            const labelsTerurut = rawDataKategori.map(item => item.label);
+            const dataNilaiTerurut = rawDataKategori.map(item => item.value);
+            const warnaTerurut = rawDataKategori.map(item => item.color);
 
-            const porsiTertinggi = totalSemua > 0 ? ((maxNilai / totalSemua) * 100).toFixed(2) : 0;
+            const totalSemua = dataNilaiTerurut.reduce((a, b) => a + b, 0);
+
             if (infoTertinggi) {
-                if (totalSemua > 0) {
-                    infoTertinggi.innerHTML = `Tertinggi: <span class="text-cikasda-blue font-black">${labelKategori[maxIndex]}</span> (${porsiTertinggi}%)`;
+                if (totalSemua > 0 && rawDataKategori[0].value > 0) {
+                    const pctMax = ((rawDataKategori[0].value / totalSemua) * 100).toFixed(2);
+                    infoTertinggi.innerHTML = `Tertinggi: <span class="text-cikasda-blue font-black">${rawDataKategori[0].label}</span> (${pctMax}%)`;
                 } else {
                     infoTertinggi.innerHTML = `Kategori Tertinggi: Belum ada transaksi`;
                 }
             }
 
-            const warnaPalette = ['#083370', '#f1c40f', '#059669', '#4f46e5', '#0d9488', '#06b6d4'];
-
             if (instanceDonatSewa) {
-                instanceDonatSewa.data.datasets[0].data = dataNilai;
+                instanceDonatSewa.data.labels = labelsTerurut;
+                instanceDonatSewa.data.datasets[0].data = dataNilaiTerurut;
+                instanceDonatSewa.data.datasets[0].backgroundColor = warnaTerurut;
                 instanceDonatSewa.update();
                 return;
             }
@@ -603,10 +607,10 @@
             instanceDonatSewa = new Chart(ctxD, {
                 type: 'doughnut',
                 data: {
-                    labels: labelKategori,
+                    labels: labelsTerurut,
                     datasets: [{
-                        data: dataNilai,
-                        backgroundColor: warnaPalette,
+                        data: dataNilaiTerurut,
+                        backgroundColor: warnaTerurut,
                         borderWidth: 2,
                         borderColor: '#ffffff'
                     }]
@@ -709,7 +713,7 @@
             if (containerBulan) containerBulan.innerHTML = "";
 
             let totalKas = 0, nominalTunai = 0, nominalNonTunai = 0;
-            let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0 };
+            let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lainlain": 0 };
 
             if(!dataArray || dataArray.length === 0) {
                 tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-cikasda-lightblue font-semibold">Tidak ada log data yang cocok dengan filter atau kata kunci pencarian.</td></tr>`;
@@ -726,7 +730,7 @@
                 const textUraian = (item.uraian || "").trim().toLowerCase();
                 const idTrans = item.id_transaksi || '-';
                 const namaPenyetorClub = item.penyetor || '-';
-                const hariTanggal = (item.hari ? item.hari + ", " : "") + (item.tanggal || '-');
+                const tanggalTransaksi = item.tanggal || '-';
 
                 totalKas += nominal;
                 if (mekanisme.toLowerCase() === "tunai") nominalTunai += nominal; else nominalNonTunai += nominal;
@@ -737,7 +741,8 @@
                 else if (textUraian.includes("badminton")) breakdownSewa.badminton += nominal;
                 else if (textUraian.includes("pelataran")) breakdownSewa.pelataran += nominal;
                 else if (textUraian.includes("masjid")) breakdownSewa.masjid += nominal;
-                else breakdownSewa.rumah += nominal; // Default fallback
+                else if (textUraian.includes("lain-lain") || textUraian.includes("lain")) breakdownSewa.lainlain += nominal;
+                else breakdownSewa.lainlain += nominal; // Fallback mapping ke lain-lain jika uraian khusus
 
                 const warnaBadge = mekanisme.toLowerCase() === "tunai" ? "bg-amber-100 text-cikasda-blue border border-cikasda-yellow" : "bg-blue-100 text-cikasda-blue border border-blue-200";
 
@@ -745,7 +750,7 @@
                     <tr class="hover:bg-cikasda-bg/60 transition-colors border-b border-cikasda-bg font-bold">
                         <td class="p-4 text-center font-mono font-black text-cikasda-blue">${idTrans}</td>
                         <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
-                        <td class="p-4 text-center text-cikasda-lightblue font-mono">${hariTanggal}</td>
+                        <td class="p-4 text-center text-cikasda-lightblue font-mono">${tanggalTransaksi}</td>
                         <td class="p-4 text-left font-extrabold text-xs text-cikasda-blue">${item.uraian || '-'}</td>
                         <td class="p-4 text-left font-semibold">${namaPenyetorClub}</td>
                         <td class="p-4 text-left text-[11px] text-cikasda-lightblue font-medium max-w-xs truncate">${item.penjelasan || '-'}</td>
@@ -774,7 +779,7 @@
             document.getElementById("total-tunai").innerText = konversiKeRupiah(nominalTunai);
             document.getElementById("total-nontunai").innerText = konversiKeRupiah(nominalNonTunai);
 
-            const kategoriArray = ['rumah', 'kantin', 'tenis', 'badminton', 'masjid', 'pelataran'];
+            const kategoriArray = ['rumah', 'kantin', 'tenis', 'badminton', 'masjid', 'pelataran', 'lainlain'];
             kategoriArray.forEach(kat => {
                 const nilaiAktual = breakdownSewa[kat] || 0;
                 const targetKat = TARGET_KATEGORI[kat] || 1;
@@ -810,7 +815,6 @@
                 "No": index + 1,
                 "ID Transaksi": item.id_transaksi || "-",
                 "Bulan": item.bulan || "-",
-                "Hari": item.hari || "-",
                 "Tanggal": item.tanggal || "-",
                 "Uraian Sewa": item.uraian || "-",
                 "Penyetor": item.penyetor || "-",
@@ -883,7 +887,7 @@
                 index + 1,
                 item.id_transaksi || "-",
                 item.bulan || "-",
-                (item.hari ? item.hari + ", " : "") + (item.tanggal || "-"),
+                item.tanggal || "-",
                 item.uraian || "-",
                 item.penyetor || "-",
                 konversiKeRupiah(Number(item.jumlah) || 0),
@@ -892,7 +896,7 @@
 
             doc.autoTable({
                 startY: currentY,
-                head: [['No', 'ID Transaksi', 'Bulan', 'Hari, Tanggal', 'Uraian Sewa', 'Penyetor', 'Jumlah (Rp)', 'Mekanisme']],
+                head: [['No', 'ID Transaksi', 'Bulan', 'Tanggal', 'Uraian Sewa', 'Penyetor', 'Jumlah (Rp)', 'Mekanisme']],
                 body: tableRows,
                 theme: 'grid',
                 headStyles: { fillColor: [8, 51, 112] },
@@ -901,7 +905,7 @@
                 margin: { left: 14, right: 14 }
             });
 
-            // Tanda Tangan Bendahara Penerima
+            // Tanda Tangan Bendahara Penerima di PDF
             let finalY = doc.lastAutoTable.finalY + 15;
             const pageHeight = doc.internal.pageSize.getHeight();
             if (finalY > pageHeight - 45) {
@@ -909,7 +913,7 @@
                 finalY = 25;
             }
 
-            const ttdX = 210; // Posisi sebelah kanan kertas Landscape A4 (297 mm)
+            const ttdX = 210; 
             doc.setFontSize(10);
             doc.setTextColor(0, 0, 0);
             doc.text("Palu, " + new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }), ttdX, finalY);
@@ -940,7 +944,7 @@
                 id_transaksi: (idTransaksiEdit && idTransaksiEdit !== "(Otomatis Sistem)") ? idTransaksiEdit : "",
                 bulan: document.getElementById("f-bulan").value,
                 tanggal: document.getElementById("f-tanggal").value,
-                hari: document.getElementById("f-hari").value,
+                hari: "-", // Hari dihilangkan dari input form
                 uraian: document.getElementById("f-uraian").value,
                 penyetor: document.getElementById("f-penyetor").value,
                 sesi_waktu: "-",
