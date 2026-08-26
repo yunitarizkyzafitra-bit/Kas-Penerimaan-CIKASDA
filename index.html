@@ -128,7 +128,7 @@
             <div class="md:col-span-2 glass-panel rounded-2xl p-5 flex flex-col justify-between bg-cikasda-cardbg">
                 <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
                     <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-chart-line text-cikasda-lightblue"></i> Grafik Kurva Fluktuasi Pendapatan PAD
+                        <i class="fa-solid fa-chart-line text-cikasda-lightblue"></i> Grafik Kurva Fluktuasi Pendapatan PAD CIKASDA
                     </h3>
                     <span id="label-info-kurva" class="text-[9px] bg-cikasda-lightyellow border border-cikasda-yellow text-cikasda-blue font-black px-2.5 py-0.5 rounded">Tahun 2026</span>
                 </div>
@@ -138,14 +138,14 @@
             </div>
         </div>
 
-        <!-- KARTU KATEGORI OBJEK SEWA -->
+        <!-- KARTU KATEGORI OBJEK SEWA (Aula & Pelataran Masjid Raya Dikeluarkan) -->
         <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-3">
             <div class="flex items-center justify-between border-b border-cikasda-bg pb-3">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
                     <i class="fa-solid fa-layer-group text-cikasda-yellow"></i> Akumulasi Pendapatan Berdasarkan Target Objek Sewa Resmi (T.A 2026)
                 </h3>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 
                 <!-- Rumah Dinas -->
                 <div class="p-4 bg-cikasda-bg rounded-xl border border-cikasda-blue/10 space-y-1">
@@ -210,32 +210,6 @@
                         <div id="bar-lainlain" class="bg-cikasda-blue h-1.5 rounded-full" style="width: 0%"></div>
                     </div>
                     <span id="persen-lainlain" class="text-[10px] font-bold text-cikasda-lightblue block text-right mt-0.5">0.00% Realisasi</span>
-                </div>
-
-                <!-- Aula Masjid Raya -->
-                <div class="p-4 bg-cikasda-bg rounded-xl border border-cikasda-blue/10 space-y-1">
-                    <div class="flex justify-between items-start">
-                        <span class="text-[10px] font-bold text-cikasda-lightblue uppercase block">Aula Masjid Raya</span>
-                    </div>
-                    <span id="pos-masjid" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                    <span class="text-[9px] text-gray-500 block font-mono">Target: Rp 0 / Thn</span>
-                    <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
-                        <div id="bar-masjid" class="bg-cikasda-blue h-1.5 rounded-full" style="width: 0%"></div>
-                    </div>
-                    <span id="persen-masjid" class="text-[10px] font-bold text-cikasda-lightblue block text-right mt-0.5">0.00% Realisasi</span>
-                </div>
-
-                <!-- Pelataran Masjid -->
-                <div class="p-4 bg-cikasda-bg rounded-xl border border-cikasda-blue/10 space-y-1 sm:col-span-2">
-                    <div class="flex justify-between items-start">
-                        <span class="text-[10px] font-bold text-cikasda-lightblue uppercase block">Pelataran Masjid</span>
-                    </div>
-                    <span id="pos-pelataran" class="text-base font-black text-cikasda-blue font-mono block">Rp 0</span>
-                    <span class="text-[9px] text-gray-500 block font-mono">Target: Rp 0 / Thn</span>
-                    <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
-                        <div id="bar-pelataran" class="bg-cikasda-blue h-1.5 rounded-full" style="width: 0%"></div>
-                    </div>
-                    <span id="persen-pelataran" class="text-[10px] font-bold text-cikasda-lightblue block text-right mt-0.5">0.00% Realisasi</span>
                 </div>
 
             </div>
@@ -304,7 +278,7 @@
         </div>
     </main>
 
-    <!-- Modal Laporan Analisis Ekonomi & Fiskal -->
+    <!-- Modal Laporan Analisis Ekonomi & Fiskal dengan Bahasa Adaptif, Akuntabel, dan Transparan -->
     <div id="modalAnalisisEkonomi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -318,30 +292,30 @@
             <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue leading-relaxed">
                 <div class="p-4 bg-cikasda-lightyellow rounded-xl border border-cikasda-yellow space-y-1.5">
                     <h4 class="font-black text-cikasda-blue text-sm uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-bullseye text-cikasda-amber"></i> Ringkasan Eksekutif & Posisi Anggaran
+                        <i class="fa-solid fa-bullseye text-cikasda-amber"></i> I. Ringkasan Eksekutif & Akuntabilitas Pendapatan CIKASDA
                     </h4>
                     <p class="font-semibold text-justify">
-                        Pencapaian ini adalah sebuah prestasi tata kelola yang patut diapresiasi tinggi. Dinas CIKASDA tidak sekadar memenuhi kewajiban administratif, melainkan berhasil mengubah aset-aset penunjang menjadi instrumen produktif yang mendatangkan surplus pendapatan nyata bagi daerah pada tahun 2026 ini.
+                        Pelaporan penerimaan Pendapatan Asli Daerah (PAD) Dinas CIKASDA Tahun Anggaran 2026 disajikan secara terbuka (*transparency*) dan dapat dipertanggungjawabkan (*accountability*) melalui sistem pencatatan keuangan yang adaptif terhadap dinamika fiskal daerah. Optimalisasi aset produktif dikelola secara terukur guna menunjang kemandirian fiskal daerah tanpa mengabaikan aspek kepatuhan regulasi.
                     </p>
                 </div>
 
                 <div class="space-y-2">
                     <h4 class="font-black uppercase text-cikasda-lightblue flex items-center gap-1.5">
-                        <i class="fa-solid fa-scale-balanced text-cikasda-yellow"></i> II. Analisis Likuiditas & Efisiensi Kanal Pembayaran
+                        <i class="fa-solid fa-scale-balanced text-cikasda-yellow"></i> II. Transparansi Likuiditas & Efisiensi Kanal Pembayaran
                     </h4>
                     <p class="text-justify">
-                        Penerapan sistem pencatatan transaksi terintegrasi melalui mekanisme kanal <em>Non-Tunai</em> dan <em>Tunai</em> menunjukkan tingkat akuntabilitas perbendaharaan yang tinggi. Penggunaan kanal non-tunai diutamakan guna meminimalisasi risiko operasional, mempercepat rekonsiliasi bank kas daerah, serta memastikan transparansi arus kas masuk secara real-time.
+                        Integrasi kanal pembayaran <em>Non-Tunai</em> dan <em>Tunai</em> memberikan keterbukaan arus kas secara real-time. Kebijakan ini dirancang untuk meminimalisasi risiko penyimpangan fiskal, mempercepat proses audit internal perbendaharaan, serta memastikan setiap rupiah kontribusi sewa aset tercatat secara akurat dan akuntabel di kas daerah.
                     </p>
                 </div>
 
                 <div class="space-y-2">
                     <h4 class="font-black uppercase text-cikasda-lightblue flex items-center gap-1.5">
-                        <i class="fa-solid fa-lightbulb text-cikasda-yellow"></i> III. Rekomendasi Strategis & Intensifikasi Aset
+                        <i class="fa-solid fa-lightbulb text-cikasda-yellow"></i> III. Rekomendasi Strategis & Intensifikasi Aset Berkelanjutan
                     </h4>
                     <ul class="list-disc pl-5 space-y-1.5 font-semibold text-justify">
-                        <li><strong>Optimalisasi Sektor Unggulan:</strong> Pos Rumah Dinas dan Lapangan Tenis menyumbang kontribusi dominan dari total target fiskal, sehingga pemeliharaan fasilitas pada klaster ini harus diprioritaskan.</li>
-                        <li><strong>Ekstensifikasi Potensi Pasif:</strong> Perlu dilakukan kajian peninjauan tarif sewa yang disesuaikan dengan tingkat inflasi daerah serta valuasi pasar wajar demi mendongkrak potensi surplus pendapatan di tahun anggaran berikutnya.</li>
-                        <li><strong>Digitalisasi Pengawasan:</strong> Penggunaan penomoran urut otomatis menjamin tertib administrasi pembukuan tanpa celah duplikasi data ganda.</li>
+                        <li><strong>Optimalisasi Sektor Unggulan:</strong> Klaster Rumah Dinas dan Lapangan Tenis menunjukkan tingkat produktivitas fiskal tertinggi, sehingga reinvestasi pemeliharaan fasilitas pada klaster ini menjadi prioritas utama efisiensi anggaran.</li>
+                        <li><strong>Adaptabilitas Valuasi Aset:</strong> Penyesuaian tarif sewa secara berkala perlu dilakukan secara transparan dengan mempertimbangkan tingkat inflasi regional serta nilai wajar pasar guna mendongkrak optimalisasi penerimaan CIKASDA.</li>
+                        <li><strong>Tata Kelola Berbasis Digital:</strong> Implementasi validasi transaksi berlapis menjamin keamanan data pembukuan, meniadakan risiko duplikasi, serta memperkuat integritas laporan keuangan instansi.</li>
                     </ul>
                 </div>
             </div>
@@ -352,7 +326,7 @@
         </div>
     </div>
 
-    <!-- Modal Form Transaksi -->
+    <!-- Modal Form Transaksi (Aula & Pelataran Masjid Raya Dikeluarkan dari Pilihan) -->
     <div id="modalFormTransaksi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -374,8 +348,6 @@
                         <option value="Sewa Badminton">Badminton (Target: Rp 7.500.000)</option>
                         <option value="Sewa Kantin">Sewa Kantin (Target: Rp 5.000.000)</option>
                         <option value="Sewa Lain-Lain">Sewa Lain-Lain (Target: Rp 2.448.000)</option>
-                        <option value="Sewa Masjid Raya">Aula Masjid Raya</option>
-                        <option value="Sewa Pelataran Masjid Raya">Pelataran Masjid</option>
                     </select>
                 </div>
 
@@ -486,9 +458,7 @@
             tenis: 9000000,
             badminton: 7500000,
             kantin: 5000000,
-            lainlain: 2448000,
-            masjid: 0,
-            pelataran: 0
+            lainlain: 2448000
         };
         const TARGET_PAD_UTAMA = 21360000;
 
@@ -693,7 +663,7 @@
                     datasets: [{
                         label: 'Realisasi (Rp)',
                         data: dataNilai,
-                        backgroundColor: ['#083370', '#1a5ba3', '#f1c40f', '#3b82f6', '#60a5fa', '#93c5fd', '#cbd5e1'],
+                        backgroundColor: ['#083370', '#1a5ba3', '#f1c40f', '#3b82f6', '#60a5fa'],
                         borderRadius: 6
                     }]
                 },
@@ -783,7 +753,7 @@
             if (containerBulan) containerBulan.innerHTML = "";
 
             let totalKasSaringan = 0, nominalTunai = 0, nominalNonTunai = 0;
-            let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "masjid": 0, "pelataran": 0, "lainlain": 0 };
+            let breakdownSewa = { "rumah": 0, "kantin": 0, "tenis": 0, "badminton": 0, "lainlain": 0 };
 
             dataArray.forEach((item, index) => {
                 const nominal = Number(item.jumlah) || 0;
@@ -794,8 +764,6 @@
                 else if (textUraian.includes("kantin")) breakdownSewa.kantin += nominal;
                 else if (textUraian.includes("tenis")) breakdownSewa.tenis += nominal;
                 else if (textUraian.includes("badminton")) breakdownSewa.badminton += nominal;
-                else if (textUraian.includes("pelataran")) breakdownSewa.pelataran += nominal;
-                else if (textUraian.includes("masjid")) breakdownSewa.masjid += nominal;
                 else breakdownSewa.lainlain += nominal;
 
                 const mekanisme = (item.keterangan || "Non Tunai").trim();
@@ -843,8 +811,6 @@
             document.getElementById("pos-badminton").innerText = konversiKeRupiah(breakdownSewa.badminton);
             document.getElementById("pos-kantin").innerText = konversiKeRupiah(breakdownSewa.kantin);
             document.getElementById("pos-lainlain").innerText = konversiKeRupiah(breakdownSewa.lainlain);
-            document.getElementById("pos-masjid").innerText = konversiKeRupiah(breakdownSewa.masjid);
-            document.getElementById("pos-pelataran").innerText = konversiKeRupiah(breakdownSewa.pelataran);
 
             let pRumah = TARGET_OBJEK_RESMI.rumah > 0 ? ((breakdownSewa.rumah / TARGET_OBJEK_RESMI.rumah) * 100).toFixed(1) : "0.0";
             let pTenis = TARGET_OBJEK_RESMI.tenis > 0 ? ((breakdownSewa.tenis / TARGET_OBJEK_RESMI.tenis) * 100).toFixed(1) : "0.0";
@@ -867,20 +833,12 @@
             document.getElementById("bar-lainlain").style.width = Math.min(parseFloat(pLain), 100) + "%";
             document.getElementById("persen-lainlain").innerText = pLain + "% Realisasi";
 
-            document.getElementById("bar-masjid").style.width = "0%";
-            document.getElementById("persen-masjid").innerText = "0.0% Realisasi";
-
-            document.getElementById("bar-pelataran").style.width = "0%";
-            document.getElementById("persen-pelataran").innerText = "0.0% Realisasi";
-
             let arrayKategori = [
                 { nama: "Rumah Dinas", jumlah: breakdownSewa.rumah },
                 { nama: "Lapangan Tenis", jumlah: breakdownSewa.tenis },
                 { nama: "Badminton", jumlah: breakdownSewa.badminton },
                 { nama: "Sewa Kantin", jumlah: breakdownSewa.kantin },
-                { nama: "Sewa Lain-Lain", jumlah: breakdownSewa.lainlain },
-                { nama: "Aula Masjid Raya", jumlah: breakdownSewa.masjid },
-                { nama: "Pelataran Masjid", jumlah: breakdownSewa.pelataran }
+                { nama: "Sewa Lain-Lain", jumlah: breakdownSewa.lainlain }
             ];
 
             arrayKategori.sort((a, b) => b.jumlah - a.jumlah);
